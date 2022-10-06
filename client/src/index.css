@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +14,53 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Hidden arrow button in input type number */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.scroll1::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scroll1::-webkit-scrollbar-track {
+  background: #ddd;
+}
+
+.scroll1::-webkit-scrollbar-thumb {
+  background: #666;
+}
+
+.no-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.min-w-250 {
+  min-width: 250px;
+}
+
+.w-450 {
+  width: 450px;
+}
+
+@media only screen and (min-width: 300px) {
+  .heightCart {
+    height: 630px;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .heightCart {
+    height: 350px;
+  }
 }
