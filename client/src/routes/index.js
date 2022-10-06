@@ -1,13 +1,16 @@
 import Home from '../pages/Home'
+import SignIn from '../pages/SignIn'
 import SignUp from '../pages/SignUp'
 import CheckOut from '../pages/CheckOut'
 
-import LayoutDefault from '../layouts/DefaultLayout'
+import DefaultLayout from '../layouts/DefaultLayout'
+import Login from '../layouts/Login'
 
 const publicRoutes = [
-    { path: "/", component: Home, layout: LayoutDefault },
-    { path: "/signup", component: SignUp, layout: LayoutDefault },
-    { path: "/checkout", component: CheckOut, layout: LayoutDefault },
+    { path: "/", component: Home, layout: DefaultLayout },
+    { path: "/signin", component: SignIn, layout: Login },
+    { path: "/signup", component: SignUp, layout: Login },
+    { path: "/checkout", component: CheckOut, layout: DefaultLayout },
 ]
 
 export { publicRoutes }

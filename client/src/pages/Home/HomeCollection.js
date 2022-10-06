@@ -50,13 +50,11 @@ const HomeCollection = () => {
             <p className="text-3xl mb-10">Season Collection</p>
             <Swiper
                 modules={[Pagination]}
-                spaceBetween={0}
+                spaceBetween={30}
                 breakpoints={{
-                    // when window width is >= 640px
-                    375: {
+                    370: {
                         slidesPerView: 1.2,
                     },
-                    // when window width is >= 768px
                     768: {
                         slidesPerView: 5,
                     },

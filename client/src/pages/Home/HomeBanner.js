@@ -1,3 +1,5 @@
+import banner1 from '../../assets/banner1.jpg'
+
 import { Pagination, A11y } from 'swiper';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -20,7 +22,7 @@ const HomeBanner = () => {
                 <div
                     style={{
                         height: '570px',
-                        backgroundImage: `url("https://img.ltwebstatic.com/images3_ach/2022/09/16/16633244073de9d73cee669be190a121a553839126.jpg")`,
+                        backgroundImage: `url(${banner1})`,
                         backgroundPosition: 'center',
                         backgroundSize: 'cover'
                     }}
