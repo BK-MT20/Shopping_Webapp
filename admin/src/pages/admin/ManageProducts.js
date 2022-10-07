@@ -131,6 +131,9 @@ function ManageProducts() {
             <Form.Item label="Type" name="type" rules={[{ required: true }]}>
               <Input />
             </Form.Item>
+            <Form.Item label="Colors" name="colors" rules={[{ required: true }]}>
+              <Input />
+            </Form.Item>
  
           </Form>
         </Modal>
