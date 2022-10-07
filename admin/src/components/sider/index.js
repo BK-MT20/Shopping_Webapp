@@ -1,9 +1,9 @@
-import { ShoppingCartOutlined } from '@ant-design/icons';
+import { ShoppingCartOutlined } from '@ant-design/icons'
 import React from 'react'
-import { Layout, Menu} from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { Layout, Menu } from 'antd'
+import { useNavigate } from 'react-router-dom'
 
-const items = [
+const items = [ 
   {
     title: 'Orders',
     icon: ShoppingCartOutlined,
@@ -32,7 +32,7 @@ function Sider() {
       key: item.path + child.path,
       label: child.title,
     }))
-  }));
+  }))
 
   const handleSiderOnclick = e => {
     navigate(e.key)
@@ -42,11 +42,11 @@ function Sider() {
     <Layout.Sider width={200} className="site-layout-background">
       <Menu
         mode="inline"
-        defaultSelectedKeys={['subnav11']}
-        defaultOpenKeys={['nav1']}
+        defaultSelectedKeys={[ 'subnav11' ]}
+        defaultOpenKeys={[ 'nav1' ]}
         style={{
-            height: '100%',
-            borderRight: 0,
+          height: '100%',
+          borderRight: 0,
         }}
         items={keys}
         onClick={handleSiderOnclick}
