@@ -3,7 +3,7 @@ import {
   BrowserRouter,
   Routes
 } from 'react-router-dom'
-import { Layout, Orders } from './pages/admin';
+import { Layout, Orders,ManageProducts} from './pages/admin';
 
 function App() {
   return (
@@ -11,7 +11,9 @@ function App() {
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route path='orders' element={<Orders />} />
+          <Route path='manage-products' element={<ManageProducts/>} />
         </Route>
+
       </Routes>
     </BrowserRouter>
   );
