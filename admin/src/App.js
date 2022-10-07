@@ -3,7 +3,7 @@ import {
   BrowserRouter,
   Routes
 } from 'react-router-dom'
-import { Layout, Orders } from './pages/admin';
+import { Layout, Orders } from './pages/admin'
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
-  );
+  )
 }
 
-export default App;
+export default App
