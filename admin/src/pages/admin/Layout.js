@@ -1,6 +1,6 @@
-import { Layout as LayoutAntd } from 'antd';
-import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Layout as LayoutAntd } from 'antd'
+import React from 'react'
+import { Outlet } from 'react-router-dom'
 import { Header, Sider, BreadCrumb } from '../../components'
 
 function Layout() {
@@ -34,4 +34,4 @@ function Layout() {
   )
 }
 
-export default Layout;
+export default Layout
