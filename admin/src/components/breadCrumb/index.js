@@ -10,7 +10,7 @@ function BreadCrumb() {
   return (
     <Breadcrumb
       style={{
-          margin: '16px 0',
+        margin: '16px 0',
       }}
     >
       {
