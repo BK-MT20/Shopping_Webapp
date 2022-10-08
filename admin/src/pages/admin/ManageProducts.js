@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-import { Table,Tag,Space,Popconfirm,Form,Modal,Input } from 'antd';
+import React, {  } from 'react'
+import { Table,Tag,Space,Popconfirm } from 'antd';
 import {EditOutlined ,DeleteOutlined} from '@ant-design/icons';
+import EditButton from './AED-Products/EditButton'
 import './ManageProducts.scss'
 
 function ManageProducts() {
-  const [modaldata, setmodaldata] = useState([])
   const columns = [
     {
       title: 'Name',
@@ -53,11 +53,12 @@ function ManageProducts() {
       align: 'center',
       render: (_, record) => (
         <Space size="middle">
-          <EditOutlined style={{ fontSize: '16px', color: '#08c' }} 
-                        onClick={()=>showModal(record)}
-          />
+          {/* <EditOutlined style={{ fontSize: '16px', color: '#08c' }} 
+                        
+          /> */}
+          <EditButton/>
           <Popconfirm title="Sure to delete?" okText="Yes" cancelText="No" >
-            <DeleteOutlined style={{ fontSize: '16px', color: 'red' }}/>
+            <DeleteOutlined style={{ fontSize: '18px', color: 'red' }}/>
           </Popconfirm>
         </Space>
       ),
@@ -86,58 +87,13 @@ function ManageProducts() {
       colors: ['LightBlue', 'DarkBlue'],
     },
   ];
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const showModal = (record) => {
-  console.log(record);
-  setIsModalVisible(true);
-  setmodaldata(record);
-  };
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
 
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
   return (
     <>
         <Table columns={columns} 
            dataSource={data} 
            rowClassName={(record, index) => index % 2 === 0 ? 'table-row-light' :  'table-row-dark'}
         />
-        <Modal
-          title="Edit Products"
-          visible={isModalVisible}
-          onOk={handleOk}
-          onCancel={handleCancel}
-        >
-          <Form
-            name="wrap"
-            labelCol={{ flex: '70px' }}
-            labelAlign="left"
-            labelWrap
-            wrapperCol={{ flex: 1 }}
-            colon={false}
-          >
-            <Form.Item label="Name" name="name" rules={[{ required: true }]}>
-              <Input />
-            </Form.Item>
-            <Form.Item label="Image" name="imgage" rules={[{ required: true }]}>
-              <Input />
-            </Form.Item>
-            <Form.Item label="Price" name="price" rules={[{ required: true }]}>
-              <Input />
-            </Form.Item>
-            <Form.Item label="Type" name="type" rules={[{ required: true }]}>
-              <Input />
-            </Form.Item>
-            <Form.Item label="Colors" name="colors" rules={[{ required: true }]}>
-              <Input />
-            </Form.Item>
- 
-          </Form>
-        </Modal>
-
     </>
 
   )
