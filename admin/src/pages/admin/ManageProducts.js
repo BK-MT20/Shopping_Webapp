@@ -1,6 +1,6 @@
-import React, { useRef,useState } from 'react'
-import { Table,Tag,Space,Popconfirm ,Input} from 'antd';
-import {DeleteOutlined,SearchOutlined} from '@ant-design/icons';
+import React, { } from 'react'
+import { Table,Tag,Space,Popconfirm ,Input } from 'antd'
+import { DeleteOutlined,SearchOutlined } from '@ant-design/icons'
 import EditButton from './AED-Products/EditButton'
 import './ManageProducts.scss'
 
@@ -21,18 +21,18 @@ function ManageProducts() {
       dataIndex: 'name',
       key: 'name', 
       align: 'center',
-      filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters }) => {
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => {
         return (
-            <Input placeholder='Type text here'
-                  value={selectedKeys[0]}
-                  onChange={(e)=>{
-                    setSelectedKeys(e.target.value?[e.target.value]:[])
-                  }}
-                  onPressEnter={()=>{
-                    // console.log(selectedKeys[0])
-                    confirm();
-                  }}
-            />
+          <Input placeholder='Type text here'
+            value={selectedKeys[0]}
+            onChange={(e) => {
+              setSelectedKeys(e.target.value ? [ e.target.value ] : [])
+            }}
+            onPressEnter={() => {
+              // console.log(selectedKeys[0])
+              confirm()
+            }}
+          />
         )
 
       },
@@ -49,19 +49,19 @@ function ManageProducts() {
       key: 'image',
       align: 'center',  
       width:400,
-      render: (images, record ) => (
+      render: (images) => (
 
-          images.map((image,idx) => {
-            console.log(idx)
-            return (
-              <img 
-                key={idx}
-                src={image} 
-                alt=""
-                style={{width: '80px' ,marginTop:'10px'}} 
-              /> 
-            );
-          })
+        images.map((image,idx) => {
+          console.log(idx)
+          return (
+            <img 
+              key={idx}
+              src={image} 
+              alt=""
+              style={{ width: '80px' ,marginTop:'10px' }} 
+            /> 
+          )
+        })
       ),
       
     },
@@ -91,18 +91,18 @@ function ManageProducts() {
       render: (_, { colors }) => (
         <>
           {
-          colors.map((color) => {
+            colors.map((color) => {
   
   
-            return (
-              <Tag color={color} key={color}
-              style={{marginTop:'10px'}} >
-                <Space size="middle">
-                  {color.toUpperCase()}
-                </Space>
-              </Tag>
-            );
-          })}
+              return (
+                <Tag color={color} key={color}
+                  style={{ marginTop:'10px' }} >
+                  <Space size="middle">
+                    {color.toUpperCase()}
+                  </Space>
+                </Tag>
+              )
+            })}
         </>
       ),
     },
@@ -110,7 +110,7 @@ function ManageProducts() {
       title: 'Action',
       key: 'action',
       align: 'center',
-      render: (_, record) => (
+      render: () => (
         <Space size="middle">
           {/* <EditOutlined style={{ fontSize: '16px', color: '#08c' }} 
                         
@@ -122,36 +122,36 @@ function ManageProducts() {
         </Space>
       ),
     },
-  ];
+  ]
   const data = [
     {
       key: '1',
       name: 'Boxy',
       price: '$20.00',
-      image: ['https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990',
-              'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990'
-              ],
-      colors: ['LightBlue', 'DarkBlue'],
+      image: [ 'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990',
+        'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990'
+      ],
+      colors: [ 'LightBlue', 'DarkBlue' ],
       remained: 1,
     },
     {
       key: '2',
       name: 'Denim ',
       price: '$21.00',
-      image: ['https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990',
-              'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990'
-              ],
-      colors: ['LightBlue', 'DarkBlue'],
+      image: [ 'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990',
+        'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990'
+      ],
+      colors: [ 'LightBlue', 'DarkBlue' ],
       remained: 2,
     },
     {
       key: '3',
       name: 'Jacket',
       price: '$22.00',
-      image: ['https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990',
-              'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990'
-            ],
-      colors: ['LightBlue', 'DarkBlue'],
+      image: [ 'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990',
+        'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990'
+      ],
+      colors: [ 'LightBlue', 'DarkBlue' ],
       remained: 3,
 
       
@@ -160,10 +160,10 @@ function ManageProducts() {
       key: '4',
       name: 'vest',
       price: '$23.00',
-      image: ['https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990',
-              'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990'
-            ],
-      colors: ['LightBlue', 'DarkBlue'],
+      image: [ 'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990',
+        'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990'
+      ],
+      colors: [ 'LightBlue', 'DarkBlue' ],
       remained: 4,
       
     },
@@ -171,10 +171,10 @@ function ManageProducts() {
       key: '5',
       name: 'pants',
       price: '$24.00',
-      image: ['https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990',
-              'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990'
-            ],
-      colors: ['LightBlue', 'DarkBlue'],
+      image: [ 'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990',
+        'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990'
+      ],
+      colors: [ 'LightBlue', 'DarkBlue' ],
       remained: 5,
       
     },
@@ -182,10 +182,10 @@ function ManageProducts() {
       key: '6',
       name: 't-shirt',
       price: '$25.00',
-      image: ['https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990',
-              'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990'
-              ],
-      colors: ['LightBlue', 'DarkBlue'],
+      image: [ 'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990',
+        'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990'
+      ],
+      colors: [ 'LightBlue', 'DarkBlue' ],
       remained: 6,
       
     },
@@ -193,68 +193,68 @@ function ManageProducts() {
       key: '7',
       name: 'jacket',
       price: '$26.00',
-      image: ['https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990',
-              'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990'
-              ],
-      colors: ['LightBlue', 'DarkBlue'],
+      image: [ 'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990',
+        'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990'
+      ],
+      colors: [ 'LightBlue', 'DarkBlue' ],
       remained: 7,
     
-  },
-  {
-    key: '8',
-    name: 'socks',
-    price: '$27.00',
-    image: ['https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990',
-            'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990'
-            ],
-    colors: ['LightBlue', 'DarkBlue'],
-    remained: 8,
+    },
+    {
+      key: '8',
+      name: 'socks',
+      price: '$27.00',
+      image: [ 'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990',
+        'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990'
+      ],
+      colors: [ 'LightBlue', 'DarkBlue' ],
+      remained: 8,
   
-},
-{
-  key: '9',
-  name: 'shirt',
-  price: '$28.00',
-  image: ['https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990',
-          'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990'
-          ],
-  colors: ['LightBlue', 'DarkBlue'],
-  remained: 9,
+    },
+    {
+      key: '9',
+      name: 'shirt',
+      price: '$28.00',
+      image: [ 'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990',
+        'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990'
+      ],
+      colors: [ 'LightBlue', 'DarkBlue' ],
+      remained: 9,
 
-},
-{
-  key: '10',
-  name: 'dress',
-  price: '$29.00',
-  image: ['https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990',
-            'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990'
-          ],
-  colors: ['LightBlue', 'DarkBlue'],
-  remained: 10,
+    },
+    {
+      key: '10',
+      name: 'dress',
+      price: '$29.00',
+      image: [ 'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990',
+        'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990'
+      ],
+      colors: [ 'LightBlue', 'DarkBlue' ],
+      remained: 10,
 
-},
-{
-  key: '11',
-  name: 'Boxy Denim Jacket',
-  price: '$30.00',
-  image: ['https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990',
-          'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990'
-          ],
-  colors: ['LightBlue', 'DarkBlue'],
-  remained: 11,
+    },
+    {
+      key: '11',
+      name: 'Boxy Denim Jacket',
+      price: '$30.00',
+      image: [ 'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990',
+        'https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=990'
+      ],
+      colors: [ 'LightBlue', 'DarkBlue' ],
+      remained: 11,
 
-},
+    },
 
-];
+  ]
 
   return (
     <>
-        <Table columns={columns} 
-           dataSource={data} 
-           rowClassName={(record, index) => index % 2 === 0 ? 'table-row-light' :  'table-row-dark'}
-           pagination={{ pageSize: 10 }}
-           scroll={{ y: 450 }}  
-        />
+      <Table columns={columns} 
+        dataSource={data} 
+        rowClassName={(record, index) => index % 2 === 0 ? 'table-row-light' :  'table-row-dark'}
+        pagination={{ pageSize: 10 }}
+        scroll={{ y: 450 }}  
+      />
     </>
 
   )

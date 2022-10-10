@@ -28,11 +28,11 @@ const items = [
 
 function Sider() {
   const navigate = useNavigate()
-  const keys = items.map((item, index) => ({
+  const keys = items.map((item) => ({
     key: item.path,
     icon: React.createElement(item.icon),
     label: item.title,
-    children: item.children?.map((child, idx) => ({
+    children: item.children?.map((child) => ({
       key: item.path + child.path,
       label: child.title,
     }))
