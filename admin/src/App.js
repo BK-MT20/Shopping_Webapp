@@ -6,7 +6,14 @@ import {
   Outlet
 } from 'react-router-dom'
 import Layout from './pages/admin/Layout'
-import {/*OrderDetail*/  Orders, OrdersHistory } from './pages/admin/orders'
+import {/*OrderDetail*/  Orders,OrdersHistory } from './pages/admin/orders'
+// import { OrdersHistory } from './pages/admin/orders/OrdersHistory'
+// import {
+//   Route,
+//   BrowserRouter,
+//   Routes
+// } from 'react-router-dom'
+// import { Layout, Orders } from './pages/admin';
 
 
 import { ManageProducts } from './pages/admin/products'
