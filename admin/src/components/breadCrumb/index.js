@@ -1,25 +1,25 @@
-import { Breadcrumb } from 'antd'
 import React from 'react'
+import BreadCrumb from './Breadcrumb'
 import { useLocation } from 'react-router-dom'
-import { capitalizeFirstLetter } from '../../Helpers'
-
-function BreadCrumb() {
+import './index.scss'
+import AddButton from '../../pages/admin/products/AED-Products/AddButton'
+function Breadcrumb() {
   let location = useLocation()
   let paths = location.pathname.split('/')
   paths.unshift('Home')
-  return (
-    <Breadcrumb
-      style={{
-        margin: '16px 0',
-      }}
-    >
-      {
-        paths.map(path => (
-          <Breadcrumb.Item key={path}>{capitalizeFirstLetter(path)}</Breadcrumb.Item>
-        ))
-      }
-    </Breadcrumb>
-  )
+
+  if(paths[paths.length - 1] === 'manage-products') {    
+    return (
+      <div className='manage-products'>
+        <BreadCrumb/>
+        <AddButton/>
+      </div>
+    )
+  } else {
+    return (  
+      <BreadCrumb/>
+    )
+  }
 }
 
-export default BreadCrumb
+export default Breadcrumb
