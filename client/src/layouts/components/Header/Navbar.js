@@ -6,6 +6,7 @@ import OutsideAlerter from '../../../components/OutsideAlerter'
 import { FiMenu } from 'react-icons/fi'
 import { AiOutlineArrowLeft } from 'react-icons/ai'
 import { MdOutlineKeyboardArrowRight } from 'react-icons/md'
+import {Link} from 'react-router-dom'
 
 const Navbar = () => {
 
@@ -368,7 +369,7 @@ const Navbar = () => {
             ]
         },
         {
-            title: 'Products',
+            title: <Link to="/product1">Products</Link> ,
             moreInfomation: moreInfoProductsNavItem,
             fullWidth: true,
             children: [
