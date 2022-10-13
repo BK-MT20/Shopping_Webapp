@@ -28,7 +28,7 @@ function OrdersTable({ columns, data, loading, hasHeader, onSearch, onRowClick =
   const [filter, setFilter]=useState(filterOptions[0])
   
   const onFinish = (values) => {
-    console.log(values)
+    // console.log(values)
     // setSearching(true)
     onSearch(values)
   }

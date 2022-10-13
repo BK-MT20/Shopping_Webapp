@@ -29,7 +29,7 @@ function AEProducts() {
         remained: values.item,
       })
         .then(res => {
-          console.log(res.data)
+          // console.log(res.data)
           success()
         })
     }
