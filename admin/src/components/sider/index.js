@@ -2,34 +2,20 @@ import { ShoppingCartOutlined,DesktopOutlined } from '@ant-design/icons'
 import React from 'react'
 import { Layout, Menu } from 'antd'
 import { useLocation, useNavigate } from 'react-router-dom'
+import './style.css'
 
 const items = [ 
   {
     title: 'Orders',
     icon: ShoppingCartOutlined,
     path: '/orders',
-    children: [
-      {
-        title: 'List orders',
-        path: '/'
-      },
-      {
-        title: 'History',
-        path: '/history'
-      }
-    ]
-  },
-  {
-    title: 'Manage Products',
-    icon: DesktopOutlined,
-    path: '/manage-products',
   }
 ]
 
 function Sider() {
   const navigate = useNavigate()
   const location = useLocation()
-  const paths = location.pathname.split('/')
+  // const paths = location.pathname.split('/')
   // console.log(location, paths)
 
   const keys = items.map((item) => ({
@@ -50,8 +36,8 @@ function Sider() {
     <Layout.Sider width={200} className="site-layout-background">
       <Menu
         mode="inline"
-        defaultSelectedKeys={[ location.pathname ]}
-        defaultOpenKeys={[ '\\' + paths[1] ]}
+        // defaultSelectedKeys={[ location.pathname ]}
+        // defaultOpenKeys={[ '\\' + paths[1] ]}
         style={{
           height: '100%',
           borderRight: 0,
