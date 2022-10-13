@@ -1,25 +1,36 @@
+import { Breadcrumb } from 'antd'
+import { HomeOutlined } from '@ant-design/icons'
 import React from 'react'
-import BreadCrumb from './Breadcrumb'
-import { useLocation } from 'react-router-dom'
-import './index.scss'
-import AddButton from '../../pages/admin/products/AED-Products/AddButton'
-function Breadcrumb() {
-  let location = useLocation()
-  let paths = location.pathname.split('/')
-  paths.unshift('Home')
+import { Link, useLocation } from 'react-router-dom'
+import { capitalizeFirstLetter } from '../../Helpers'
 
-  if(paths[paths.length - 1] === 'manage-products') {    
+function BreadCrumb() {
+  const location = useLocation()
+  const pathSnippets = location.pathname.split('/').filter((i) => i)
+  const extraBreadcrumbItems = pathSnippets.map((name, index) => {
+    const url = `/${pathSnippets.slice(0, index + 1).join('/')}`
     return (
-      <div className='manage-products'>
-        <BreadCrumb/>
-        <AddButton/>
-      </div>
+      <Breadcrumb.Item key={url}>
+        <Link to={url}>{capitalizeFirstLetter(name)}</Link>
+      </Breadcrumb.Item>
     )
-  } else {
-    return (  
-      <BreadCrumb/>
-    )
-  }
+  })
+  const breadcrumbItems = [
+    <Breadcrumb.Item key="home">
+      <Link to="/">
+        <HomeOutlined />
+      </Link>
+    </Breadcrumb.Item>
+  ].concat(extraBreadcrumbItems)
+  return (
+    <Breadcrumb
+      style={{
+        margin: '16px 0',
+      }}
+    >
+      {breadcrumbItems}
+    </Breadcrumb>
+  )
 }
 
 export default Breadcrumb
