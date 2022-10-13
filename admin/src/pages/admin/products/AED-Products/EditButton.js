@@ -4,7 +4,7 @@ import { EditOutlined } from '@ant-design/icons'
 function EditButton() {
   return (
     <Button 
-      href="/manage-products/AEProducts" 
+      href="/manage-products/AEProducts/:Edit" 
       type="link" icon={<EditOutlined/> } 
       size="large"
     >

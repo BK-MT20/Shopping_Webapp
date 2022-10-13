@@ -19,9 +19,12 @@ function App() {
             <Route index element={<OrdersList />} />
             <Route path=':orderId' element={<OrderDetail />} />
           </Route>
-          <Route path='orders' element={<Orders />} />
+          {/* <Route path='orders' element={<Orders />} /> */}
           <Route path='manage-products' element={<ManageProducts/>} />
           <Route path='manage-products/AEProducts' element={<AEProducts/>} />
+          <Route path='manage-products/AEProducts/:Add' element={<AEProducts/>} />
+          <Route path='manage-products/AEProducts/:Edit' element={<AEProducts/>} />
+
         </Route>
 
       </Routes>

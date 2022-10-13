@@ -9,6 +9,21 @@ const items = [
     title: 'Orders',
     icon: ShoppingCartOutlined,
     path: '/orders',
+    // children: [
+    //   {
+    //     title: 'List orders',
+    //     path: '/'
+    //   },
+    //   {
+    //     title: 'History',
+    //     path: '/history'
+    //   }
+    // ]
+  },
+  {
+    title: 'Manage Products',
+    icon: DesktopOutlined,
+    path: '/manage-products',
   }
 ]
 
@@ -22,10 +37,10 @@ function Sider() {
     key: item.path,
     icon: React.createElement(item.icon),
     label: item.title,
-    children: item.children?.map((child) => ({
-      key: item.path + child.path,
-      label: child.title,
-    }))
+    // children: item.children?.map((child) => ({
+    //   key: item.path + child.path,
+    //   label: child.title,
+    // }))
   }))
 
   const handleSiderOnclick = e => {
