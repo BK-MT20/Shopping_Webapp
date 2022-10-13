@@ -1,4 +1,4 @@
-import { ShoppingCartOutlined } from '@ant-design/icons'
+import { ShoppingCartOutlined,DesktopOutlined } from '@ant-design/icons'
 import React from 'react'
 import { Layout, Menu } from 'antd'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -18,6 +18,11 @@ const items = [
         path: '/history'
       }
     ]
+  },
+  {
+    title: 'Manage Products',
+    icon: DesktopOutlined,
+    path: '/manage-products',
   }
 ]
 
@@ -31,7 +36,7 @@ function Sider() {
     key: item.path,
     icon: React.createElement(item.icon),
     label: item.title,
-    children: item.children.map((child) => ({
+    children: item.children?.map((child) => ({
       key: item.path + child.path,
       label: child.title,
     }))

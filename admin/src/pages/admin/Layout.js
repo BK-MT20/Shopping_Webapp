@@ -14,6 +14,7 @@ function Layout() {
         <LayoutAntd
           style={{
             padding: '0 24px 24px',
+            height: 'fit-content' 
           }}
         >
           <BreadCrumb />
