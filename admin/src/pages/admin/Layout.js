@@ -1,31 +1,16 @@
 import { Layout as LayoutAntd } from 'antd'
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import { Header, Sider, BreadCrumb } from '../../components'
+import { Header, Sider } from '../../components'
 
 function Layout() {
   return (
     <LayoutAntd>
       <Header />
-
-      <LayoutAntd>
+      <LayoutAntd className='main-content'>
         <Sider />
-
-        <LayoutAntd
-          style={{
-            padding: '0 24px 24px',
-          }}
-        >
-          <BreadCrumb />
-          
-          <LayoutAntd.Content
-            className="site-layout-background"
-            style={{
-              padding: 24,
-              margin: 0,
-              minHeight: 280,
-            }}
-          >
+        <LayoutAntd>
+          <LayoutAntd.Content>
             <Outlet />
           </LayoutAntd.Content>
         </LayoutAntd>

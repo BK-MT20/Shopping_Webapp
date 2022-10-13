@@ -19,14 +19,25 @@
         "object-curly-spacing": [1, "always"],
         "array-bracket-spacing": [1, "always"],
         "block-spacing": [1, "always"],
-        "space-infix-ops": ["error", { "int32Hint": false }],
+        "space-infix-ops": [1, { "int32Hint": false }],
         "arrow-spacing": [1, { "before": true, "after": true }],
         "camelcase": [1, { "properties": "always" }],
         "eqeqeq": [1, "smart"],
         "one-var-declaration-per-line": [1, "always"],
         "new-cap": 2,
         "no-case-declarations": 0,
-        "react/react-in-jsx-scope": "off"
+        "react/react-in-jsx-scope": "off",
+        "no-unused-vars": [1, "all"],
+        "no-multiple-empty-lines": [1, { "max": 1, "maxEOF": 1, "maxBOF": 1 }],
+        "react/prop-types": 1,
+        "comma-dangle": [1, {
+            "arrays": "never",
+            "objects": "only-multiline",
+            "imports": "never",
+            "exports": "never",
+            "functions": "never"
+        }],
+        "comma-spacing": [1, { "before": false, "after": true }]
     },
     "parserOptions": {
         "ecmaVersion": 2018,

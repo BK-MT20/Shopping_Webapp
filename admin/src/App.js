@@ -5,7 +5,7 @@ import {
   Outlet
 } from 'react-router-dom'
 import Layout from './pages/admin/Layout'
-import { OrderDetail, Orders, OrdersHistory } from './pages/admin/orders'
+import { OrderDetail, OrdersList } from './pages/admin/orders'
 
 function App() {
   return (
@@ -13,9 +13,8 @@ function App() {
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route path='orders/' element={<Outlet />}>
-            <Route index element={<Orders />} />
-            <Route path='history' element={<OrdersHistory />} />
-            <Route path='order/:id' element={<OrderDetail />} />
+            <Route index element={<OrdersList />} />
+            <Route path=':orderId' element={<OrderDetail />} />
           </Route>
         </Route>
       </Routes>

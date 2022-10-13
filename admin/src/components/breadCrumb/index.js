@@ -1,23 +1,34 @@
 import { Breadcrumb } from 'antd'
+import { HomeOutlined } from '@ant-design/icons'
 import React from 'react'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { capitalizeFirstLetter } from '../../Helpers'
 
 function BreadCrumb() {
-  let location = useLocation()
-  let paths = location.pathname.split('/')
-  paths.unshift('Home')
+  const location = useLocation()
+  const pathSnippets = location.pathname.split('/').filter((i) => i)
+  const extraBreadcrumbItems = pathSnippets.map((name, index) => {
+    const url = `/${pathSnippets.slice(0, index + 1).join('/')}`
+    return (
+      <Breadcrumb.Item key={url}>
+        <Link to={url}>{capitalizeFirstLetter(name)}</Link>
+      </Breadcrumb.Item>
+    )
+  })
+  const breadcrumbItems = [
+    <Breadcrumb.Item key="home">
+      <Link to="/">
+        <HomeOutlined />
+      </Link>
+    </Breadcrumb.Item>
+  ].concat(extraBreadcrumbItems)
   return (
     <Breadcrumb
       style={{
         margin: '16px 0',
       }}
     >
-      {
-        paths.map(path => (
-          <Breadcrumb.Item key={path}>{capitalizeFirstLetter(path)}</Breadcrumb.Item>
-        ))
-      }
+      {breadcrumbItems}
     </Breadcrumb>
   )
 }
