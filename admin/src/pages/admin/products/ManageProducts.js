@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Tag, Space, Popconfirm, Input, Button, Card, Typography } from 'antd'
+import { Table, Tag, Space, Modal, Input, Button, Card, Typography } from 'antd'
 import axios from 'axios'
 import { DeleteOutlined, SearchOutlined } from '@ant-design/icons'
 import EditButton from './AED-Products/EditButton'
@@ -28,12 +28,12 @@ function ManageProducts() {
           key: item.id,
           index,
         })))
-        console.log(res.data)
+        // console.log(res.data)
       })
       .catch(error => console.log(error))
   }, [])
   const handleChange = (pagination, filters, sorter) => {
-    console.log('Various parameters', pagination, filters, sorter)
+    // console.log('Various parameters', pagination, filters, sorter)
     setFilteredInfo(filters)
     setSortedInfo(sorter)
   }
@@ -41,6 +41,21 @@ function ManageProducts() {
   const clearAll = () => {
     setFilteredInfo({})
     setSortedInfo({})
+  }
+
+  const onDeleteStudent = record => {
+    Modal.confirm({
+      title: 'Are you sure,you want to delete this product?',
+      onOk: () => {
+        axios.delete('http://localhost:3000/data/' + record.id)
+          .then(
+            setDataSource(pre => {
+              console.log(pre, record)
+              return pre.filter(student => student.id !== record.id)
+            })
+          )
+      }
+    })
   }
   const columns = [
     {
@@ -51,16 +66,17 @@ function ManageProducts() {
       filteredValue: filteredInfo.name || null,
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => {
         return (
-          <Input placeholder='Type text here'
+          <Input.Search placeholder='Type text here'
             value={selectedKeys[0]}
             onChange={(e) => {
               setSelectedKeys(e.target.value ? [ e.target.value ] : [])
             }}
             onPressEnter={() => {
-              // console.log(selectedKeys[0])
+              // console.log(selectedKeys)
               confirm()
             }}
-          />
+          /> 
+
         )
 
       },
@@ -134,15 +150,15 @@ function ManageProducts() {
       title: 'Action',
       key: 'action',
       align: 'center',
-      render: () => (
-        <Space size="middle">
-          {/* <EditOutlined style={{ fontSize: '16px', color: '#08c' }} 
-                        
-          /> */}
+      render: (record) => (
+        <Space size="middle" style = {{ gap: '0px' }}>
           <EditButton/>
-          <Popconfirm title="Sure to delete?" okText="Yes" cancelText="No" >
-            <DeleteOutlined style={{ fontSize: '18px', color: 'red' }}/>
-          </Popconfirm>
+          <DeleteOutlined 
+            style={{ fontSize: '18px', color: 'red' }}
+            onClick={() => {
+              onDeleteStudent(record)
+            }} 
+          />
         </Space>
       ),
     }
@@ -181,7 +197,9 @@ function ManageProducts() {
 
           </Space>
 
-          <Table columns={columns} 
+          <Table 
+            bordered
+            columns={columns} 
             dataSource={dataSource} 
             rowClassName={(record, index) => index % 2 === 0 ? 'table-row-light' :  'table-row-dark'}
             pagination={{ pageSize: 10 }}
