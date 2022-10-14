@@ -6,6 +6,17 @@ import { BiChevronsLeft } from "react-icons/bi";
 import { useEffect } from 'react';
 
 const Index = () => {
+
+    const data = [
+        {
+            urlImage: "https://cdn.shopify.com/s/files/1/0591/1350/4958/products/10_d49f949e-99cd-4873-bf56-d45ce90bfec9.jpg?v=1628348069&width=600",
+            title: "Straw Shopeer Bag",
+            price: "$12.00",
+            id: "Straw-Shopeer-Bag",
+            amount: 5,
+        },
+    ]
+
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
@@ -23,11 +34,13 @@ const Index = () => {
             <div id='img-product' class=" flex mt-[110px] w-11/12 m-auto justify-between " >
                 <Filter />
                 <div id='right' class="w-9/12 flex-none ">
-                    <div class="flex justify-between">
-                        <Item a_link="" img_link="https://cdn.shopify.com/s/files/1/0591/1350/4958/products/10_d49f949e-99cd-4873-bf56-d45ce90bfec9.jpg?v=1628348069&width=600" name_product="Straw Shopeer Bag" price_product="$12.00" item="/product4/Straw-Shopeer-Bag" />
-
+                    <div class="grid grid-cols-4 gap-x-6 gap-y-90 ">
+                        {data.map((item, index) => (
+                            <Item item={item} />
+                        )
+                        )
+                        }
                     </div>
-
 
                 </div>
             </div>

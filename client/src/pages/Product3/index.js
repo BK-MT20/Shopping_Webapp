@@ -6,9 +6,103 @@ import { BiChevronsRight } from "react-icons/bi";
 import { useEffect } from 'react';
 
 const Index = () => {
+
+    const data = [
+        {
+            urlImage: "https://cdn.shopify.com/s/files/1/0591/1350/4958/products/26_80a643e6-7781-402f-b813-c85f2fa3400c.jpg?v=1628347185&width=600",
+            title: "Wool-blend jacket",
+            price: "$35.00", 
+            id:  "Wool-blend-jacket",
+            amount: 5,
+        },
+        {
+            urlImage: "https://cdn.shopify.com/s/files/1/0591/1350/4958/products/29_ca458f48-34f9-4a89-9c32-b4066c87bdd2.jpg?v=1628347841&width=600",
+            title: "Ribbed cardigan",
+            price: "$25.00",
+            id:  "Ribbed-cardigan",
+            amount: 5,
+        },
+        {
+            urlImage: "https://cdn.shopify.com/s/files/1/0591/1350/4958/products/36.jpg?v=1628346789&width=600",
+            title: "Jacket De Blouse",
+            price: "$40.00",
+            id: "Jacket-De-Blouse",
+            amount: 5,
+        },
+        {
+            urlImage: "https://cdn.shopify.com/s/files/1/0591/1350/4958/products/1_6256cf3d-6d25-4976-80a4-707131709f5b.jpg?v=1628348039&width=600",
+            title: "Oversized Jacket",
+            price: "$153.00",
+            id: "Oversized-Jacket",
+            amount: 5,
+        },
+
+
+        {
+            urlImage: "https://cdn.shopify.com/s/files/1/0591/1350/4958/products/34.jpg?v=1628347206&width=600",
+            title: "Platform espadrille sandals",
+            price: "$25.00",
+            id:  "Platform-espadrille-sandals",
+            amount: 5,
+        },
+        {
+            urlImage: "https://cdn.shopify.com/s/files/1/0591/1350/4958/products/7_611bbe55-5bb2-4ec6-b25c-de0fdbe6e047.jpg?v=1628347194&width=600",
+            title: "Platform sandals",
+            price: "$35.00",
+            id:  "Platform-sandals",
+            amount: 5,
+        },
+        {
+            urlImage: "https://cdn.shopify.com/s/files/1/0591/1350/4958/products/33_ecbc9a95-9898-48b3-abe6-6aba72aaedcd.jpg?v=1628348151&width=600",
+            title: "Espadrille sandals",
+            price: "$19.00",
+            id: "Espadrille-sandals",
+            amount: 5,
+        },
+        {
+            urlImage: "https://cdn.shopify.com/s/files/1/0591/1350/4958/products/8_63420c57-eb52-4f3d-b637-da02b938fda7.jpg?v=1628347190&width=600",
+            title: "Braided Sandals",
+            price: "$15.00",
+            id: "Braided-Sandals",
+            amount: 5,
+        },
+
+
+
+        {
+            urlImage: "https://cdn.shopify.com/s/files/1/0591/1350/4958/products/prod4_0ada908c-fcf0-410c-8bc1-4d563932167e.jpg?v=1628344923",
+            title: "Black backpack",
+            price: "$350.00",
+            id: "Black-backpack",
+            amount: 5,
+        },
+        {
+            urlImage: "https://cdn.shopify.com/s/files/1/0591/1350/4958/products/prod3_495841bc-e198-405e-86f1-0b2f4349cbbb.jpg?v=1628344922",
+            title: "Gray backpack",
+            price: "$350.00",
+            id: "Gray-backpack",
+            amount: 5,
+        },
+        {
+            urlImage: "https://cdn.shopify.com/s/files/1/0591/1350/4958/products/prod2_a803d9b4-3368-4e29-8c51-9a2c319250fc.jpg?v=1628344023",
+            title: "Mens Gym Bag",
+            price: "$20.00",
+            id: "Mens-Gym-Bag",
+            amount: 5,
+        },
+        {
+            urlImage: "https://cdn.shopify.com/s/files/1/0591/1350/4958/products/7_459cabf1-1a14-4cfc-9c43-758c1005ae13.jpg?v=1628344029",
+            title: "Roller Messenger Bag",
+            price: "$250.00",
+            id: "Roller-Messenger-Bag",
+            amount: 5,
+        },
+    ]
+
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
+
     return (
         <div class="w-full">
             <div class="m-auto text-center">
@@ -22,38 +116,12 @@ const Index = () => {
             <div id='img-product' class=" flex mt-[110px] w-11/12 m-auto justify-between " >
                 <Filter />
                 <div id='right' class="w-9/12 flex-none ">
-                    <div class="flex justify-between">
-                        <Item a_link="" img_link="https://cdn.shopify.com/s/files/1/0591/1350/4958/products/26_80a643e6-7781-402f-b813-c85f2fa3400c.jpg?v=1628347185&width=600" name_product="Wool-blend jacket" price_product="$35.00" item="/product3/Wool-blend-jacket" />
-
-                        <Item a_link="" img_link="https://cdn.shopify.com/s/files/1/0591/1350/4958/products/29_ca458f48-34f9-4a89-9c32-b4066c87bdd2.jpg?v=1628347841&width=600" name_product="Ribbed cardigan" price_product="$25.00" item="/product3/Ribbed-cardigan" />
-
-                        <Item a_link="" img_link="https://cdn.shopify.com/s/files/1/0591/1350/4958/products/36.jpg?v=1628346789&width=600" name_product="Jacket De Blouse" price_product="$40.00" item="/product3/Jacket-De-Blouse" />
-
-                        <Item a_link="" img_link="https://cdn.shopify.com/s/files/1/0591/1350/4958/products/1_6256cf3d-6d25-4976-80a4-707131709f5b.jpg?v=1628348039&width=600" name_product="Oversized Jacket" price_product="$153.00" item="/product3/Oversized-Jacket" />
-
-                    </div>
-
-                    <div class="flex justify-between mt-[90px]">
-
-                        <Item a_link="" img_link="https://cdn.shopify.com/s/files/1/0591/1350/4958/products/34.jpg?v=1628347206&width=600" name_product="Platform espadrille sandals" price_product="$25.00" item="/product3/Platform-espadrille-sandals" />
-
-                        <Item a_link="" img_link="https://cdn.shopify.com/s/files/1/0591/1350/4958/products/7_611bbe55-5bb2-4ec6-b25c-de0fdbe6e047.jpg?v=1628347194&width=600" name_product="Platform sandals" price_product="$35.00" item="/product3/Platform-sandals" />
-
-                        <Item a_link="" img_link="https://cdn.shopify.com/s/files/1/0591/1350/4958/products/33_ecbc9a95-9898-48b3-abe6-6aba72aaedcd.jpg?v=1628348151&width=600" name_product="Espadrille sandals" price_product="$19.00" item="/product3/Espadrille-sandals" />
-
-                        <Item a_link="" img_link="https://cdn.shopify.com/s/files/1/0591/1350/4958/products/8_63420c57-eb52-4f3d-b637-da02b938fda7.jpg?v=1628347190&width=600" name_product="Braided Sandals" price_product="$15.00" item="/product3/Braided-Sandals" />
-                    </div>
-
-                    <div class="flex justify-between mt-[90px]">
-
-                        <Item a_link="" img_link="https://cdn.shopify.com/s/files/1/0591/1350/4958/products/prod4_0ada908c-fcf0-410c-8bc1-4d563932167e.jpg?v=1628344923" name_product="Black backpack" price_product="$350.00" item="/product3/Black-backpack" />
-
-                        <Item a_link="" img_link="https://cdn.shopify.com/s/files/1/0591/1350/4958/products/prod3_495841bc-e198-405e-86f1-0b2f4349cbbb.jpg?v=1628344922" name_product="Gray backpack" price_product="$350.00" item="/product3/Gray-backpack" />
-
-                        <Item a_link="" img_link="https://cdn.shopify.com/s/files/1/0591/1350/4958/products/prod2_a803d9b4-3368-4e29-8c51-9a2c319250fc.jpg?v=1628344023" name_product="Mens Gym Bag" price_product="$20.00" item="/product3/Mens-Gym-Bag" />
-
-                        <Item a_link="" img_link="https://cdn.shopify.com/s/files/1/0591/1350/4958/products/7_459cabf1-1a14-4cfc-9c43-758c1005ae13.jpg?v=1628344029" name_product="Roller Messenger Bag" price_product="$250.00" item="/product3/Roller-Messenger-Bag" />
-
+                    <div class="grid grid-cols-4 gap-x-6 gap-y-90 ">
+                        {data.map((item, index) => (
+                            <Item item={item} />
+                        )
+                        )
+                        }
                     </div>
 
                 </div>

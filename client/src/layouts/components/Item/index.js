@@ -1,14 +1,13 @@
 import { Link } from 'react-router-dom';
-
-const Item = (props) => {
+const Item = ({item}) => {
     return (
-        <div class="w-23/100 flex-none">
+        <div class=" flex-none">
             <div >
-                <Link to={props.item}><img src={props.img_link} alt="image here" /></Link>
+                <Link to={`/product/${item.id}`}  state= {item}   ><img src={item.urlImage} alt="image here" /></Link>
             </div>
             <div class="text-left mt-5 ">
-                <p><Link to={props.item} class="font-medium hover:text-gray-500 transition ease-in-out">{props.name_product}</Link></p>
-                <p>{props.price_product}</p>
+                <p><Link to={`/product/${item.id}`}  state= {item}  class="font-medium hover:text-gray-500 transition ease-in-out">{item.title}</Link></p>
+                <p>{item.price}</p>
             </div>
 
         </div>
