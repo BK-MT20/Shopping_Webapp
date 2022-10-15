@@ -57,7 +57,7 @@ const Index = (props) => {
 			<div class="flex w-[340px] m-auto mt-[30px] justify-between">
 				<p class="flex-none"> <Link to="/">Home</Link> </p>
 				<p class="flex-none  mt-[5px]"> <BiChevronRight /> </p>
-				<p class="flex-none"><Link to="/product1">Products</Link></p>
+				<p class="flex-none"><Link to="/product">Products</Link></p>
 				<p class="flex-none  mt-[5px] "> <BiChevronRight /> </p>
 				<p class="flex-none ">{state.title}</p>
 			</div>
