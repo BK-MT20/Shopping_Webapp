@@ -64,3 +64,57 @@ input[type=number] {
     height: 350px;
   }
 }
+
+/* new add */
+
+.underline-hover-effect {
+  text-decoration: none;
+  display: inline-block;
+  padding-bottom: 0.25rem; /* defines the space between text and underline */
+  position: relative;
+}
+
+.underline-hover-effect::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 0.5px;
+  background-color: rgb(17, 18, 17);
+  transition: width 0.25s ease-out;
+}
+.underline-hover-effect:hover::before {
+  
+  width: 100%;
+}
+
+.context{
+  width:78%;
+  text-align: justify;
+  margin: auto;
+  
+}
+
+.fontBu{
+  font-size: larger;
+  font-weight: 500;
+}
+
+.tabitem{
+  font-size: larger;
+  font-weight: 500;
+  color:rgb(204, 204, 204)
+}
+.tabitem:hover{
+  color: black;
+  transition: 1s;
+
+}
+
+#tabhead {
+  width:50%;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+}
