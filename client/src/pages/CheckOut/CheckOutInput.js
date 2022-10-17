@@ -1,12 +1,17 @@
 import React from 'react'
 
-const CheckOutInput = ({ placeholder }) => {
+const CheckOutInput = ({ name, onChange, value, placeholder, disabled = false }) => {
     return (
         <div>
             <input
-                type="text" className="font-medium px-2 py-3.5 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full"
+                type="text"
+                className="font-medium p-2 border border-gray-300 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full disabled:bg-neutral-100 disabled:text-gray-400"
                 placeholder={placeholder}
+                name={name}
+                onChange={onChange}
                 required
+                disabled={disabled}
+                value={value}
             />
         </div>
     )
