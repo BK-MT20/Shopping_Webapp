@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import Filter from '../../layouts/components/Filter'
-import Item from '../Item'
+import ProducsItem from './ProductsItem'
+
 import { BiChevronRight } from "react-icons/bi";
 import { BiChevronsRight } from "react-icons/bi";
 import { BiChevronsLeft } from "react-icons/bi";
@@ -321,7 +322,7 @@ const Index = () => {
                         <div class="grid grid-cols-4 gap-x-6 gap-y-90 ">
                             {currentData.map((item, index) => (
 
-                                <Item item={item} />
+                                <ProducsItem item={item} />
                             )
                             )
                             }
