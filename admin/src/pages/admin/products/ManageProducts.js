@@ -1,46 +1,68 @@
-import React, { useState, useEffect } from 'react'
-import { Table, Tag, Space, Modal, Input, Button, Card, Typography } from 'antd'
+import React, { useState, useEffect, useRef } from 'react'
+import { Table, Tag, Space, Modal, Input, Button, Card, Typography, Select } from 'antd'
 import axios from 'axios'
 import { DeleteOutlined, SearchOutlined } from '@ant-design/icons'
 import EditButton from './AED-Products/EditButton'
 import './ManageProducts.scss'
 import { ProductHeader } from '../../../components/'
 import AddButton  from './AED-Products/AddButton'
+
+const items = [ 'all', 'shirts', 'pants', 'bags', 'glasses', 'shoes', 'sandals' ]
 function ManageProducts() {
-  // const [searchText, setSearchText] = useState('');
-  // const [searchedColumn, setSearchedColumn] = useState('');
-  // const searchInput = useRef(null);
-  // const handleSearch = (selectedKeys, confirm, dataIndex) => {
-  //   // confirm();
-  //   // console.log(selectedKeys[0])
-  //   // console.log(dataIndex)
-  //   setSearchText(selectedKeys[0]);
-  //   setSearchedColumn(dataIndex);
-  // };
+  const [ rootData, setRootData ] = useState([])
   const [ dataSource, setDataSource ] = useState([])
   const [ filteredInfo, setFilteredInfo ] = useState({})
   const [ sortedInfo, setSortedInfo ] = useState({})
-  useEffect(() => {
-    axios.get('http://localhost:3000/data')
+  const [ filteredName, setFilteredName ] = useState('')
+  const [ inputValue, setInputValue ] = useState('')
+  const [ valueTypeCurrent, setValueTypeCurrent ] = useState('all')
+  // const [ countSelect, setCountSelect ] = useState(1)
+  const count = useRef(0)
+  // const [ editingProduct, setEditingProduct] = useState(null)
+  const fetchData = async () => {
+    await axios.get('http://localhost:3000/data')
       .then(res => {
         setDataSource(res.data.map((item, index) => ({
           ...item,
           key: item.id,
           index,
         })))
-        // console.log(res.data)
+        setRootData(res.data.map((item, index) => ({
+          ...item,
+          key: item.id,
+          index,
+        })))
+        // console.log(res.data, "fdsfs: ", dataSource)
       })
       .catch(error => console.log(error))
+  }
+  useEffect(() => {
+    fetchData()
   }, [])
+  
+  useEffect(() => {
+    if (valueTypeCurrent === 'all') {
+      fetchData()
+      return
+    }
+    const newData = rootData.filter(item => item.type === valueTypeCurrent)
+    setDataSource(newData)
+  }, [ valueTypeCurrent ])
+  
   const handleChange = (pagination, filters, sorter) => {
-    // console.log('Various parameters', pagination, filters, sorter)
+    console.log('Various parameters', pagination, filters, sorter)
+    setFilteredName(filters.name[0])
     setFilteredInfo(filters)
     setSortedInfo(sorter)
   }
 
   const clearAll = () => {
     setFilteredInfo({})
+    setFilteredName('')
     setSortedInfo({})
+    setInputValue('')
+    setValueTypeCurrent('all')
+    // console.log(valueTypeCurrent)
   }
 
   const onDeleteStudent = record => {
@@ -57,22 +79,29 @@ function ManageProducts() {
       }
     })
   }
+
   const columns = [
     {
       title: 'Name',
       dataIndex: 'name',
       key: 'name', 
       align: 'center',
-      filteredValue: filteredInfo.name || null,
+      filteredValue: (filteredInfo.name || [ filteredName ]) || null,
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => {
         return (
           <Input.Search placeholder='Type text here'
+            className="search-name"
             value={selectedKeys[0]}
             onChange={(e) => {
               setSelectedKeys(e.target.value ? [ e.target.value ] : [])
+              setFilteredName(e.target.value ? e.target.value : '')
             }}
-            onPressEnter={() => {
-              // console.log(selectedKeys)
+            // onChange={() => {
+            //   // console.log(selectedKeys)
+            //   // confirm()setFilteredName(e.target.value)
+            //   setFilteredName(e.target.value)
+            // }}
+            onSearch={() => {
               confirm()
             }}
           /> 
@@ -114,7 +143,7 @@ function ManageProducts() {
       align: 'center',
       sortOrder: sortedInfo.columnKey === 'price' ? sortedInfo.order : null,
       sorter: (a, b) => {        
-        return a.price.slice(1) - b.price.slice(1)
+        return a.price - b.price
       }
     },
     {
@@ -151,8 +180,11 @@ function ManageProducts() {
       key: 'action',
       align: 'center',
       render: (record) => (
-        <Space size="middle" style = {{ gap: '0px' }}>
-          <EditButton/>
+        
+        <Space size="middle" style = {{ }}>
+          <EditButton 
+            editProduct = {record}
+          />
           <DeleteOutlined 
             style={{ fontSize: '18px', color: 'red' }}
             onClick={() => {
@@ -171,6 +203,58 @@ function ManageProducts() {
         subtitle='All products'
 
       />
+      <Card style={{
+        margin: '24px 24px 0 24px',
+      }}>
+        <Space
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between'
+          }}>
+          <Space>
+            <Select 
+              showSearch
+              // placeholder="Select a type"
+              defaultValue="all"
+              style={{ width: 130 }} 
+              onChange={(value) => setValueTypeCurrent(value)}
+              value = {valueTypeCurrent}
+            >
+              {
+                items.map((item, index) => {
+                  return <Select.Option key={index} value={item}></Select.Option>
+                })
+              }
+            </Select>
+          </Space>
+          <Input.Search
+            className="search-name"
+            placeholder="Search here..."
+            value = {inputValue}  
+            onChange={(e) => {
+              // console.log(e)
+              setFilteredName(e.target.value)
+              setInputValue(e.target.value)
+              // console.log(filteredName)
+            }}
+            onSearch={(value) => {
+              setInputValue(value)
+              setFilteredName(value)
+            }}
+          />
+          <Space>
+            <Button 
+              className='reset-btn' 
+              onClick={clearAll}
+            >
+              Reset filters
+            </Button>
+            <AddButton/>
+          </Space>  
+        </Space>
+
+      </Card>
+
       <Space
         style= {{           
           padding: '24px' }}
@@ -178,22 +262,11 @@ function ManageProducts() {
         <Card>
           <Space
             style= {{           
-              display: 'flex',
-              justifyContent: 'space-between'
             }}
           >
             <Typography.Title level={4}>
               Table
             </Typography.Title>
-            <Space>
-              <Button 
-                className='reset-btn' 
-                onClick={clearAll}
-              >
-                Reset filters
-              </Button>
-              <AddButton/>
-            </Space>
 
           </Space>
 

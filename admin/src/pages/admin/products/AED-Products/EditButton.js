@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useState, useEffect }from 'react'
 import { Button } from 'antd'
 import { EditOutlined } from '@ant-design/icons'
-function EditButton() {
+import AEProduct from './AEProducts'
+const EditButton = (editProduct) => {
   return (
     <Button 
-      href="/manage-products/AEProducts/:Edit" 
+      onClick={() => {
+        // console.log(editProduct)
+      }} 
+      href = {'/manage-products/AEProducts/:Edit/' + editProduct.editProduct.id}
       type="link" icon={<EditOutlined/> } 
       size="large"
     >
     </Button>
   )
 }
-
 export default EditButton
