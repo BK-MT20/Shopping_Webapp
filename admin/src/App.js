@@ -23,7 +23,7 @@ function App() {
           <Route path='manage-products' element={<ManageProducts/>} />
           <Route path='manage-products/AEProducts' element={<AEProducts/>} />
           <Route path='manage-products/AEProducts/:Add' element={<AEProducts/>} />
-          <Route path='manage-products/AEProducts/:Edit' element={<AEProducts/>} />
+          <Route path='manage-products/AEProducts/:Edit/:id' element={<AEProducts/>} />
 
         </Route>
 
