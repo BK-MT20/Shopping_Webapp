@@ -369,7 +369,7 @@ const Navbar = () => {
             ]
         },
         {
-            title: <Link to="/products">Products</Link> ,
+            title: <Link to="/product">Products</Link> ,
             moreInfomation: moreInfoProductsNavItem,
             fullWidth: true,
             children: [
