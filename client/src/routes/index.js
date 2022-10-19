@@ -13,7 +13,7 @@ const publicRoutes = [
     { path: "/signin", component: SignIn, layout: Login },
     { path: "/signup", component: SignUp, layout: Login },
     { path: "/checkout", component: CheckOut, layout: DefaultLayout },
-    { path: "/products", component: Products, layout: DefaultLayout },
+    { path: "/product", component: Products, layout: DefaultLayout },
     { path: "/product/:id", component: ProductDetail, layout: DefaultLayout },
 ]
 
