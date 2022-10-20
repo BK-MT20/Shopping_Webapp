@@ -1,0 +1,22 @@
+.img-carousel {
+    width:100%;
+    height:44rem;
+}
+
+.ant-carousel {
+    width:50% !important;
+}
+.ant-input-affix-wrapper, .ant-input{
+    border-radius: 10px !important
+}
+.login-container{
+    display:flex;
+    .right-container{
+        background-color: #f5f5f5;
+        width: 50%;
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+
+    }
+}
