@@ -1,4 +1,4 @@
-import { ShoppingCartOutlined,DesktopOutlined } from '@ant-design/icons'
+import { ShoppingCartOutlined,DesktopOutlined,LineChartOutlined } from '@ant-design/icons'
 import React from 'react'
 import { Layout, Menu } from 'antd'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -24,6 +24,12 @@ const items = [
     title: 'Manage Products',
     icon: DesktopOutlined,
     path: '/manage-products',
+  },
+  {
+    title: 'Manage Statistic',
+    icon: LineChartOutlined,
+    path: '/manage-statistic',
+    
   }
 ]
 
