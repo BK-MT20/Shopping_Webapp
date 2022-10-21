@@ -1,3 +1,4 @@
+import { Statistic } from 'antd'
 import React from 'react'
 import {
   Route,
@@ -10,6 +11,7 @@ import { OrderDetail, OrdersList } from './pages/admin/orders'
 import { Login, Register, ForgotPW } from './pages/auth'
 import { ManageProducts } from './pages/admin/products'
 import AEProducts from './pages/admin/products/AED-Products/AEProducts'
+import { Statisticmonth, Items } from './pages/admin/statistic'
 function App() {
   return (
     <BrowserRouter>
@@ -25,7 +27,13 @@ function App() {
           <Route path='manage-products' element={<ManageProducts/>} />
           <Route path='manage-products/AEProducts' element={<AEProducts/>} />
           <Route path='manage-products/AEProducts/:Add' element={<AEProducts/>} />
-          <Route path='manage-products/AEProducts/:Edit/:id' element={<AEProducts/>} />
+          <Route path='manage-products/AEProducts/:Edit' element={<AEProducts/>} />
+          <Route path='manage-statistic' element={<Statisticmonth/>} />
+          <Route path='manage-statistic/monthstatistic' element={<Statisticmonth/>} />
+        
+          <Route path='manage-statistic/itemsstatistic' element={<Items/>} />
+          {/* <Route path='manage-statistic/' element={<Items/>} /> */}
+
         </Route>
 
       </Routes>
