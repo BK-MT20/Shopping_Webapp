@@ -6,16 +6,37 @@ const Role = db.role
 const verifyToken = (req, res, next) => {
     let accessToken = req.cookies?.act
 
-    console.log(req.cookies);
-
     if (!accessToken) {
-        return res.status(403).send({ message: 'No token provided!' })
+        return res.status(402).send({ message: 'No token provided!' })
     }
 
     jwt.verify(accessToken, process.env.ACCESS_SECRET_KEY, (err, decoded) => {
-        console.log('verify', decoded, err);
-        if (err) {
-            return res.status(401).send({ message: 'Unauthorized!' })
+        if (err || !decoded?.id) {
+            let refreshToken = req.cookies?.rft
+            if (!refreshToken) {
+                return res.status(401).send({ message: 'Unauthorized!', error: err })
+            }
+
+            jwt.verify(refreshToken, process.env.REFRESH_SECRET_KEY, (err, decoded) => {
+                if (err || !decoded?.id) {
+                    return res.status(401).send({ message: 'Unauthorized!', error: err })
+                }
+
+                var accessToken = jwt.sign({ id: decoded.id }, process.env.ACCESS_SECRET_KEY, {
+                    expiresIn: `${process.env.ACCESS_TOKEN_EXPIRESIN}m`
+                })
+
+                res.cookie('act', accessToken, {
+                    httpOnly: true,
+                    sameSite: 'strict',
+                    secure: true,
+                    path: '/',
+                    maxAge: process.env.ACCESS_TOKEN_EXPIRESIN*1000
+                })
+                req.userId = decoded.id
+                next()
+            })
+            return
         }
         req.userId = decoded.id
         next()
@@ -37,7 +58,7 @@ const isAdmin = (req, res, next) => {
                 return;
             }
 
-            if (role.name === 'admin') {
+            if (role?.name === 'admin') {
                 next()
                 return
             }

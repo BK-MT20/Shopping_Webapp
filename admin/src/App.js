@@ -33,7 +33,6 @@ function App() {
         
           <Route path='manage-statistic/itemsstatistic' element={<Items/>} />
           {/* <Route path='manage-statistic/' element={<Items/>} /> */}
-
         </Route>
 
       </Routes>

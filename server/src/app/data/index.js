@@ -9,6 +9,7 @@ db.mongoose = mongoose
 
 db.user = require('../models/domain/user.model')
 db.role = require('../models/domain/role.model')
+db.order = require('../models/domain/order.model')
 
 db.ROLES = ['user', 'admin']
 
