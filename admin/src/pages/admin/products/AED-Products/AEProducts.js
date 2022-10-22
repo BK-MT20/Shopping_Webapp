@@ -5,7 +5,7 @@ import axios from 'axios'
 import { useNavigate, useLocation, useParams } from 'react-router-dom'
 import { ProductHeader } from '../../../../components/'
 const AEProducts = () => {
-  const [ form ] = Form.useForm();
+  const [ form ] = Form.useForm()
   let { id } = useParams()
   const navigate = useNavigate()
   let location = useLocation()

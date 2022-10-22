@@ -1,6 +1,6 @@
 import React from 'react'
 import { ArrowLeftOutlined } from '@ant-design/icons'
-import { Button,Form,Input,Divider,InputNumber } from 'antd'
+import { Button, Form, Input, Divider, InputNumber } from 'antd'
 
 function AEProducts() {
   return (
@@ -48,7 +48,7 @@ function AEProducts() {
                         required: true,
                         whitespace: true,
                         message: 'Please input your image.',
-                      },
+                      }
                     ]}
                     noStyle
                   >
@@ -85,7 +85,6 @@ function AEProducts() {
 
         <Divider style={{ backgroundColor: '#d8d8d8' }}>Price field</Divider>
 
-
         <Form.Item
           name="price"
           rules={[ { required: true, message: 'Please input your price!' } ]}
@@ -93,7 +92,7 @@ function AEProducts() {
           <Input placeholder="Price..." />
         </Form.Item>
 
-        <Divider style={{ backgroundColor: '#d8d8d8', }}>Colors field</Divider>
+        <Divider style={{ backgroundColor: '#d8d8d8' }}>Colors field</Divider>
 
         <Form.List
           name="colors"
@@ -115,7 +114,7 @@ function AEProducts() {
                         required: true,
                         whitespace: true,
                         message: 'Please input your color.',
-                      },
+                      }
                     ]}
                     noStyle
                   >

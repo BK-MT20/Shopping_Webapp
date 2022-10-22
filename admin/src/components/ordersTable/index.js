@@ -19,7 +19,7 @@ const filterOptions = [
     label: 'Confirmed',
     value: 'confirmed',
     func: i => i.status === 'confirmed'
-  },
+  }
 ]
 
 function OrdersTable({ columns, data, loading, hasHeader, onSearch, onRowClick = () => {} }) {

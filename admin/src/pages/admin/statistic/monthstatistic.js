@@ -1,37 +1,16 @@
 
-import {Card, Grid, Statistic,Table,Space,Button, Radio,Col,Form} from 'antd';
+import { Card,  Statistic, Table, Button } from 'antd'
 import './month.scss'
-<script src="https://unpkg.com/recharts/umd/Recharts.min.js"></script>
-import {  ArrowLeftOutlined} from '@ant-design/icons'
-import React , {Component,useState,activateLasers  } from 'react'
+import React from 'react'
 import { SttHeader } from '../../../components/'
-import axios from 'axios'
-import { createRoot } from 'react-dom/client';
-import { DownloadOutlined } from '@ant-design/icons';
-import PropTypes from 'prop-types'
-import {items} from '../../../components'
 import './itemsstatistic.js'
-
-// import {
-//   Chart as ChartJS,
-//   CategoryScale,
-//   LinearScale,
-//   BarElement,
-//   Title,
-//   Tooltip,
-//   Legend,
-// } from 'chart.js';
-
-
-
 ChartJS.register(
   CategoryScale,
   LinearScale,
- // BarElement,
   Title,
   Tooltip,
   Legend
-);
+)
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -40,12 +19,9 @@ import {
   LineElement,
   Title,
   Tooltip,
-  Legend,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
-import { data } from './chart.js';
-import Items from './itemsstatistic.js';
-//import {faker} from 'faker';
+  Legend
+} from 'chart.js'
+import { Line } from 'react-chartjs-2'
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -54,53 +30,46 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend
-);
-
-
-
-function Statisticmonth(onSearch){
-  
-  const [size, setSize] = useState('large');
-      const options = {
-        responsive: true,
-        interaction: {
-          mode: 'index' ,
-          intersect: false,
-        },
-        stacked: false,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Revenue of Month',
-          },
-        },
-        scales: {
-          y: {
-            type: 'linear' ,
-            display: true,
-            position: 'left' ,
-          }
-          
+)
+function Statisticmonth() {
+  const options = {
+    responsive: true,
+    interaction: {
+      mode: 'index',
+      intersect: false,
+    },
+    stacked: false,
+    plugins: {
+      title: {
+        display: true,
+        text: 'Revenue of Month',
+      },
+    },
+    scales: {
+      y: {
+        type: 'linear',
+        display: true,
+        position: 'left',
+      }
         
-        },
-      };
+    },
+  }
       
-      const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July','August','September','October'];
+  const labels = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October' ]
       
-      const dataChart = {
-        labels,
-        datasets: [
-          {
-            label: 'Revenue',
-            data:[1000,5000,3000,3000,4000,2000,8000,5000,6000,7000],
-            borderColor: 'rgb(255, 99, 132)',
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            yAxisID: 'y',
-          },
+  const dataChart = {
+    labels,
+    datasets: [
+      {
+        label: 'Revenue',
+        data:[ 1000, 5000, 3000, 3000, 4000, 2000, 8000, 5000, 6000, 7000 ],
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        yAxisID: 'y',
+      }
 
-        ],
-      };
-      
+    ],
+  }
   
   const columns = [
     {
@@ -109,7 +78,6 @@ function Statisticmonth(onSearch){
       key: 'stt',
       width:100,
       align: 'center',
-      
      
     },
     {
@@ -124,11 +92,11 @@ function Statisticmonth(onSearch){
       dataIndex: 'revenue',
       key: 'revenue',
       align: 'center',
-    },
+    }
     
-  ];
+  ]
     
-  const data_revenue = [
+  const datarevenue = [
     {
      
       stt: '1',
@@ -188,58 +156,53 @@ function Statisticmonth(onSearch){
       time: '10/2022',
       revenue: 7000,
       
-    },
-  ];
+    }
+  ]
   return(
     
-      <>
-        <SttHeader 
-          title='Manage Revenue ' 
-          subtitle='Month Revenue'
-        />
+    <>
+      <SttHeader 
+        title='Manage Revenue ' 
+        subtitle='Month Revenue'
+      />
         
-        <div className="container">
-          <div className="site-statistic-demo-card">
+      <div className="container">
+        <div className="site-statistic-demo-card">
          
-            <div className='choose'>
-              <div className='choose1'>Status:</div>
-              <div className="border1">
+          <div className='choose'>
+            <div className='choose1'>Status:</div>
+            <div className="border1">
               <Button href="/manage-statistic/monthstatistic" type="text" >Revenue by month</Button></div>
-              <Button  href="/manage-statistic/itemsstatistic" >Revenue by items </Button></div>
-              <Card>
-                <Statistic className='reveneannual'
-                  title="Revenue this Month"
-                  value={100000}
-                  precision={2}
-                  valueStyle={{
-                    color: '#cf1322',
-                  }}
-                  style={{
-                    width:'650px'
+            <Button  href="/manage-statistic/itemsstatistic" >Revenue by items </Button></div>
+          <Card>
+            <Statistic className='reveneannual'
+              title="Revenue this Month"
+              value={100000}
+              precision={2}
+              valueStyle={{
+                color: '#cf1322',
+              }}
+              style={{
+                width:'650px'
                     
-                  }}
-                />
+              }}
+            />
           </Card>
-         
      
         </div>
         <div className='Table-month'>
           <div className='headeroftable'>Table</div>        
-          <Table columns={columns} dataSource={data_revenue} />
+          <Table columns={columns} dataSource={datarevenue} />
         </div>
         <div className='Chart'> 
           <div className='headerofchart'>Chart</div> 
           <div className='linechart'>
-          <Line options={options} data={dataChart} />
+            <Line options={options} data={dataChart} />
           </div>
-          </div>
-          </div>
+        </div>
+      </div>
         
-      </>
-)
-
+    </>
+  )
 }
-
-
-
 export default Statisticmonth
