@@ -23,7 +23,7 @@ class AuthController {
                 return
             }
     
-            Role.find(
+            Role.findOne(
                 { name: req.body.role }
                 , (err, role) => {
                     if (err) {
@@ -73,37 +73,33 @@ class AuthController {
             }
     
             var accessToken = jwt.sign({ id: user.id }, process.env.ACCESS_SECRET_KEY, {
-                expiresIn: '5m'
+                expiresIn: `${process.env.ACCESS_TOKEN_EXPIRESIN}m`
             })
     
-            // var refreshToken = jwt.sign({ id: user.id }, process.env.REFRESH_SECRET_KEY, {
-            //     expiresIn: '1d'
-            // })
+            var refreshToken = jwt.sign({ id: user.id }, process.env.REFRESH_SECRET_KEY, {
+                expiresIn: `${process.env.REFRESH_TOKEN_EXPIRESIN}m`
+            })
     
             res
+                .status(202)
                 .cookie('act', accessToken, {
                     httpOnly: true,
-                    sameSite: 'None',
-                    secure: false,
-                    maxAge: 5*60*1000
+                    sameSite: 'strict',
+                    secure: true,
+                    path: '/',
+                    maxAge: process.env.ACCESS_TOKEN_EXPIRESIN*1000
                 })
-                // .cookie('rft', refreshToken, {
-                //     httpOnly: true,
-                //     sameSite: 'None',
-                //     secure: false,
-                //     maxAge: 24*60*60*1000
-                // })
-    
-    
-            // var authorities = user.roles.map(role => `ROLE_${role.name.toUpperCase()}`)
-            res.status(200).send({
-                // id: user.id,
-                // username: user.username,
-                // email: user.email,
-                // roles: authorities,
-                accessToken: accessToken,
-                expiresIn: 5*60
-            })
+                .cookie('rft', refreshToken, {
+                    httpOnly: true,
+                    sameSite: 'strict',
+                    secure: true,
+                    path: '/',
+                    maxAge: process.env.REFRESH_TOKEN_EXPIRESIN*1000
+                })
+                .send({
+                    accessToken: accessToken,
+                    expiresIn: process.env.ACCESS_TOKEN_EXPIRESIN + 'm'
+                })
         })
     }
 }

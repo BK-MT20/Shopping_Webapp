@@ -19,13 +19,13 @@ const filterOptions = [
     label: 'Confirmed',
     value: 'confirmed',
     func: i => i.status === 'confirmed'
-  },
+  }
 ]
 
 function OrdersTable({ columns, data, loading, hasHeader, onSearch, onRowClick = () => {} }) {
   const [ form ] = Form.useForm()
   const [ searching, setSearching ] = useState(false)
-  const [filter, setFilter]=useState(filterOptions[0])
+  const [ filter, setFilter ] = useState(filterOptions[0])
   
   const onFinish = (values) => {
     // console.log(values)
@@ -34,19 +34,18 @@ function OrdersTable({ columns, data, loading, hasHeader, onSearch, onRowClick =
   }
 
   const onReset = () => {
-    form.resetFields();
+    form.resetFields()
   }
 
-  const onChangeFilter = ({ target: { value } })=>{
+  const onChangeFilter = ({ target: { value } }) => {
     var filter = filterOptions.find(i => i.value === value)
     filter ? setFilter(filter) : setFilter(filterOptions[0])
   }
-  
 
   return (
     <>
-    {
-      hasHeader && 
+      {
+        hasHeader && 
       <Card style={{
         marginBottom: '18px'
       }}>
@@ -63,7 +62,6 @@ function OrdersTable({ columns, data, loading, hasHeader, onSearch, onRowClick =
                 optionType='button'
                 onChange={onChangeFilter}
               ></Radio.Group>
-
 
             </Form.Item>
 
@@ -107,7 +105,7 @@ function OrdersTable({ columns, data, loading, hasHeader, onSearch, onRowClick =
           </Col>
         </Form>
       </Card>
-    }
+      }
 
       <Card>
         <Row justify='space-between'>
@@ -133,7 +131,7 @@ function OrdersTable({ columns, data, loading, hasHeader, onSearch, onRowClick =
           bordered
           loading={loading}
           columns={columns}
-          dataSource={data?.filter(filter.func)}
+          dataSource={data.filter(filter.func)}
           onRow={(record, rowIndex) => {
             return {
               onClick: event => onRowClick(record, rowIndex), // click row
