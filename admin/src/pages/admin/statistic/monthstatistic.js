@@ -3,7 +3,6 @@ import { Card,  Statistic, Table, Button } from 'antd'
 import './month.scss'
 import React from 'react'
 import { SttHeader } from '../../../components/'
-import './itemsstatistic.js'
 ChartJS.register(
   CategoryScale,
   LinearScale,
