@@ -53,5 +53,10 @@
     },
     "globals": {
         "arguments": true
+    },
+    "settings": {
+        "react": {
+          "version": "detect"
+        }
     }
 }

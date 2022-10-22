@@ -1,8 +1,8 @@
 import { Space } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getOrdersData, getProductsData } from '../../../api'
 import { OrderHeader, OrdersTable } from '../../../components'
+import axios from '../../../api'
 
 const columns = [
   {
@@ -28,21 +28,28 @@ function OrderDetail() {
   const { orderId } = useParams()
   const [ order, setOrder ] = useState(null)
   const [ loading, setLoading ] = useState(true)
-  const[ data, setData ] = useState([])
+  const [ data, setData ] = useState([])
   
   // const onRowClick = (record, rowIndex) => {
   //   navigate(`/pro/${record.id}`)
   // }
 
   useEffect(() => {
-    var order = getOrdersData(orderId)
-    setData(order.products.map((p, index) => ({
-      ...p,
-      ...getProductsData(p.id),
-      key: `order-${p.id}-${index}`,
-    })))
-    setOrder(order)
-    setLoading(false)
+    axios.post('/order/getOrder', { id: orderId })
+      .then(res => {
+        console.log(res)
+        setData(res.data.products.map((p, index) => ({
+          ...p,
+          // ...getProductsData(p.id),
+          key: `order-${p.id}-${index}`,
+        })))
+        setOrder(res.data)
+        setLoading(false)
+      })
+      .catch(e => {
+        console.log(e)
+        setLoading(false)
+      })
   }, [])
 
   const props = {

@@ -1,4 +1,4 @@
-import { ShoppingCartOutlined,DesktopOutlined } from '@ant-design/icons'
+import { ShoppingCartOutlined, DesktopOutlined } from '@ant-design/icons'
 import React from 'react'
 import { Layout, Menu } from 'antd'
 import { useLocation, useNavigate } from 'react-router-dom'
