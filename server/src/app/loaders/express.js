@@ -9,11 +9,12 @@ const route = require('../routes')
 
 module.exports = async (app) => {
 
-    app.use(morgan('combined'));
+    app.use(morgan('dev'));
 
-    // config cors
-    const corsOptions = {}
-    app.use(cors(corsOptions))
+    app.use(cors({
+        origin: 'http://localhost:3000',
+        credentials: true
+    }))
 
     app.use(cookieParser())
 

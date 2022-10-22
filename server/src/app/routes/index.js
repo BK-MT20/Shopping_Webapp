@@ -1,4 +1,5 @@
 const authRouter = require('./auth')
+const orderRouter = require('./order')
 
 const route = app => {
     app.use((req, res, next) => {
@@ -10,6 +11,7 @@ const route = app => {
     })
 
     app.use('/api/auth', authRouter)
+    app.use('/api/order', orderRouter)
 }
 
 module.exports = route
