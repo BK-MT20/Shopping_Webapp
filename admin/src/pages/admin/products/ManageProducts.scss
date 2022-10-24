@@ -1,3 +1,11 @@
+.product-table{
+    td:nth-child(2){
+        display:grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        // align-items:center
+    
+    }
+}
 .table-row-light {
     background-color: #ffffff;
 }
@@ -6,20 +14,10 @@
 }
 thead[class*="ant-table-thead"] th{
     background-color:#2658a2 !important;
+    // background-color:#001529 !important;
     color: white !important; 
     font-weight: bold;
     border: 1px solid white;
     text-align: center;
   }
 
-
-td:nth-child(2){
-    display:grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    // align-items:center
-
-}
-// .reset-btn,.add-btn {
-//     float:right;
-//     margin-bottom:5px;
-// }

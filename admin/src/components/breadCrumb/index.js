@@ -6,15 +6,13 @@ import { capitalizeFirstLetter } from '../../Helpers'
 
 function BreadCrumb() {
   const location = useLocation()
-  let pos = location.pathname.indexOf(':')
+  let pos = location.pathname.indexOf('Edit/')
   // = location.pathname.split('/').filter((i) => i)
   let pathSnippets
   if(pos !== -1) {
-    let str1 = location.pathname.slice(0, pos)
-    let str2 = location.pathname.slice(pos + 1)  
-    let temp = str1.concat(str2)
-    pathSnippets = temp.split('/').filter((i) => i)
-    // console.log(paths)
+    let str1 = location.pathname.slice(0, pos + 4)
+    pathSnippets = str1.split('/').filter((i) => i)
+    // console.log(pathSnippets)
   } else{
     pathSnippets = location.pathname.split('/').filter((i) => i)
   }

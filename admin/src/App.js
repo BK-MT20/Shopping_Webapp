@@ -26,8 +26,12 @@ function App() {
           <Route path='/' element={<Statisticmonth/>} />
           <Route path='manage-products' element={<ManageProducts/>} />
           <Route path='manage-products/AEProducts' element={<AEProducts/>} />
-          <Route path='manage-products/AEProducts/:Add' element={<AEProducts/>} />
-          <Route path='manage-products/AEProducts/:Edit' element={<AEProducts/>} />
+          <Route path='manage-products/Add' element={<AEProducts/>} />
+          <Route path='manage-products/Edit/:id' element={<AEProducts/>} />
+          { /* <Route path='manage-products/' element={<ManageProducts/>} >
+          <Route path='Add' element={<AEProducts/>} />
+          <Route path='Edit/:id' element={<AEProducts/>} />
+          </Route> */ }
           <Route path='manage-statistic' element={<Statisticmonth/>} />
           <Route path='manage-statistic/monthstatistic' element={<Statisticmonth/>} />
         

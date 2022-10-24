@@ -1,7 +1,9 @@
 import React, { useState, useEffect }from 'react'
 import { ArrowLeftOutlined } from '@ant-design/icons'
 import { Button, Form, Input, Divider, InputNumber, Modal, Card } from 'antd'
-import axios from 'axios'
+// import axios from '../../../../api'
+import axios from '../../../../api'
+
 import { useNavigate, useLocation, useParams } from 'react-router-dom'
 import { ProductHeader } from '../../../../components/'
 const AEProducts = () => {
@@ -11,12 +13,13 @@ const AEProducts = () => {
   let location = useLocation()
   // console.log(location.pathname) 
   let paths = location.pathname.split('/')
-  let type = paths[paths.length - 1].slice(1)
+  console.log(paths)
+  let type = paths[paths.length - 1]
   let [ editValue, setEditValue ]  = useState ({})
 
   async function fetchData() {
     let response = await axios.get (
-      'http://localhost:3000/data/' + id
+      'product/' + id
     )
       .catch(error => console.log(error))
 
@@ -29,7 +32,7 @@ const AEProducts = () => {
     if(type !== 'Add') {
       fetchData()
     }
-  }, [ ])  
+  }, [])  
 
   useEffect(() => {
     form.setFieldsValue({
@@ -53,7 +56,7 @@ const AEProducts = () => {
   }
   const onFinish = (values) => {
     if(type === 'Add') {
-      axios.post('http://localhost:3000/data', { 
+      axios.post('/product/createProduct', { 
         name: values.name,
         image: values.image,
         price: values.price,
@@ -66,7 +69,7 @@ const AEProducts = () => {
           success()
         })
     }else{
-      axios.put('http://localhost:3000/data/' + id, {
+      axios.put('product/' + id, {
         name: values.name,
         image: values.image,
         price: values.price,
@@ -75,7 +78,7 @@ const AEProducts = () => {
         type: values.type
       })
         .then(res => {
-          console.log(values)
+          console.log(res)
         })
         .catch(error => {
           this.setState({ errorMessage: error.message })

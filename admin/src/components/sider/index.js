@@ -56,6 +56,7 @@ function Sider() {
   return (
     <Layout.Sider width={200} className="site-layout-background">
       <Menu
+        theme="dark"
         mode="inline"
         // defaultSelectedKeys={[ location.pathname ]}
         // defaultOpenKeys={[ '\\' + paths[1] ]}
