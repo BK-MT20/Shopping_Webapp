@@ -4,7 +4,7 @@ import { PlusOutlined } from '@ant-design/icons'
 function AddButton() {
   return (
     <Button 
-      href="/manage-products/AEProducts/:Add" 
+      href="/manage-products/Add" 
       type="primary" icon={<PlusOutlined/>} 
       className='add-btn' 
       size="medium"

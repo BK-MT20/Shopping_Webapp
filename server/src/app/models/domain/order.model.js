@@ -16,7 +16,6 @@ const Order = mongoose.model(
     }, { timestamps: true })
         .method('toClient', function() {
             var obj = this.toObject();
-        
             //Rename fields
             obj.id = obj._id;
             delete obj._id;

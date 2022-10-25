@@ -6,10 +6,11 @@
 .ant-carousel {
     width:50% !important;
 }
-.ant-input-affix-wrapper, .ant-input{
-    border-radius: 10px !important
-}
+
 .login-container{
+    .ant-input-affix-wrapper, .ant-input{
+        border-radius: 10px !important
+    }
     display:flex;
     .right-container{
         background-color: #f5f5f5;

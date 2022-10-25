@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Table, Tag, Space, Modal, Input, Button, Card, Typography, Select } from 'antd'
-import axios from 'axios'
+import axios from '../../../api'
 import { DeleteOutlined, SearchOutlined } from '@ant-design/icons'
 import EditButton from './AED-Products/EditButton'
 import './ManageProducts.scss'
@@ -17,10 +17,10 @@ function ManageProducts() {
   const [ inputValue, setInputValue ] = useState('')
   const [ valueTypeCurrent, setValueTypeCurrent ] = useState('all')
   // const [ countSelect, setCountSelect ] = useState(1)
-  const count = useRef(0)
+  // const count = useRef(0)
   // const [ editingProduct, setEditingProduct] = useState(null)
   const fetchData = async () => {
-    await axios.get('http://localhost:3000/data')
+    await axios.get('/product/getAllProduct')
       .then(res => {
         setDataSource(res.data.map((item, index) => ({
           ...item,
@@ -69,7 +69,7 @@ function ManageProducts() {
     Modal.confirm({
       title: 'Are you sure,you want to delete this product?',
       onOk: () => {
-        axios.delete('http://localhost:3000/data/' + record.id)
+        axios.delete('product/' + record.id)
           .then(
             setDataSource(pre => {
               console.log(pre, record)
@@ -137,7 +137,7 @@ function ManageProducts() {
       
     },
     {
-      title: 'Price',
+      title: 'Price ($)',
       dataIndex: 'price',
       key: 'price',
       align: 'center',
@@ -272,6 +272,7 @@ function ManageProducts() {
 
           <Table 
             bordered
+            className="product-table"
             columns={columns} 
             dataSource={dataSource} 
             rowClassName={(record, index) => index % 2 === 0 ? 'table-row-light' :  'table-row-dark'}
