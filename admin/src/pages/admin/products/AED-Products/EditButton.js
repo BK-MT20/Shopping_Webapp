@@ -8,7 +8,7 @@ const EditButton = (editProduct) => {
       onClick={() => {
         // console.log(editProduct)
       }} 
-      href = {'/manage-products/AEProducts/:Edit/' + editProduct.editProduct.id}
+      href = {'/manage-products/Edit/' + editProduct.editProduct.id}
       type="link" icon={<EditOutlined/> } 
       size="large"
     >
