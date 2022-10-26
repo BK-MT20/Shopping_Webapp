@@ -26,3 +26,7 @@
 .page-content {
   padding: 24px 24px 0;
 }
+
+.ant-popover-inner-content {
+  padding: 0;
+}
