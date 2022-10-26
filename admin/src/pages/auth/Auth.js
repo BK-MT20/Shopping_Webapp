@@ -1,9 +1,54 @@
 import React from 'react'
+import axios from '../../api'
+import { message } from 'antd'
 
-function Auth() {
-  return (
-    <div>Auth</div>
-  )
+const login = (values) => {
+  return axios.post('/auth/signin', {
+    username: values.username,
+    password: values.password
+  })
+    .then(res => {
+      console.log(res)
+      if(res.data.accessToken) {
+        localStorage.setItem('admin', JSON.stringify(res.data))
+      }
+    }) .catch(err => {
+      console.log(err)
+      if(err.response.status === 500) {
+        message.error('Internal Server Error')
+
+      }
+      if (err.response.status === 401) {
+        message.error('Password is wrong')
+      }
+      if (err.response.status === 404) {
+        message.error('User not found')
+
+      }
+    })
 }
 
-export default Auth
+const logout = () => {
+  localStorage.removeItem('admin')
+}
+
+const register = (values) => {
+  return axios.post('/auth/signup', {
+    username: values.username,
+    email : values.email,
+    password: values.password,
+  })
+}
+const getCurrentUser = () => {
+  return JSON.parse(localStorage.getItem('admin'))
+}
+
+const authService = { 
+  login,
+  logout,
+  register,
+  getCurrentUser
+
+}
+
+export default authService  
