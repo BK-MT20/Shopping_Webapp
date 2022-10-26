@@ -1,11 +1,43 @@
-import React from 'react'
-import { Typography, Button, Form, Input, Card } from 'antd'
+import React, { useState } from 'react'
+import { Typography, Button, Form, Input, Card, message } from 'antd'
 import { LockOutlined, UserOutlined, MailOutlined } from '@ant-design/icons'
+// import axios from '../../api'
+import authService from './Auth'
+import { useNavigate } from 'react-router-dom'
 
 const { Title } = Typography
 import UI from './UI'
 
 const Register = () => {
+  const [ form ] = Form.useForm()
+  const [ username, setUsername ] = useState('')
+  const [ email, setEmail ] = useState('')
+  const [ password, setPassword ] = useState('')
+  const [ confirmPassword, setcConfirmPassword ] = useState('')
+  const navigate = useNavigate()
+  const onFinish =  (values) => {
+    try{
+      authService.register(values)
+        .then((res) => {
+          console.log(res)
+          if(res.status === 200) {
+            navigate('/login') 
+            window.location.reload()
+          }
+
+        }, err => {
+          if(err.response.status === 500) {
+            message.error('Internal Server Error')
+
+          }
+          if (err.response.status === 400) {
+            message.error('User already existed.')
+          }
+        })
+    } catch (err) {
+      console.log(err)
+    }
+  }
   return (
     <div className='login-container'>
       <UI/>
@@ -13,10 +45,11 @@ const Register = () => {
         <Card style={{ margin: '100px' }}>
           <Title style={{ textAlign: 'center' }} level={3}>Welcome</Title>
           <Form
+            form={form}
             name="normal_register"
             className="login-form"
             initialValues={{ remember: true }}
-            // onFinish={}
+            onFinish={onFinish}
           >
             <Form.Item
               name="username"
@@ -24,6 +57,12 @@ const Register = () => {
             >
               <Input  
                 prefix={<UserOutlined className="site-form-item-icon" />} 
+                minLength={6}
+                maxLength={30}
+                onChange={e => {
+                  setUsername(e.target.value)
+                }}
+                value = {username}
                 placeholder="Username" />
             </Form.Item>
             <Form.Item
@@ -41,6 +80,10 @@ const Register = () => {
             >
               <Input   
                 prefix={<MailOutlined className="site-form-item-icon" />} 
+                onChange={e => {
+                  setEmail(e.target.value)
+                }}
+                value = {email}
                 placeholder="Enter email" />
             </Form.Item>
             <Form.Item
@@ -50,12 +93,17 @@ const Register = () => {
             >
               <Input.Password
                 prefix={<LockOutlined className="site-form-item-icon" />}
+                onChange={e => {
+                  setPassword(e.target.value)
+                }}
+                minLength={8}
+                value = {password}
                 type="password"
                 placeholder="Password"
               />
             </Form.Item>
             <Form.Item
-              name="confirm-password"
+              name="confirmPassword"
               dependencies={[ 'password' ]}
               hasFeedback
               rules={[ 
@@ -73,6 +121,10 @@ const Register = () => {
               <Input.Password
                 prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"
+                onChange={e => {
+                  setcConfirmPassword(e.target.value)
+                }}
+                value = {confirmPassword}
                 placeholder="Confirm Password"
               />
             </Form.Item>
