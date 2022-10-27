@@ -1,8 +1,9 @@
 import { Layout, Typography, Dropdown, Menu, Space, Divider } from 'antd'
-import React from 'react'
+import React, { memo } from 'react'
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons'
 import './style.css'
 import authService from '../../pages/auth/Auth'
+import Notification from '../notification'
 
 const menu = (
   <Menu
@@ -38,16 +39,14 @@ function Header() {
   return (
     <Layout.Header  style ={{ display:'flex', justifyContent: 'space-between', alignItems:'center' }}className="header">
       <Typography.Title style={{ color: 'white' }}>Shopping Webapp</Typography.Title>
-      <Dropdown  overlay={menu}>
-        <a>
+      <Space size={'large'}>
+        <Notification />
+        <Dropdown overlay={menu}>
           <UserOutlined style={{ color:'white', fontSize:'16px' }} />
-
-        </a>
-
-      </Dropdown>
-
+        </Dropdown>
+      </Space>
     </Layout.Header>
   )
 }
 
-export default Header
+export default memo(Header)
