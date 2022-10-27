@@ -1,4 +1,4 @@
-import { Button, Descriptions, Layout, PageHeader, Statistic, Tabs } from 'antd'
+import { Button, Descriptions, Form, Input, Layout, Modal, PageHeader, Statistic, Tabs } from 'antd'
 import { ReloadOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
@@ -6,6 +6,47 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import './style.css'
 import BreadCrumb from '../breadCrumb'
+const { confirm } = Modal
+
+const declineForm = (
+  <Form
+    name="basic"
+    layout='vertical'
+    // onFinish={onFinish}
+    // onFinishFailed={onFinishFailed}
+    autoComplete="off"
+  >
+    <Form.Item
+      label="Reason"
+      name="declineReason"
+      rules={[
+        {
+          required: true,
+          message: 'Please input the reason!',
+        }
+      ]}
+    >
+      <Input.TextArea rows={4} />
+    </Form.Item>
+  </Form>
+)
+
+const handleConfirm = () => {
+  confirm({
+    title: 'Are you sure to confirm this order?',
+    content: 'When clicked the OK button, this order will be confirmed and it\'s status will be changed to "confirmed".',
+    // onOk() {},
+    // onCancel() {},
+  })
+}
+const handleDecline = () => {
+  confirm({
+    title: 'Are you sure to declined this order?',
+    content: declineForm,
+    // onOk() {},
+    // onCancel() {},
+  })
+}
 
 function OrdersHeader({ order }) {
   const [ isRefresh, setRefresh ] = useState(false)
@@ -78,7 +119,7 @@ function OrdersHeader({ order }) {
             type="primary"
             icon={<CheckOutlined />}
             disabled={order.status === 'confirmed'}
-          // onClick={handleRefresh}
+            onClick={handleConfirm}
           >Confirm</Button>,
           <Button
             key='order-declind'
@@ -86,12 +127,12 @@ function OrdersHeader({ order }) {
             danger
             icon={<CloseOutlined />}
             disabled={order.status === 'confirmed'}
-          // onClick={handleRefresh}
+            onClick={handleDecline}
           >Decline</Button>
         ]}
-        footer={
-          <Tabs defaultActiveKey="1" items={items} />
-        }
+        // footer={
+        //   <Tabs defaultActiveKey="1" items={items} />
+        // }
       >
         <Content extra={extraContent}>{renderContent()}</Content>
       </PageHeader>

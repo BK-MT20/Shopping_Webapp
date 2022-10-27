@@ -7,4 +7,5 @@ export { default as OrderHeader } from './orderHeader'
 export { default as OrdersHeader } from './ordersHeader'
 export { default as ProductHeader } from './productHeader'
 export { default as SttHeader } from './statisticHeader'
+export { default as Notification } from './notification'
 
