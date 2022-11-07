@@ -59,22 +59,22 @@ const Index = (props) => {
 				<p class="flex-none  mt-[5px]"> <BiChevronRight /> </p>
 				<p class="flex-none"><Link to="/product">Products</Link></p>
 				<p class="flex-none  mt-[5px] "> <BiChevronRight /> </p>
-				<p class="flex-none ">{state.title}</p>
+				<p class="flex-none ">{state.name}</p>
 			</div>
 			<div>
 				<div>
 					<div classname="Item_detail" class="w-73/100 h-[660px] xl: flex justify-between mt-[40px] m-auto  mb-[150px] ">
 						<div id="Item" class="w-44/100 flex-none overflow-hidden">
-							<img class=" overflow-hidden hover:scale-110 duration-150" src={state.urlImage} alt="image here" />
+							<img class=" overflow-hidden hover:scale-110 duration-150 aspect-24/29" src={state.image[0]} alt="image here" />
 						</div>
 						<div id="Info" class="w-52/100 text-left flex-none">
 							<div class="text-color-subtext uppercase text-sm text-gray-500">
 								MINIMOG
 							</div>
-							<h1 class="text-2xl md:text-3xl md:leading-[42px] pr-2 mt-[15px]">{state.title}</h1>
+							<h1 class="text-2xl md:text-3xl md:leading-[42px] pr-2 mt-[15px]">{state.name}</h1>
 							<p class="flex mt-[5px]"><BiStar /> <BiStar /> <BiStar /> <BiStar /> <BiStar /></p>
-							<p class="f-price-item f-price-item--regular text-xl md:text-2xl mt-[17px]">{state.price}</p>
-							<div class="text-gray-500 mt-[20px]">Only <strong>{state.amount}</strong> item(s) left in stock!</div>
+							<p class="f-price-item f-price-item--regular text-xl md:text-2xl mt-[17px]">$ {state.price.toFixed(2)}</p>
+							<div class="text-gray-500 mt-[20px]">Only <strong>{state.remained}</strong> item(s) left in stock!</div>
 							<div class="h-[5px] bg-gray-200 flex rounded-md mt-[10px]">
 								<div class="w-5/100 bg-red-500 flex-none rounded-md"></div>
 							</div>
