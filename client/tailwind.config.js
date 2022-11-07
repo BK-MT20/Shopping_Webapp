@@ -23,7 +23,10 @@ module.exports = {
       },
       gap: {
         '90': '90px',
-      }
+      },
+      aspectRatio: {
+        '24/29': '24 / 29',
+      },
     },
   },
   plugins: [],
