@@ -1,11 +1,16 @@
 
-import { Card,  Statistic, Table, Button } from 'antd'
+import { Card,  Statistic, Table, Col, Row } from 'antd'
 import './month.scss'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { SttHeader } from '../../../components/'
+import { ShoppingCartOutlined, PoundOutlined } from '@ant-design/icons'
+const { Column } = Table
+import axios from '../../../api'
 ChartJS.register(
+ 
   CategoryScale,
   LinearScale,
+  BarElement,
   Title,
   Tooltip,
   Legend
@@ -14,22 +19,12 @@ import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  PointElement,
-  LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend
 } from 'chart.js'
-import { Line } from 'react-chartjs-2'
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-)
+import {  Bar } from 'react-chartjs-2'
 function Statisticmonth() {
   const options = {
     responsive: true,
@@ -51,7 +46,8 @@ function Statisticmonth() {
         position: 'left',
       }
         
-    },
+    }
+  
   }
       
   const labels = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October' ]
@@ -63,141 +59,136 @@ function Statisticmonth() {
         label: 'Revenue',
         data:[ 1000, 5000, 3000, 3000, 4000, 2000, 8000, 5000, 6000, 7000 ],
         borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        backgroundColor: 'rgb(92, 148, 227)',
         yAxisID: 'y',
       }
 
     ],
   }
-  
-  const columns = [
+  const dataitems = [
     {
-      title: 'ID',
-      dataIndex: 'stt',
-      key: 'stt',
-      width:100,
-      align: 'center',
-     
-    },
-    {
-      title: 'Time',
-      dataIndex: 'time',
-      key: 'time',
-      width:400,
-      align: 'center',
-    },
-    {
-      title: 'Revenue ($)',
-      dataIndex: 'revenue',
-      key: 'revenue',
-      align: 'center',
-    }
     
-  ]
-    
-  const datarevenue = [
-    {
-     
-      stt: '1',
-      time: '1/2022',
-      revenue: 1000,
+      time: 'T-shirt',
+      revenue: 10,
      
     },
     {
-      stt: '2',
-      time: '2/2022',
-      revenue: 5000,
+     
+      time: 'Jacket',
+      revenue: 50,
     },
     {
-      stt: '3',
-      time: '3/2022',
-      revenue: 3000,
+     
+      time: 'Trousers',
+      revenue: 30,
       
     },
     {
-      stt: '4',
-      time: '4/2022',
-      revenue: 3000,
-      
-    },
-    {
-      stt: '5',
-      time: '5/2022',
-      revenue: 4000,
-      
-    },
-    {
-      stt: '6',
-      time: '6/2022',
-      revenue: 2000,
-      
-    },
-    {
-      stt: '7',
-      time: '7/2022',
-      revenue: 8000,
-      
-    },
-    {
-      stt: '8',
-      time: '8/2022',
-      revenue: 5000,
-      
-    },
-    {
-      stt: '9',
-      time: '9/2022',
-      revenue: 6000,
-      
-    },
-    {
-      stt: '10',
-      time: '10/2022',
-      revenue: 7000,
+   
+      time: 'Glassess',
+      revenue: 30,
       
     }
+   
   ]
   return(
     
     <>
       <SttHeader 
         title='Manage Revenue ' 
-        subtitle='Month Revenue'
+        // subtitle=''
       />
         
       <div className="container">
         <div className="site-statistic-demo-card">
+          <Row gutter={20}>
+            <Col  className='today'  >
+              <Card >
+                <Statistic
+                  title="Order today"
+                  value={10}
+                 
+                  valueStyle={{
+                    color: 'rgb(92, 148, 227)',
+                  }}
+                  suffix={<ShoppingCartOutlined />}
+
+                />
+               
+              </Card >
+            </Col>
+            <Col  className='today' >
+              <Card  >
+                
+                <Statistic
+                  title="Revenue today"
+                  value={100}
+                  precision={2}
+                  valueStyle={{
+                    color: '#cf1322',
+                  }}
+                  suffix={<PoundOutlined />}
+                />
+              </Card>
+            </Col>
          
-          <div className='choose'>
-            <div className='choose1'>Status:</div>
-            <div className="border1">
-              <Button href="/manage-statistic/monthstatistic" type="text" >Revenue by month</Button></div>
-            <Button  href="/manage-statistic/itemsstatistic" >Revenue by items </Button></div>
-          <Card>
-            <Statistic className='reveneannual'
-              title="Revenue this Month"
-              value={100000}
-              precision={2}
-              valueStyle={{
-                color: '#cf1322',
-              }}
-              style={{
-                width:'650px'
-                    
-              }}
-            />
-          </Card>
-     
+            <Col  className='today'>
+              <Card>
+                <Statistic
+                  title="Order this month"
+                  value={120}
+                 
+                  valueStyle={{
+                    color: 'rgb(92, 148, 227)',
+                  }}
+                  suffix={<ShoppingCartOutlined />}
+                />
+               
+              </Card >
+            </Col>
+            <Col  className='today'>
+              <Card>
+                <Statistic
+                  title="Revenue this month"
+                  value={123456}
+                  precision={2}
+                  valueStyle={{
+                    color: '#cf1322',
+                  }}
+                  suffix={<PoundOutlined />}
+                />
+              </Card>
+            </Col>
+          </Row>
         </div>
-        <div className='Table-month'>
-          <div className='headeroftable'>Table</div>        
-          <Table columns={columns} dataSource={datarevenue} />
-        </div>
-        <div className='Chart'> 
-          <div className='headerofchart'>Chart</div> 
-          <div className='linechart'>
-            <Line options={options} data={dataChart} />
+        <div className='chart'>
+          <div className='chartheader'>Chart Revenue</div>
+          <div className='chartbody'>
+
+            <Bar options={options} data={dataChart}/>
           </div>
+
+        </div>
+        <div className='items'>
+          <div className='itemleft'>
+            <div className='itemsHeader'>Statistic order by items</div>
+            <Table dataSource={dataitems}>
+    
+              <Column title="Name of item" dataIndex="time" key="time" />
+              <Column title="Num of order" dataIndex="revenue" key="revenue" />
+   
+            </Table>
+          </div>
+          <div className='itemright'>
+            <div className='itemsHeader'>Best seller Items</div>
+            <Table dataSource={dataitems}>
+    
+              <Column title="Item" dataIndex="time" key="time" />
+              <Column title="Num of order" dataIndex="revenue" key="revenue" />
+   
+            </Table>
+          </div>
+
         </div>
       </div>
         
