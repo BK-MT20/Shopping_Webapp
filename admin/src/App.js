@@ -10,7 +10,7 @@ import { OrderDetail, OrdersList } from './pages/admin/orders'
 import { Login, Register, ForgotPW } from './pages/auth'
 import { ManageProducts } from './pages/admin/products'
 import AEProducts from './pages/admin/products/AED-Products/AEProducts'
-import { Statisticmonth, Statisticitems } from './pages/admin/statistic'
+import { Statisticmonth } from './pages/admin/statistic'
 function App() {
   return (
     <BrowserRouter>
@@ -32,10 +32,8 @@ function App() {
           <Route path='Add' element={<AEProducts/>} />
           <Route path='Edit/:id' element={<AEProducts/>} />
           </Route> */ }
-          <Route path='manage-statistic' element={<Statisticmonth/>} />
-          <Route path='manage-statistic/monthstatistic' element={<Statisticmonth/>} />
-        
-          <Route path='manage-statistic/itemsstatistic' element={<Statisticitems/>} />
+          {/* <Route path='manage-statistic' element={<Statisticmonth/>} />
+          <Route path='manage-statistic/monthstatistic' element={<Statisticmonth/>} /> */}
        
         </Route>
 

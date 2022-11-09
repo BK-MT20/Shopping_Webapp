@@ -6,6 +6,12 @@ import './style.css'
 
 const items = [ 
   {
+    title: 'Manage Statistic',
+    icon: LineChartOutlined,
+    path: '/',
+    
+  },
+  {
     title: 'Orders',
     icon: ShoppingCartOutlined,
     path: '/orders',
@@ -24,13 +30,8 @@ const items = [
     title: 'Manage Products',
     icon: DesktopOutlined,
     path: '/manage-products',
-  },
-  {
-    title: 'Manage Statistic',
-    icon: LineChartOutlined,
-    path: '/manage-statistic',
-    
   }
+ 
 ]
 
 function Sider() {
