@@ -23,7 +23,7 @@ const data = [
     orderId: '6353c682c34c35ffd2bd963f',
     customerName: 'Nguyen Quang',
     customerAvatar: ''
-  },
+  }
 ]
 
 const Notification = () => {

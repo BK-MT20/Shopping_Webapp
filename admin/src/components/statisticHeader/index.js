@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Layout, PageHeader } from 'antd'
 import BreadCrumb from '../breadCrumb'
-const SttHeader = ({ title, subtitle }) => {
+const SttHeader = ({ title }) => {
   return (
     <Layout className='page-header'>
       <BreadCrumb />
@@ -12,7 +12,7 @@ const SttHeader = ({ title, subtitle }) => {
         // breadcrumb={{
         //   routes,
         // }}
-        subTitle={subtitle}
+       
       />
     </Layout>
   )
@@ -20,6 +20,6 @@ const SttHeader = ({ title, subtitle }) => {
 
 SttHeader.propTypes = {
   title: PropTypes.string.isRequired,
-  subtitle: PropTypes.string.isRequired,
+  // subtitle: PropTypes.string.isRequired,
 }
 export default SttHeader
