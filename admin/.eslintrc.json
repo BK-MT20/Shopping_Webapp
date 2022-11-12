@@ -8,7 +8,7 @@
     ],
     "rules": {
         "indent": [1, 2, { "SwitchCase": 1 }],
-        "linebreak-style": [1, "unix"],
+        "linebreak-style": [0, "unix"],
         //"linebreak-style": ["error", "windows"],
         "quotes": [1, "single"],
         "semi": [1, "never"],
