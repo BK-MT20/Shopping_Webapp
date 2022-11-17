@@ -6,6 +6,7 @@ const Order = mongoose.model(
         customerId: { type: String, required: true },
         status: { type: String, default: 'pending' },
         confirmByAdminId: { type: String, default: '' },
+        declineReason: { type: String },
         totalAmount: { type: Number, required: true },
         products: [
             {

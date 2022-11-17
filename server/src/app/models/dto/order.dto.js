@@ -5,7 +5,22 @@ const getOrderDto = {
         id: Joi.string().required(),
     })
 }
+    
+const confirmOrderDto = {
+    [Segments.BODY]: Joi.object().keys({
+        id: Joi.string().required(),
+    })
+}
+    
+const declineOrderDto = {
+    [Segments.BODY]: Joi.object().keys({
+        id: Joi.string().required(),
+        reason: Joi.string().required(),
+    })
+}
 
 module.exports = {
-    getOrderDto
+    getOrderDto,
+    confirmOrderDto,
+    declineOrderDto,
 }
