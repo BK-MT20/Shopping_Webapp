@@ -68,7 +68,7 @@ const ListNotifications = ({ notifications, onClick }) => {
             <List.Item key={item.id} className='list-notification-item' onClick={() => handleNotificationClick(item)}>
               <List.Item.Meta
                 avatar={<Avatar src={user} />}
-                title={`${item.customerName} has new order!`}
+                title={`${item.customer.name} has new order!`}
                 description={
                   <Typography.Paragraph ellipsis={{ rows: 1 }}>
                     Please review more details to confirm this order, otherwise decline this with a reason!
@@ -87,8 +87,12 @@ ListNotifications.propTypes = {
   notifications: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     orderId: PropTypes.string.isRequired,
-    customerName: PropTypes.string.isRequired,
-    customerAvatar: PropTypes.string,
+    for: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    customer: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    })
   })),
   onClick: PropTypes.func.isRequired,
 }

@@ -2,6 +2,7 @@ import { BellOutlined, ShoppingCartOutlined } from '@ant-design/icons'
 import { Badge, notification, Popover } from 'antd'
 import React, { memo, useEffect, useState } from 'react'
 import ListNotifications from './listNotifications'
+import axios from '../../api'
 import './style.css'
 import { useSocket } from '../../hooks'
 
@@ -27,9 +28,19 @@ const data = [
 ]
 
 const Notification = () => {
-  const [ notifications, setNotifications ] = useState(data)
+  const [ notifications, setNotifications ] = useState([])
   const [ show, setShow ] = useState(false)
   const socket = useSocket()
+
+  useEffect(() => {
+    axios.get('/notification/getAllNotifications')
+      .then(response => {
+        setNotifications(response.data)
+      })
+      .catch(err => {
+        console.log('get notifications error:', err)
+      })
+  }, [])
 
   const onTabChange = () => {
 
