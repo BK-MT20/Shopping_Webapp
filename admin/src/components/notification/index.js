@@ -1,9 +1,9 @@
 import { BellOutlined, ShoppingCartOutlined } from '@ant-design/icons'
-import { Badge, notification, Popover, Tabs } from 'antd'
+import { Badge, notification, Popover } from 'antd'
 import React, { memo, useEffect, useState } from 'react'
 import ListNotifications from './listNotifications'
 import './style.css'
-import PropTypes from 'prop-types'
+import { useSocket } from '../../hooks'
 
 const data = [
   {
@@ -13,13 +13,13 @@ const data = [
     customerAvatar: ''
   },
   {
-    id: 'adfasfda',
+    id: 'dadfs',
     orderId: '6353c682c34c35ffd2bd963f',
     customerName: 'Nguyen Quang',
     customerAvatar: ''
   },
   {
-    id: 'adfasfda',
+    id: 'eadzv',
     orderId: '6353c682c34c35ffd2bd963f',
     customerName: 'Nguyen Quang',
     customerAvatar: ''
@@ -29,6 +29,7 @@ const data = [
 const Notification = () => {
   const [ notifications, setNotifications ] = useState(data)
   const [ show, setShow ] = useState(false)
+  const socket = useSocket()
 
   const onTabChange = () => {
 
@@ -65,15 +66,21 @@ const Notification = () => {
     })
   }
 
-  useEffect(() => {
-    const id = setTimeout(() => {
-      openNotification(data[0])
-    }, 500)
+  const onCick = () => {
+    // socket.emit('newOrder', notifications[0])
+  }
 
-    return () => {
-      clearTimeout(id)
+  useEffect(() => {
+    if (socket) {
+      socket.on('newOrder', order => {
+        openNotification(order)
+      })
+  
+      return () => {
+        socket.off('newOrder')
+      }
     }
-  }, [])
+  }, [ socket ])
     
   return (
     <Popover

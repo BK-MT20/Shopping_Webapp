@@ -1,11 +1,12 @@
-import { Button, Descriptions, Form, Input, Layout, Modal, PageHeader, Statistic, Tabs } from 'antd'
+import { Button, Descriptions, Form, Input, Layout, Modal, PageHeader, Statistic } from 'antd'
 import { ReloadOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons'
-import React, { useState } from 'react'
+import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import './style.css'
 import BreadCrumb from '../breadCrumb'
+import { useSocket } from '../../hooks'
 const { confirm } = Modal
 
 const declineForm = (
@@ -26,34 +27,38 @@ const declineForm = (
         }
       ]}
     >
-      <Input.TextArea rows={4} />
+      <Input.TextArea rows={4} required/>
     </Form.Item>
   </Form>
 )
 
-const handleConfirm = () => {
+const handleConfirm = (order, socket) => {
   confirm({
     title: 'Are you sure to confirm this order?',
     content: 'When clicked the OK button, this order will be confirmed and it\'s status will be changed to "confirmed".',
-    // onOk() {},
+    onOk() {
+      socket.emit('confirmOrder', order)
+    },
     // onCancel() {},
   })
 }
-const handleDecline = () => {
+const handleDecline = (order, socket) => {
   confirm({
     title: 'Are you sure to declined this order?',
     content: declineForm,
-    // onOk() {},
+    onOk() {
+      socket.emit('declineOrder', order)
+    },
     // onCancel() {},
   })
 }
 
-function OrdersHeader({ order }) {
-  const [ isRefresh, setRefresh ] = useState(false)
+function OrderHeader({ setRefresh, order, loading }) {
   const navigate = useNavigate()
+  const socket = useSocket()
   
   const handleRefresh = () => {
-    setRefresh(!isRefresh)
+    setRefresh(true)
   }
 
   const renderContent = (column = 2, size = 'small') => (
@@ -111,23 +116,23 @@ function OrdersHeader({ order }) {
             key='order-refresh'
             type="primary"
             icon={<ReloadOutlined />}
-            loading={isRefresh}
+            loading={loading}
             onClick={handleRefresh}
           >Refresh</Button>,
-          <Button
+          order.status === 'pending' && <Button
             key='order-confirm'
             type="primary"
             icon={<CheckOutlined />}
             disabled={order.status === 'confirmed'}
-            onClick={handleConfirm}
+            onClick={() => handleConfirm(order, socket)}
           >Confirm</Button>,
-          <Button
+          order.status === 'pending' && <Button
             key='order-declind'
             type="primary"
             danger
             icon={<CloseOutlined />}
             disabled={order.status === 'confirmed'}
-            onClick={handleDecline}
+            onClick={() => handleDecline(order, socket)}
           >Decline</Button>
         ]}
         // footer={
@@ -140,17 +145,19 @@ function OrdersHeader({ order }) {
   )
 }
 
-OrdersHeader.propTypes = {
+OrderHeader.propTypes = {
+  setRefresh: PropTypes.func.isRequired,
   order: PropTypes.shape({
     id: PropTypes.string.isRequired,
     customerId: PropTypes.string.isRequired,
-    createdAt: PropTypes.object.isRequired,
+    createdAt: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
     amount: PropTypes.number.isRequired,
     adminId: PropTypes.string,
-    confirmAt: PropTypes.object,
+    confirmAt: PropTypes.string,
     products: PropTypes.arrayOf(PropTypes.object)
   }),
+  loading: PropTypes.bool.isRequired,
 }
 
-export default OrdersHeader
+export default OrderHeader
