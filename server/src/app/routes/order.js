@@ -2,7 +2,7 @@ const express = require('express')
 const { celebrate } = require('celebrate')
 const { authJWT } = require('../middlewares')
 const controller = require('../controllers/order/order.controller')
-const { getOrderDto } = require('../models/dto/order.dto')
+const { getOrderDto, declineOrderDto, confirmOrderDto } = require('../models/dto/order.dto')
 const router = express.Router()
 
 /**
@@ -236,6 +236,165 @@ router.post(
         // authJWT.isAdmin
     ],
     controller.getOrder
+)
+
+/**
+ * @swagger
+ * /api/order/confirmOrder:
+ *  post:
+ *      summary: Confirm Order
+ *      description: Confirm order by id
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          id: 
+ *                              type: string
+ *                              example: orderId
+ *      responses:
+ *          200:
+ *              description: Confirm order successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              message:
+ *                                  type: string
+ *                                  example: Confirm Order Successfully.
+ *          401:
+ *              description: Unauthorized.
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              message:
+ *                                  type: string
+ *                                  example: Unauthorized.
+ *          402:
+ *              description: No Token Provided.
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              message:
+ *                                  type: string
+ *                                  example: No Token Provided.
+ *          403:
+ *              description: Required Admin Role.
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              message:
+ *                                  type: string
+ *                                  example: Required Admin Role.
+ *          500:
+ *              description: Internal Server Error.
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              message:
+ *                                  type: string
+ *                                  example: Internal Server Error.
+ */
+router.post(
+    '/confirmOrder',
+    [
+        celebrate(confirmOrderDto),
+        // authJWT.verifyToken,
+        // authJWT.isAdmin
+    ],
+    controller.confirmOrder
+)
+
+/**
+ * @swagger
+ * /api/order/declineOrder:
+ *  post:
+ *      summary: Decline Order
+ *      description: Decline order by id
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          id: 
+ *                              type: string
+ *                              example: orderId
+ *                          reason: 
+ *                              type: string
+ *                              example: Sold Out!
+ *      responses:
+ *          200:
+ *              description: Decline order successfully
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              message:
+ *                                  type: string
+ *                                  example: Decline Order Successfully.
+ *          401:
+ *              description: Unauthorized.
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              message:
+ *                                  type: string
+ *                                  example: Unauthorized.
+ *          402:
+ *              description: No Token Provided.
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              message:
+ *                                  type: string
+ *                                  example: No Token Provided.
+ *          403:
+ *              description: Required Admin Role.
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              message:
+ *                                  type: string
+ *                                  example: Required Admin Role.
+ *          500:
+ *              description: Internal Server Error.
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              message:
+ *                                  type: string
+ *                                  example: Internal Server Error.
+ */
+router.post(
+    '/declineOrder',
+    [
+        celebrate(declineOrderDto),
+        // authJWT.verifyToken,
+        // authJWT.isAdmin
+    ],
+    controller.declineOrder
 )
 
 module.exports = router
