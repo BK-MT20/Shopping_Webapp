@@ -67,16 +67,6 @@ const router = express.Router()
  *                                                          type: number
  *                                                          description: Quantity Of Product In Order
  *                                                          example: 2
- *          400:
- *              description: User already existed.
- *              content:
- *                  application/json:
- *                      schema:
- *                          type: object
- *                          properties:
- *                              message:
- *                                  type: string
- *                                  example: User already existed.
  *          401:
  *              description: Unauthorized.
  *              content:
@@ -197,16 +187,6 @@ router.get(
  *                                                          type: number
  *                                                          description: Quantity Of Product In Order
  *                                                          example: 2
- *          400:
- *              description: User already existed.
- *              content:
- *                  application/json:
- *                      schema:
- *                          type: object
- *                          properties:
- *                              message:
- *                                  type: string
- *                                  example: User already existed.
  *          401:
  *              description: Unauthorized.
  *              content:
