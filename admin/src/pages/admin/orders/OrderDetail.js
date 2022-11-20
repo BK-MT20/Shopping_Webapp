@@ -37,7 +37,7 @@ function OrderDetail() {
 
   useEffect(() => {
     setLoading(true)
-    axios.post('/order/getOrder', { id: orderId })
+    axios.post('/order/getOrder', { id: orderId }, { withCredentials: true })
       .then(res => {
         setData(res.data.products.map((p, index) => ({
           ...p,

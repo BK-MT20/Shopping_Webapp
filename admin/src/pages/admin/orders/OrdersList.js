@@ -61,7 +61,7 @@ function OrdersList() {
 
   useEffect(() => {
     // setLoading(true)
-    axios.get('/order/getAllOrders')
+    axios.get('/order/getAllOrders', { withCredentials: true })
       // .then(res => res.json())
       .then(res => {
         setData(res.data.map((item, index) => ({

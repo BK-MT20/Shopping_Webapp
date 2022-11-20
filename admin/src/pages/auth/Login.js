@@ -3,7 +3,7 @@ import { Typography, Button, Form, Input, Card } from 'antd'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import UI from './UI'
 // import axios from '../../api'
-import authService from './Auth'
+import authService from '../../services/Auth'
 import { useNavigate } from 'react-router-dom'
 
 const { Title } = Typography
@@ -18,7 +18,6 @@ function Login() {
         .then(() => {
           if(authService.getCurrentUser()) {
             navigate('/') 
-            window.location.reload()
           }
         }, err => {
           console.log(err)

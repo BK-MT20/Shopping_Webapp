@@ -1,11 +1,11 @@
-import React from 'react'
-import axios from '../../api'
+import axios from '../api'
 import { message } from 'antd'
 
 const login = (values) => {
   return axios.post('/auth/signin', {
     username: values.username,
-    password: values.password
+    password: values.password,
+    role: 'admin'
   })
     .then(res => {
       console.log(res)
@@ -37,6 +37,7 @@ const register = (values) => {
     username: values.username,
     email : values.email,
     password: values.password,
+    role: 'admin'
   })
 }
 const getCurrentUser = () => {
@@ -48,7 +49,7 @@ const authService = {
   logout,
   register,
   getCurrentUser
-
+  
 }
 
 export default authService  

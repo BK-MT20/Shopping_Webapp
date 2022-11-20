@@ -71,35 +71,60 @@ class AuthController {
                     message: 'Invalid password!'
                 })
             }
-    
+            
             var accessToken = jwt.sign({ id: user.id }, process.env.ACCESS_SECRET_KEY, {
                 expiresIn: `${process.env.ACCESS_TOKEN_EXPIRESIN}m`
             })
-    
+            
             var refreshToken = jwt.sign({ id: user.id }, process.env.REFRESH_SECRET_KEY, {
                 expiresIn: `${process.env.REFRESH_TOKEN_EXPIRESIN}m`
             })
-    
+            
             res
-                .status(202)
-                .cookie('act', accessToken, {
-                    httpOnly: true,
-                    sameSite: 'strict',
-                    secure: true,
-                    path: '/',
-                    maxAge: process.env.ACCESS_TOKEN_EXPIRESIN*1000
+            .status(200)
+            .cookie('act', accessToken, {
+                httpOnly: true,
+                sameSite: 'strict',
+                secure: true,
+                path: '/',
+                maxAge: process.env.ACCESS_TOKEN_EXPIRESIN*1000*60
+            })
+            .cookie('rft', refreshToken, {
+                httpOnly: true,
+                sameSite: 'strict',
+                secure: true,
+                path: '/',
+                maxAge: process.env.REFRESH_TOKEN_EXPIRESIN*1000*60
+            })
+
+            if (req.body.role === 'admin') {
+                Role.findOne({
+                    _id: user.role
+                }, (err, role) => {
+                    if (err) {
+                        res.status(500).send({ message: err })
+                        return;
+                    }
+        
+                    if (role?.name !== 'admin') {
+                        return res.status(403).send({ message: 'Require Admin role!' })
+                    }
+
+                    return res.send({
+                        accessToken: accessToken,
+                        expiresIn: process.env.ACCESS_TOKEN_EXPIRESIN + 'm'
+                    })
                 })
-                .cookie('rft', refreshToken, {
-                    httpOnly: true,
-                    sameSite: 'strict',
-                    secure: true,
-                    path: '/',
-                    maxAge: process.env.REFRESH_TOKEN_EXPIRESIN*1000
-                })
-                .send({
+            }
+            else if (req.body.role !== 'user') {
+                return res.status(403).send({ message: 'Invalid role!' })
+            }
+            else {
+                return res.send({
                     accessToken: accessToken,
                     expiresIn: process.env.ACCESS_TOKEN_EXPIRESIN + 'm'
                 })
+            }
         })
     }
 }
