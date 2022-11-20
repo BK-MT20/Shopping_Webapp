@@ -111,8 +111,8 @@ const router = express.Router()
 router.get(
     '/getAllOrders',
     [
-        // authJWT.verifyToken,
-        // authJWT.isAdmin
+        authJWT.verifyToken,
+        authJWT.isAdmin
     ],
     controller.getAllOrders
 )
@@ -232,8 +232,8 @@ router.post(
     '/getOrder',
     [
         celebrate(getOrderDto),
-        // authJWT.verifyToken,
-        // authJWT.isAdmin
+        authJWT.verifyToken,
+        authJWT.isAdmin
     ],
     controller.getOrder
 )
@@ -310,8 +310,8 @@ router.post(
     '/confirmOrder',
     [
         celebrate(confirmOrderDto),
-        // authJWT.verifyToken,
-        // authJWT.isAdmin
+        authJWT.verifyToken,
+        authJWT.isAdmin
     ],
     controller.confirmOrder
 )
@@ -391,8 +391,8 @@ router.post(
     '/declineOrder',
     [
         celebrate(declineOrderDto),
-        // authJWT.verifyToken,
-        // authJWT.isAdmin
+        authJWT.verifyToken,
+        authJWT.isAdmin
     ],
     controller.declineOrder
 )

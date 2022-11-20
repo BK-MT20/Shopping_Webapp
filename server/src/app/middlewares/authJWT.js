@@ -7,7 +7,7 @@ const verifyToken = (req, res, next) => {
     let accessToken = req.cookies?.act
 
     if (!accessToken) {
-        return res.status(402).send({ message: 'No token provided!' })
+        return res.status(401).send({ message: 'Unauthorized!' })
     }
 
     jwt.verify(accessToken, process.env.ACCESS_SECRET_KEY, (err, decoded) => {

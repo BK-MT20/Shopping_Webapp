@@ -2,7 +2,7 @@ import { Layout, Typography, Dropdown, Menu, Space, Divider } from 'antd'
 import React, { memo } from 'react'
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons'
 import './style.css'
-import authService from '../../pages/auth/Auth'
+import authService from '../../services/Auth'
 import Notification from '../notification'
 
 const menu = (
