@@ -22,11 +22,13 @@ function ManageProducts() {
   const fetchData = async () => {
     await axios.get('/product/getAllProduct')
       .then(res => {
-        setDataSource(res.data.map((item, index) => ({
-          ...item,
-          key: item.id,
-          index,
-        })))
+        setDataSource(res.data.map((item, index) => (
+          console.log(item),
+          {
+            ...item,
+            key: item.id,
+            index,
+          })))
         setRootData(res.data.map((item, index) => ({
           ...item,
           key: item.id,

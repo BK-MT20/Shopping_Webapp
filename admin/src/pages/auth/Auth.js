@@ -1,31 +1,41 @@
-import React from 'react'
+import React, { useContext }from 'react'
 import axios from '../../api'
 import { message } from 'antd'
 
-const login = (values) => {
-  return axios.post('/auth/signin', {
-    username: values.username,
-    password: values.password
-  })
-    .then(res => {
-      console.log(res)
-      if(res.data.accessToken) {
-        localStorage.setItem('admin', JSON.stringify(res.data))
+const login = async (username, password) => {
+  try {
+    const response = await axios.post('/auth/signin', 
+      JSON.stringify({
+        username,
+        password
+      }),
+      {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true
       }
-    }) .catch(err => {
-      console.log(err)
-      if(err.response.status === 500) {
-        message.error('Internal Server Error')
+    )          
+    return response
+  }  catch(err) {
+    console.log(err)
+    if(err.response.status === 500) {
+      message.error('Internal Server Error')
+    }
+    if (err.response.status === 401) {
+      message.error('Password is wrong')
+    }
+    if (err.response.status === 404) {
+      message.error('User not found')
 
-      }
-      if (err.response.status === 401) {
-        message.error('Password is wrong')
-      }
-      if (err.response.status === 404) {
-        message.error('User not found')
+    }
+  }
+  
+  // .then(res => {
+  //   console.log(res)
+  //   if(res.data.accessToken) {
+  //     localStorage.setItem('admin', JSON.stringify(res.data))
+  //   }
+  // }) 
 
-      }
-    })
 }
 
 const logout = () => {

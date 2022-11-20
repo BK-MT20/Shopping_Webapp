@@ -1,4 +1,4 @@
 export { default as Login } from './Login'
 export { default as Register } from './Register'
 export { default as ForgotPW } from './ForgotPW'
-
+export { default as RequiredAuth } from './RequiredAuth'

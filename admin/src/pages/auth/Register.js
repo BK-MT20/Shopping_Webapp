@@ -24,7 +24,6 @@ const Register = () => {
             navigate('/login') 
             window.location.reload()
           }
-
         }, err => {
           if(err.response.status === 500) {
             message.error('Internal Server Error')

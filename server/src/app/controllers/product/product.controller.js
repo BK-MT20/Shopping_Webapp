@@ -15,7 +15,10 @@ class ProductController {
 // [Get] /api/product/:id
     getById = (req,res,next) => {
         Product.findById(req.params.id)
-            .then(product => res.json(product.toClient()))
+            .then(product =>
+                // res.json(product.toClient())
+                console.log(product)
+            )
             .catch(next)
     }
 //  [POST] /api/product/createProduct

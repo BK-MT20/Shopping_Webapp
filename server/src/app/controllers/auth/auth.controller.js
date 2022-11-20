@@ -71,7 +71,7 @@ class AuthController {
                     message: 'Invalid password!'
                 })
             }
-    
+
             var accessToken = jwt.sign({ id: user.id }, process.env.ACCESS_SECRET_KEY, {
                 expiresIn: `${process.env.ACCESS_TOKEN_EXPIRESIN}m`
             })
@@ -79,7 +79,8 @@ class AuthController {
             var refreshToken = jwt.sign({ id: user.id }, process.env.REFRESH_SECRET_KEY, {
                 expiresIn: `${process.env.REFRESH_TOKEN_EXPIRESIN}m`
             })
-    
+            var role = user.role.name
+            // console.log(role)
             res
                 .status(202)
                 .cookie('act', accessToken, {
@@ -98,7 +99,8 @@ class AuthController {
                 })
                 .send({
                     accessToken: accessToken,
-                    expiresIn: process.env.ACCESS_TOKEN_EXPIRESIN + 'm'
+                    expiresIn: process.env.ACCESS_TOKEN_EXPIRESIN + 'm',
+                    role: role
                 })
         })
     }

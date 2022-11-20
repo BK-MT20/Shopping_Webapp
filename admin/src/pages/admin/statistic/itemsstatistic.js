@@ -124,8 +124,8 @@ function Statisticitems() {
            
           <div className='choose'>
             <div className='choose1'>Status:</div>
-            <Button href="/manage-statistic/monthstatistic" default>Revenue by month</Button>
-            <div className="border1"><Button  href="/manage-statistic/itemsstatistic" type="text" >Revenue by items </Button>
+            <Button href="/monthstatistic" default>Revenue by month</Button>
+            <div className="border1"><Button  href="/itemsstatistic" type="text" >Revenue by items </Button>
             </div></div>
          
           <Card>

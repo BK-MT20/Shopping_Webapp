@@ -2,6 +2,7 @@ const express = require('express')
 const { celebrate } = require('celebrate')
 const { verifySignUp } = require('../middlewares')
 const controller = require('../controllers/auth/auth.controller')
+const { authJWT } = require('../middlewares')
 const { signUpUserDto, signInUserDto } = require('../models/dto/auth.dto')
 const router = express.Router()
 

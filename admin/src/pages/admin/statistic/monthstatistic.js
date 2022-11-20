@@ -171,8 +171,8 @@ function Statisticmonth() {
           <div className='choose'>
             <div className='choose1'>Status:</div>
             <div className="border1">
-              <Button href="/manage-statistic/monthstatistic" type="text" >Revenue by month</Button></div>
-            <Button  href="/manage-statistic/itemsstatistic" >Revenue by items </Button></div>
+              <Button href="/monthstatistic" type="text" >Revenue by month</Button></div>
+            <Button  href="/itemsstatistic" >Revenue by items </Button></div>
           <Card>
             <Statistic className='reveneannual'
               title="Revenue this Month"

@@ -2,30 +2,43 @@ import React, { useState }from 'react'
 import { Typography, Button, Form, Input, Card } from 'antd'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import UI from './UI'
-// import axios from '../../api'
 import authService from './Auth'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import useAuth from '../../hooks/useAuth'
 
 const { Title } = Typography
-function Login() {
+
+const Login = () => {
+  // missing role admin
   const [ form ] = Form.useForm()
   const [ username, setUsername ] = useState('')
   const [ password, setPassword ] = useState('')
   const navigate = useNavigate()
-  const onFinish = async (values) => {
+  const location = useLocation()
+  const {setAuth } = useAuth()       
+  const from = location.state?.from?.pathname || '/'
+  // console.log(from)
+  const onFinish =  (values) => {
     try{
-      await authService.login(values)
-        .then(() => {
-          if(authService.getCurrentUser()) {
-            navigate('/') 
-            window.location.reload()
-          }
+      authService.login(values.username, values.password)
+        .then((response) => {
+          console.log(response)
+          // if(authService.getCurrentUser()) {
+          // navigate('/') 
+          // window.location.reload()
+          // }
+          const accessToken = response.data.accessToken
+          const role = response.data.role
+          // console.log(role)
+          setAuth({ username, password, accessToken, role })   
+          navigate(from,{replace : true})  
         }, err => {
           console.log(err)
         })
     } catch (err) {
       console.log(err)
     }
+
   }
   return (
     <div className='login-container'>
