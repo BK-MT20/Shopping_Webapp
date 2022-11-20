@@ -144,9 +144,4 @@ router.post(
     controller.signin
 )
 
-// router.post(
-//     '/refresh',
-//     controller.refresh
-// )
-
 module.exports = router
