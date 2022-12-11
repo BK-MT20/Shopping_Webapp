@@ -6,8 +6,8 @@ function AddButton() {
     <Button 
       href="/manage-products/Add" 
       type="primary" icon={<PlusOutlined/>} 
-      className='add-btn' 
       size="medium"
+     
     >
       Add More
     </Button>

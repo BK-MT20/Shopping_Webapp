@@ -105,7 +105,7 @@ const Notification = () => {
     >
       <span className='notification-wrapper'>
         <Badge count={notifications.length} overflowCount={9} size='small'>
-          <div style={{ padding: '4px 6px', color: 'white' }}>
+          <div style={{ padding: '4px 6px', color: 'black' }}>
             <BellOutlined />
           </div>
         </Badge>

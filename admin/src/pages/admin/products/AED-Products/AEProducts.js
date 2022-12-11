@@ -1,4 +1,4 @@
-import React, { useState, useEffect }from 'react'
+import React, { useState, useEffect } from 'react'
 import { ArrowLeftOutlined } from '@ant-design/icons'
 import { Button, Form, Input, Divider, InputNumber, Modal, Card } from 'antd'
 // import axios from '../../../../api'
@@ -11,28 +11,27 @@ const AEProducts = () => {
   let { id } = useParams()
   const navigate = useNavigate()
   let location = useLocation()
-  // console.log(location.pathname) 
+  // console.log(location.pathname)
   let paths = location.pathname.split('/')
   console.log(paths)
   let type = paths[paths.length - 1]
-  let [ editValue, setEditValue ]  = useState ({})
+  let [ editValue, setEditValue ] = useState({})
 
   async function fetchData() {
-    let response = await axios.get (
-      'product/' + id
-    )
-      .catch(error => console.log(error))
+    let response = await axios
+      .get('product/' + id)
+      .catch((error) => console.log(error))
 
     let value = response.data
     setEditValue(value)
   }
-  
-  // 
+
+  //
   useEffect(() => {
-    if(type !== 'Add') {
+    if (type !== 'Add') {
       fetchData()
     }
-  }, [])  
+  }, [])
 
   useEffect(() => {
     form.setFieldsValue({
@@ -41,9 +40,9 @@ const AEProducts = () => {
       price: editValue.price,
       colors: editValue.colors,
       remained: editValue.remained,
-      type: editValue.type
+      type: editValue.type,
     })
-  }, [ editValue ])  
+  }, [ editValue ])
   console.log(editValue)
 
   const success = () => {
@@ -51,36 +50,38 @@ const AEProducts = () => {
       content: 'Successfully',
       onOk() {
         navigate(-1)
-      }
+      },
     })
   }
   const onFinish = (values) => {
-    if(type === 'Add') {
-      axios.post('/product/createProduct', { 
-        name: values.name,
-        image: values.image,
-        price: values.price,
-        colors: values.colors,
-        remained: values.remained,
-        type: values.type
-      })
-        .then(res => {
+    if (type === 'Add') {
+      axios
+        .post('/product/createProduct', {
+          name: values.name,
+          image: values.image,
+          price: values.price,
+          colors: values.colors,
+          remained: values.remained,
+          type: values.type,
+        })
+        .then((res) => {
           console.log(res.data)
           success()
         })
-    }else{
-      axios.put('product/' + id, {
-        name: values.name,
-        image: values.image,
-        price: values.price,
-        colors: values.colors,
-        remained: values.remained,
-        type: values.type
-      })
-        .then(res => {
+    } else {
+      axios
+        .put('product/' + id, {
+          name: values.name,
+          image: values.image,
+          price: values.price,
+          colors: values.colors,
+          remained: values.remained,
+          type: values.type,
+        })
+        .then((res) => {
           console.log(res)
         })
-        .catch(error => {
+        .catch((error) => {
           this.setState({ errorMessage: error.message })
           console.error('There was an error!', error)
         })
@@ -89,21 +90,19 @@ const AEProducts = () => {
 
   return (
     <>
-
-      <ProductHeader 
-        title='Manage Product' 
-        subtitle='All products'
-      />
+      <ProductHeader title="Manage Product" subtitle="All products" />
       <Card
-        style= {{           
-          margin: '24px' }}
+        style={{
+          margin: '24px',
+        }}
       >
-        <Button 
-          href="/manage-products" 
-          type="link" icon={<ArrowLeftOutlined/>} 
+        <Button
+          href="/manage-products"
+          type="link"
+          icon={<ArrowLeftOutlined />}
           size="small"
         >
-            Manage Products
+          Manage Products
         </Button>
         <Form
           form={form}
@@ -111,7 +110,6 @@ const AEProducts = () => {
           onFinish={onFinish}
           // wrapperCol={{ span: 16 }}
           // labelCol={{ span: 3 }}
-
         >
           <Divider style={{ backgroundColor: '#d8d8d8' }}>Name field</Divider>
 
@@ -119,15 +117,14 @@ const AEProducts = () => {
             name="name"
             rules={[ { required: true, message: 'Please input your name!' } ]}
           >
-            <Input 
+            <Input
               // ref = {editValue}
               // className='input'
-              value = {editValue.name ? editValue.name : ''}
-              
+              value={editValue.name ? editValue.name : ''}
               // defaultValue = {editValue.name ? editValue.name : ''}
               // value = {'abc'}
               // defaultValue = {'abffc'}
-              placeholder="Name..." 
+              placeholder="Name..."
             />
           </Form.Item>
           <Divider style={{ backgroundColor: '#d8d8d8' }}>Images field</Divider>
@@ -137,13 +134,9 @@ const AEProducts = () => {
             rules={[ { required: true, message: 'Please input your image!' } ]}
           >
             {(fields, { add, remove }, { errors }) => (
-
               <>
                 {fields.map((field) => (
-                  <Form.Item
-                    required={false}
-                    key={field.key}
-                  >
+                  <Form.Item required={false} key={field.key}>
                     <Form.Item
                       {...field}
                       validateTrigger={[ 'onChange', 'onBlur' ]}
@@ -156,25 +149,25 @@ const AEProducts = () => {
                       ]}
                       noStyle
                     >
-                      <Input 
+                      <Input
                         // ref = {editValue}
                         // className='input'
-                        name="image" placeholder="Image..." 
-                        value = {editValue.image ? editValue.image : ''}
-
+                        name="image"
+                        placeholder="Image..."
+                        value={editValue.image ? editValue.image : ''}
                       />
                     </Form.Item>
                     {fields.length > 1 ? (
-                      <Button type="primary" 
-                        onClick ={() => {
+                      <Button
+                        type="primary"
+                        onClick={() => {
                           remove(field.name)
-                        }} 
+                        }}
                         style={{ marginTop: '20px' }}
-                        danger 
+                        danger
                       >
-                          Remove
+                        Remove
                       </Button>
-
                     ) : null}
                   </Form.Item>
                 ))}
@@ -182,10 +175,9 @@ const AEProducts = () => {
                   <Button
                     type="primary"
                     onClick={() => add()}
-                      
-                    style={{ float: 'right' }} 
+                    style={{ float: 'right', backgroundColor: ' #da3f3f' }}
                   >
-                      Add More Images
+                    Add More Images
                   </Button>
                   <Form.ErrorList errors={errors} />
                 </Form.Item>
@@ -199,13 +191,13 @@ const AEProducts = () => {
             name="price"
             rules={[ { required: true, message: 'Please input your price!' } ]}
           >
-            <InputNumber 
+            <InputNumber
               // ref = {editValue}
               // className='input'
               prefix="$"
-              placeholder="Price..." 
-              value = {editValue.price ? editValue.price : ''}
-              style={{ width:'100%' }} 
+              placeholder="Price..."
+              value={editValue.price ? editValue.price : ''}
+              style={{ width: '100%' }}
             />
           </Form.Item>
 
@@ -218,8 +210,8 @@ const AEProducts = () => {
             <Input
               // ref = {editValue}
               // className='input'
-              value = {editValue.type ? editValue.type : ''}
-              placeholder="Type..." 
+              value={editValue.type ? editValue.type : ''}
+              placeholder="Type..."
             />
           </Form.Item>
 
@@ -230,13 +222,9 @@ const AEProducts = () => {
             rules={[ { required: true, message: 'Please input your color!' } ]}
           >
             {(fields, { add, remove }, { errors }) => (
-
               <>
                 {fields.map((field) => (
-                  <Form.Item
-                    required={false}
-                    key={field.key}
-                  >
+                  <Form.Item required={false} key={field.key}>
                     <Form.Item
                       {...field}
                       validateTrigger={[ 'onChange', 'onBlur' ]}
@@ -249,24 +237,25 @@ const AEProducts = () => {
                       ]}
                       noStyle
                     >
-                      <Input 
+                      <Input
                         // ref = {editValue}
                         // className='input'
-                        value = {editValue.color ? editValue.color : ''}
-                        name="color" placeholder="Color..." 
+                        value={editValue.color ? editValue.color : ''}
+                        name="color"
+                        placeholder="Color..."
                       />
                     </Form.Item>
                     {fields.length > 1 ? (
-                      <Button type="primary" 
-                        onClick ={() => {
+                      <Button
+                        type="primary"
+                        onClick={() => {
                           remove(field.name)
-                        }} 
+                        }}
                         style={{ marginTop: '20px' }}
-                        danger 
+                        danger
                       >
-                          Remove
+                        Remove
                       </Button>
-
                     ) : null}
                   </Form.Item>
                 ))}
@@ -274,48 +263,51 @@ const AEProducts = () => {
                   <Button
                     type="primary"
                     onClick={() => add()}
-                      
-                    style={{ float: 'right' }} 
+                    style={{ float: 'right' }}
                   >
-                      Add More Colors
+                    Add More Colors
                   </Button>
                   <Form.ErrorList errors={errors} />
                 </Form.Item>
               </>
             )}
           </Form.List>
-          <Divider style={{ backgroundColor: '#d8d8d8' }}>Total items field</Divider>
-          
+          <Divider style={{ backgroundColor: '#d8d8d8' }}>
+            Total items field
+          </Divider>
+
           <Form.Item
             name="remained"
-            rules={[ { required: true, message: 'Please input your total items left!' } ]}
-                  
+            rules={[
+              {
+                required: true,
+                message: 'Please input your total items left!',
+              }
+            ]}
           >
-            <InputNumber 
+            <InputNumber
               // ref = {editValue}
               // className='input'
-              
+
               onClick={(e) => console.log(e.target.value)}
-              placeholder="Item..." 
-              value = {editValue.remained ? editValue.remained : ''}
-              style={{ width:'100%' }} 
+              placeholder="Item..."
+              value={editValue.remained ? editValue.remained : ''}
+              style={{ width: '100%' }}
             />
           </Form.Item>
           <Form.Item>
             <Button
               type="primary"
               htmlType="submit"
-              onClick={ success }
-              style={{ float: 'right' }} 
+              onClick={success}
+              style={{ float: 'right' }}
             >
-            SAVE
+              SAVE
             </Button>
           </Form.Item>
         </Form>
       </Card>
-
     </>
-
   )
 }
 

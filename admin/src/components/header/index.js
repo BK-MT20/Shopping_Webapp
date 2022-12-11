@@ -37,12 +37,12 @@ const menu = (
 
 function Header() {
   return (
-    <Layout.Header  style ={{ display:'flex', justifyContent: 'space-between', alignItems:'center' }}className="header">
-      <Typography.Title style={{ color: 'white' }}>Shopping Webapp</Typography.Title>
+    <Layout.Header theme="light" style ={{ backgroundColor: '#367e62', display:'flex', justifyContent: 'space-between', alignItems:'center' }}className="header">
+      <Typography.Title > <img className='img-header' src="https://cdn.shopify.com/s/files/1/0591/1350/4958/files/3.png?v=1628328728&width=360"/></Typography.Title>
       <Space size={'large'}>
         <Notification />
         <Dropdown overlay={menu}>
-          <UserOutlined style={{ color:'white', fontSize:'16px' }} />
+          <UserOutlined style={{ color:'black', fontSize:'16px' }} />
         </Dropdown>
       </Space>
     </Layout.Header>

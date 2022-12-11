@@ -55,15 +55,17 @@ function Sider() {
   }
 
   return (
-    <Layout.Sider width={200} className="site-layout-background">
+    <Layout.Sider width={200} className="site-layout-background" style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', color:'black' }}>
       <Menu
-        theme="dark"
+        
         mode="inline"
         // defaultSelectedKeys={[ location.pathname ]}
         // defaultOpenKeys={[ '\\' + paths[1] ]}
         style={{
           height: '100%',
           borderRight: 0,
+          color:'black',
+          background: 'rgba(255, 255, 255, 0.2)'
         }}
         items={keys}
         onClick={handleSiderOnclick}

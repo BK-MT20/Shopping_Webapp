@@ -8,6 +8,7 @@ function AddButton() {
       type="primary" icon={<PlusOutlined/>} 
       className='add-btn' 
       size="large"
+     
     >
       Add More
     </Button>
