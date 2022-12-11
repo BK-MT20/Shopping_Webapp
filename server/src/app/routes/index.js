@@ -2,6 +2,7 @@ const authRouter = require('./auth')
 const orderRouter = require('./order')
 const productRouter = require ('./product')
 const searchRouter = require('./search')
+const statisticRouter = require('./statistic')
 const route = app => {
     app.use((req, res, next) => {
         res.header(
@@ -15,6 +16,7 @@ const route = app => {
     app.use('/api/order', orderRouter)
     app.use('/api/product', productRouter)
     app.use('/api/search', searchRouter)
+    app.use('/api/statistic', statisticRouter)
 }
 
 module.exports = route
