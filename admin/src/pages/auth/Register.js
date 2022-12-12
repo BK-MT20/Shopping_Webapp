@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Typography, Button, Form, Input, Card, message } from 'antd'
 import { LockOutlined, UserOutlined, MailOutlined } from '@ant-design/icons'
 // import axios from '../../api'
-import authService from './Auth'
+import authService from '../../services/Auth'
 import { useNavigate } from 'react-router-dom'
 
 const { Title } = Typography

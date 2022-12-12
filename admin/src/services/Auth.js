@@ -1,5 +1,4 @@
-import React from 'react'
-import axios from '../../api'
+import axios from '../api'
 import { message } from 'antd'
 
 const login = (values) => {
@@ -37,6 +36,7 @@ const register = (values) => {
     username: values.username,
     email: values.email,
     password: values.password,
+    role: 'admin'
   })
 }
 const getCurrentUser = () => {

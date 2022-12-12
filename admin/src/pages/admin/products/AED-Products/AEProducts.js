@@ -263,7 +263,6 @@ const AEProducts = () => {
                   <Button
                     type="primary"
                     onClick={() => add()}
-                    className="button-add"
                     style={{ float: 'right' }}
                   >
                     Add More Colors

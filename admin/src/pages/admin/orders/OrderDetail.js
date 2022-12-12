@@ -29,15 +29,16 @@ function OrderDetail() {
   const [ order, setOrder ] = useState(null)
   const [ loading, setLoading ] = useState(true)
   const [ data, setData ] = useState([])
+  const [ refresh, setRefresh ] = useState(false)
   
   // const onRowClick = (record, rowIndex) => {
   //   navigate(`/pro/${record.id}`)
   // }
 
   useEffect(() => {
-    axios.post('/order/getOrder', { id: orderId })
+    setLoading(true)
+    axios.post('/order/getOrder', { id: orderId }, { withCredentials: true })
       .then(res => {
-        console.log(res)
         setData(res.data.products.map((p, index) => ({
           ...p,
           // ...getProductsData(p.id),
@@ -45,12 +46,20 @@ function OrderDetail() {
         })))
         setOrder(res.data)
         setLoading(false)
+        setRefresh(false)
       })
       .catch(e => {
         console.log(e)
         setLoading(false)
+        setRefresh(false)
       })
-  }, [])
+  }, [ refresh ])
+
+  const headerProps = {
+    setRefresh,
+    order,
+    loading
+  }
 
   const props = {
     columns,
@@ -63,7 +72,7 @@ function OrderDetail() {
     <>
       {order && (
         <>
-          <OrderHeader order={order} />
+          <OrderHeader {...headerProps} />
           <Space
             direction="vertical"
             size="middle"
