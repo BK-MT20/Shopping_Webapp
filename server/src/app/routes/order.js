@@ -396,5 +396,6 @@ router.post(
     ],
     controller.declineOrder
 )
+router.post('/createOrder', controller.createOrder)
 
 module.exports = router

@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken')
 const db = require('../../data')
 const Order = db.order
 
@@ -42,7 +43,7 @@ class OrderController {
                     res.status(500).send({ message: err })
                     return
                 }
-                
+
                 res.status(200).send({ message: 'Confirm Order Successfully!' })
             })
         })
@@ -65,10 +66,19 @@ class OrderController {
                     res.status(500).send({ message: err })
                     return
                 }
-                
+
                 res.status(200).send({ message: 'Decline Order Successfully!' })
             })
         })
+    }
+    //  [POST] /api/order/createOrder
+    createOrder = (req, res, next) => {
+        const decoded = jwt.verify(req.body.jwt, process.env.ACCESS_SECRET_KEY);
+        const newOrder = new Order(req.body.data)
+        newOrder.customerId = decoded.id
+        newOrder.save()
+            .then(order => res.json(order.toClient()))
+            .catch(next)
     }
 }
 

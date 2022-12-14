@@ -10,12 +10,14 @@ const Order = mongoose.model(
         totalAmount: { type: Number, required: true },
         products: [
             {
-                id: mongoose.Schema.Types.ObjectId,
+                id: { type: String, required: true },
                 quantity: { type: Number, required: true }
             }
         ],
+        address: { type: String, required: true },
+        note: { type: String, default: '' },
     }, { timestamps: true })
-        .method('toClient', function() {
+        .method('toClient', function () {
             var obj = this.toObject();
             //Rename fields
             obj.id = obj._id;
@@ -26,7 +28,7 @@ const Order = mongoose.model(
                 delete p._id;
                 return p
             })
-        
+
             return obj;
         })
 )

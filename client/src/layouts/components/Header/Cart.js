@@ -6,7 +6,11 @@ import OutsideAlerter from '../../../components/OutsideAlerter'
 
 import { IoMdClose } from 'react-icons/io'
 
+import { useSelector, useDispatch } from 'react-redux'
+
 const Cart = ({ setShowCart }) => {
+
+    const dispatch = useDispatch()
 
     const [cartStyle, setCartStyle] = useState("translate-x-full")
 
@@ -22,15 +26,19 @@ const Cart = ({ setShowCart }) => {
         setCartStyle("translate-x-0")
     }, [])
 
-    const data = [
-        {
-            urlImage: "https://cdn.shopify.com/s/files/1/0591/1350/4958/products/54_8558553c-a9dd-4474-bc2b-6707343dacbe.jpg?v=1628348240&width=360",
-            title: "Boxy Denim Jacket",
-            color: "Light Blue",
-            price: "25",
-            amount: "2",
-        },
-    ]
+    const [data, setData] = useState([])
+    const [total, setTotal] = useState(0)
+
+    let items = useSelector(state => state.cart.cart)
+    const InitData = () => {
+        setData(items)
+        let temp = 0
+        items.forEach(item => temp += +item.data.data.price * +item.data.amount)
+        setTotal(temp);
+    }
+    useEffect(() => {
+        InitData()
+    }, [items])
 
     return (
         <div className="flex justify-end fixed top-0 right-0 w-full h-full bg-black bg-opacity-30 z-50">
@@ -40,19 +48,19 @@ const Cart = ({ setShowCart }) => {
                 </div>
                 <div className="flex flex-col h-full">
                     <p className="text-2xl font-medium">Shopping Cart</p>
-                    {false ?
+                    {!data.length ?
                         <p>Your cart is currently empty.</p>
                         :
                         <div className="flex flex-col h-full pt-3 pb-10">
                             <div className="flex-1 overflow-y-auto no-scroll md:scroll1">
-                                {data.map(item => (
-                                    <CartItem key={item.title} data={item} />
+                                {data.map((item, index) => (
+                                    <CartItem key={index} data={item} />
                                 ))}
                             </div>
                             <div className="">
                                 <div className="flex items-center justify-between py-4">
                                     <p className="font-medium text-lg">Subtotal</p>
-                                    <p className="font-medium text-lg">$25.00</p>
+                                    <p className="font-medium text-lg">${total}.00</p>
                                 </div>
                                 <Link to="/checkout">
                                     <button onClick={closeCart} className="w-full py-2 px-7 font-medium border border-black rounded text-white bg-black hover:scale-105 transition duration-300">
