@@ -1,4 +1,3 @@
-
 module.exports = async (db) => {
     try {
         await db.mongoose.connect(process.env.MONGODB_URL, {

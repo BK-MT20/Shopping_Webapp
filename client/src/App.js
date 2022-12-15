@@ -3,10 +3,14 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import DefaultLayout from './layouts/DefaultLayout'
 import { publicRoutes } from './routes'
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
 	return (
 		<Router>
 			<div className="App">
+				<ToastContainer />
 				<Routes>
 					{publicRoutes.map((route, index) => {
 						const Page = route.component;

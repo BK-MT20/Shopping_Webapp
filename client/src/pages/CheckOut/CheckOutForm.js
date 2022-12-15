@@ -1,47 +1,32 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import axios from '../../api'
+import axiosR from 'axios'
 import Select from 'react-select';
 
 import CheckOutInput from "./CheckOutInput"
 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 
 import { RiArrowLeftSLine } from 'react-icons/ri';
 
+import { toast } from 'react-toastify';
+
 const CheckOutForm = () => {
+	const navigate = useNavigate()
+	const user = useSelector(state => state.user)
 
-	const defaultProvince = { label: "Tỉnh Bà Rịa - Vũng Tàu", value: "77" }
-	const defaultDistrict = { label: "Huyện Xuyên Mộc", value: "751" }
-	const defaultWard = { label: "Thị trấn Phước Bửu", value: "26620" }
-	const defaultAddress = "88/88 Tran Hung Dao"
-
-	const optionsAddress = [{ label: "Default Address [Customer1]", value: "0" }, { label: "New Address", value: "1" }]
+	const optionsAddress = [{ label: "New Address", value: "0" }]
 
 	const selectStyle = "font-medium text-sm"
+
+	//cart
+	const [total, setTotal] = useState(0)
+	const [itemCart, setItemCart] = useState([])
 
 	const [curOptionProvince, setCurOptionProvince] = useState()
 	const [curOptionDistrict, setCurOptionDistrict] = useState()
 	const [curOptionWard, setCurOptionWard] = useState()
-
-	const resetAddressDefault = () => {
-		setCurOptionProvince(defaultProvince)
-		setCurOptionDistrict(defaultDistrict)
-		setCurOptionWard(defaultWard)
-		setOrderValue((prev) => ({
-			...prev,
-			address: defaultAddress
-		}))
-	}
-
-	const handleChangeNewOptionAddress = () => {
-		setCurOptionProvince({ label: "", value: "" })
-		setCurOptionDistrict({ label: "", value: "" })
-		setCurOptionWard({ label: "", value: "" })
-		setOrderValue((prev) => ({
-			...prev,
-			address: ""
-		}))
-	}
 
 	const [orderValue, setOrderValue] = useState({
 		optionAddress: "0",
@@ -56,7 +41,7 @@ const CheckOutForm = () => {
 
 	const onClickProvince = () => {
 		if (provinceList.length) return
-		axios.get('https://provinces.open-api.vn/api/p/')
+		axiosR.get('https://provinces.open-api.vn/api/p/')
 			.then(res => {
 				const response = res.data
 				let curArr = []
@@ -70,7 +55,7 @@ const CheckOutForm = () => {
 	const onChangeProvinceValue = (provinceCode) => {
 		setDistrictList([])
 		setWardList([])
-		axios.get(`https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`)
+		axiosR.get(`https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`)
 			.then(res => {
 				const response = res.data.districts
 				let curArr = []
@@ -82,7 +67,7 @@ const CheckOutForm = () => {
 	}
 
 	const onChangeDistrictValue = (districtCode) => {
-		axios.get(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`)
+		axiosR.get(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`)
 			.then(res => {
 				const response = res.data.wards
 				let curArr = []
@@ -100,16 +85,65 @@ const CheckOutForm = () => {
 		}))
 	}
 
-	const confirmOrder = () => {
-		console.log(curOptionProvince)
-		console.log(curOptionDistrict)
-		console.log(curOptionWard)
-		console.log(orderValue);
-	}
+	//update total cart
+	let items = useSelector(state => state.cart.cart)
 
 	useEffect(() => {
-		resetAddressDefault()
-	}, [])
+		setItemCart(items)
+		let temp = 0
+		items.forEach(item => temp += +item.data.data.price * +item.data.amount)
+		setTotal(temp);
+	}, [items])
+
+	const notifyErrorConfirm = () => toast.error('Missing data!', {
+		position: "top-right",
+		autoClose: 1000,
+		hideProgressBar: false,
+		closeOnClick: true,
+		pauseOnHover: true,
+		draggable: true,
+		progress: undefined,
+		theme: "light",
+	});
+
+	const notifySuccessConfirm = () => toast.success('Order success!', {
+		position: "top-right",
+		autoClose: 1000,
+		hideProgressBar: false,
+		closeOnClick: true,
+		pauseOnHover: true,
+		draggable: true,
+		progress: undefined,
+		theme: "light",
+	});
+
+
+	const confirmOrder = () => {
+		if (!curOptionProvince || !curOptionDistrict || !curOptionWard || !orderValue.address || !orderValue.lastName) {
+			notifyErrorConfirm()
+			return
+		}
+		const products = []
+		itemCart.map(item => products.push(
+			{
+				id: item.data.data.id,
+				quantity: item.data.amount
+			}
+		))
+		axios.post("/order/createOrder",
+			{
+				totalAmount: total,
+				products: products,
+				address: `${orderValue.address}, ${curOptionWard.label}, ${curOptionDistrict.label}, ${curOptionProvince.label}`,
+				note: orderValue.note
+			},
+			{ withCredentials: true }
+		)
+			.then(res => console.log(res))
+			.catch(err => console.log(err))
+		notifySuccessConfirm()
+		navigate("/")
+	}
 
 	return (
 		<div className="lg:pr-10">
@@ -118,15 +152,7 @@ const CheckOutForm = () => {
 				<Select
 					options={optionsAddress}
 					defaultValue={optionsAddress[0]}
-					onChange={e => {
-						setOrderValue((prev) => ({ ...prev, optionAddress: e.value }))
-						if (e.value == 0) {
-							resetAddressDefault()
-						}
-						else if (e.value == 1) {
-							handleChangeNewOptionAddress()
-						}
-					}}
+					onChange={e => setOrderValue((prev) => ({ ...prev, optionAddress: e.value }))}
 					className={selectStyle}
 				/>
 			</div>
@@ -141,7 +167,6 @@ const CheckOutForm = () => {
 								onChangeProvinceValue(e.value)
 							}}
 							value={curOptionProvince}
-							isDisabled={orderValue.optionAddress == 0}
 							className={selectStyle}
 						/>
 					</div>
@@ -155,7 +180,6 @@ const CheckOutForm = () => {
 							onChangeDistrictValue(e.value)
 						}}
 						value={curOptionDistrict}
-						isDisabled={orderValue.optionAddress == 0}
 						className={selectStyle}
 					/>
 				</div>
@@ -165,20 +189,19 @@ const CheckOutForm = () => {
 						options={wardList}
 						onChange={(e) => setCurOptionWard({ label: e.label, value: e.value })}
 						value={curOptionWard}
-						isDisabled={orderValue.optionAddress == 0}
 						className={selectStyle}
 					/>
 				</div>
 			</div>
 			<div className="mb-6">
-				<CheckOutInput name="address" value={orderValue.address} disabled={orderValue.optionAddress == 0} placeholder="Address" onChange={handleOnchangeInput} />
+				<CheckOutInput name="address" value={orderValue.address} placeholder="Address" onChange={handleOnchangeInput} />
 			</div>
 			<div className="grid grid-cols-2 gap-4 mb-6">
 				<CheckOutInput name="firstName" value={orderValue.firstName} placeholder="First name (optional)" onChange={handleOnchangeInput} />
 				<CheckOutInput name="lastName" value={orderValue.lastName} placeholder="Last name" onChange={handleOnchangeInput} />
 			</div>
 			<div className="">
-				<CheckOutInput name="note" value={orderValue.note} placeholder="Note" onChange={handleOnchangeInput} />
+				<CheckOutInput name="note" value={orderValue.note} placeholder="Note (optional)" onChange={handleOnchangeInput} />
 			</div>
 			<div className="flex items-center justify-between py-3 lg:mt-20">
 				<div className="flex items-center text-sky-600 cursor-pointer">
