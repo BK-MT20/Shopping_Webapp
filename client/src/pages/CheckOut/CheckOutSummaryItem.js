@@ -1,52 +1,27 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { MdKeyboardArrowUp } from 'react-icons/md';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 
+import { useSelector, useDispatch } from 'react-redux'
 
 const CheckOutSummaryItem = () => {
 
     const [showOrderSummary, setShoowOrderSummary] = useState(true)
+    const [data, setData] = useState(useSelector(state => state.cart.cart))
+    const [total, setTotal] = useState(0)
 
-    const data = [
-        {
-            urlImage: "https://cdn.shopify.com/s/files/1/0591/1350/4958/products/49a_345f6a56-aa62-4074-8544-b927fd02cfd2.jpg?v=1628348214&width=360",
-            title: "Rounded Sunglasses",
-            amount: "1",
-            price: "8"
-        },
-        {
-            urlImage: "https://cdn.shopify.com/s/files/1/0591/1350/4958/products/49a_345f6a56-aa62-4074-8544-b927fd02cfd2.jpg?v=1628348214&width=360",
-            title: "Rounded Sunglasses",
-            amount: "1",
-            price: "8"
-        },
-        {
-            urlImage: "https://cdn.shopify.com/s/files/1/0591/1350/4958/products/49a_345f6a56-aa62-4074-8544-b927fd02cfd2.jpg?v=1628348214&width=360",
-            title: "Rounded Sunglasses",
-            amount: "1",
-            price: "8"
-        },
-        {
-            urlImage: "https://cdn.shopify.com/s/files/1/0591/1350/4958/products/49a_345f6a56-aa62-4074-8544-b927fd02cfd2.jpg?v=1628348214&width=360",
-            title: "Rounded Sunglasses",
-            amount: "1",
-            price: "8"
-        },
-        {
-            urlImage: "https://cdn.shopify.com/s/files/1/0591/1350/4958/products/49a_345f6a56-aa62-4074-8544-b927fd02cfd2.jpg?v=1628348214&width=360",
-            title: "Rounded Sunglasses",
-            amount: "1",
-            price: "8"
-        },
-        {
-            urlImage: "https://cdn.shopify.com/s/files/1/0591/1350/4958/products/49a_345f6a56-aa62-4074-8544-b927fd02cfd2.jpg?v=1628348214&width=360",
-            title: "Rounded Sunglasses",
-            amount: "1",
-            price: "8"
-        },
-    ]
+    let items = useSelector(state => state.cart.cart)
+    const InitData = () => {
+        setData(items)
+        let temp = 0
+        items.forEach(item => temp += +item.data.data.price * +item.data.amount)
+        setTotal(temp);
+    }
+    useEffect(() => {
+        InitData()
+    }, [items])
 
     return (
         <div className="lg:px-10">
@@ -61,7 +36,7 @@ const CheckOutSummaryItem = () => {
                             {showOrderSummary ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
                         </span>
                     </div>
-                    <p className="font-medium text-lg text-green-600">$552.00</p>
+                    <p className="font-medium text-lg text-green-600">${total}.00</p>
                 </div>
             </div>
             {showOrderSummary &&
@@ -70,11 +45,11 @@ const CheckOutSummaryItem = () => {
                         {data.map((item, index) => (
                             <div key={index} className="flex items-center font-medium mb-3">
                                 <div className="relative">
-                                    <img className="w-16 rounded" src={item.urlImage} />
-                                    <span className="absolute -top-2 -right-2 flex items-center justify-center text-white text-xs w-5 h-5 rounded-full bg-slate-500"><span>{item.amount}</span></span>
+                                    <img className="w-16 rounded" src={item.data.data.image[0]} />
+                                    <span className="absolute -top-2 -right-2 flex items-center justify-center text-white text-xs w-5 h-5 rounded-full bg-slate-500"><span>{item.data.amount}</span></span>
                                 </div>
-                                <p className="flex-1 px-4">{item.title}</p>
-                                <p>${item.price}.00</p>
+                                <p className="flex-1 px-4">{item.data.data.name}</p>
+                                <p>${item.data.data.price}.00</p>
                             </div>
                         ))}
                     </div>
@@ -82,7 +57,7 @@ const CheckOutSummaryItem = () => {
                     <div className="py-3 my-4 border-y">
                         <div className="mb-2 flex items-center justify-between">
                             <p className="text-gray-700">Subtotal</p>
-                            <p className="font-medium">$552.00</p>
+                            <p className="font-medium">${total}.00</p>
                         </div>
                         <div className="flex items-center justify-between">
                             <p className="text-gray-700">Shipping</p>
@@ -91,7 +66,7 @@ const CheckOutSummaryItem = () => {
                     </div>
                     <div className="lg:mb-4 flex items-center justify-between font-medium">
                         <p className="text-xl">Total</p>
-                        <p className="text-2xl text-green-600">$552.00</p>
+                        <p className="text-2xl text-green-600">${total}.00</p>
                     </div>
                 </>
             }

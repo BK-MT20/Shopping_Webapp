@@ -3,10 +3,18 @@ import { BiStar } from "react-icons/bi";
 import { BiGitCompare } from "react-icons/bi";
 import { BsQuestionCircle } from "react-icons/bs";
 import { BsShare } from "react-icons/bs";
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import React from 'react'
 import { useState, useEffect } from "react";
+
+import { useSelector, useDispatch } from 'react-redux'
+import { add } from '../../features/cart/cartSlice'
+
+import { toast } from 'react-toastify';
+
 const Index = (props) => {
+	const navigate = useNavigate()
+	const dispatch = useDispatch()
 
 	const location = useLocation();
 	const state = location.state;
@@ -48,6 +56,32 @@ const Index = (props) => {
 		}
 	}
 
+	const notifySuccessAddItem = () => toast.success('Add success!', {
+		position: "top-right",
+		autoClose: 1000,
+		hideProgressBar: false,
+		closeOnClick: true,
+		pauseOnHover: true,
+		draggable: true,
+		progress: undefined,
+		theme: "light",
+	});
+
+	const handleAddCart = () => {
+		dispatch(add({
+			data: state,
+			amount: count
+		}))
+		notifySuccessAddItem()
+	}
+	const handleBuyNow = () => {
+		dispatch(add({
+			data: state,
+			amount: count
+		}))
+		navigate('/checkout')
+	}
+
 	useEffect(() => {
 		window.scrollTo(0, 0)
 	}, [])
@@ -86,12 +120,10 @@ const Index = (props) => {
 									<p class="flex-none">{count}</p>
 									<button type="button" id="button_right" class="flex-none text-2xl" onClick={addCount}>+</button>
 								</div>
-								<button type="button" id="button_right" class="w-73/100 h-[50px] rounded-md border-black border border-solid flex-none transition ease-in-out duration-300 hover:bg-black hover:text-white hover:scale-105 ">Add to cart</button>
+								<button onClick={handleAddCart} type="button" id="button_right" class="w-73/100 h-[50px] rounded-md border-black border border-solid flex-none transition ease-in-out duration-300 hover:bg-black hover:text-white hover:scale-105 ">Add to cart</button>
 							</div>
 							<div>
-								<Link to="/checkout">
-									<button type="button" id="button_right" class="w-full h-[50px] rounded-md border-black border border-solid flex-none bg-black text-white mt-[25px] duration-300 hover:scale-105">Buy it now</button>
-								</Link>
+								<button onClick={handleBuyNow} type="button" id="button_right" class="w-full h-[50px] rounded-md border-black border border-solid flex-none bg-black text-white mt-[25px] duration-300 hover:scale-105">Buy it now</button>
 							</div>
 							<div class=" h-[1px] bg-gray-300 mt-[30px]"></div>
 							<div class="flex w-[335px] justify-between mt-[30px]">

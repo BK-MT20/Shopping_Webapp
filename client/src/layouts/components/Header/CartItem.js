@@ -3,28 +3,47 @@ import { useState } from 'react'
 import { HiMinusSm } from 'react-icons/hi'
 import { IoMdAdd } from 'react-icons/io'
 
+import { useSelector, useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { remove, upAmount, downAmount } from '../../../features/cart/cartSlice'
+
 const CartItem = ({ data }) => {
 
-    const [amount, setAmount] = useState(data.amount)
+    const dispatch = useDispatch()
 
+    const removeItem = (id) => {
+        dispatch(remove(id))
+    }
+
+    const handleDown = (id) => {
+        dispatch(downAmount(id))
+    }
+
+    const handleUp = (id) => {
+        dispatch(upAmount(id))
+    }
     return (
         <div className="flex items-center mb-2">
-            <img className="w-24" src={data.urlImage} />
+            <Link to={`/product/${data.data.data.id}`} state={data.data.data}>
+                <img className="w-24" src={data.data.data.image[0]} />
+            </Link>
             <div className="pl-4">
-                <p className="font-medium hover:underline">{data.title}</p>
-                <p className=""><span className="font-medium">Color: </span>{data.color}</p>
-                <p className="">${data.price}.00</p>
+                <Link to={`/product/${data.data.data.id}`} state={data.data.data}>
+                    <p className="font-medium hover:underline">{data.data.data.name}</p>
+                </Link>
+                <p className=""><span className="font-medium">Color: </span>{data.data.data.colors[0]}</p>
+                <p className="">${data.data.data.price}.00</p>
                 <div className="flex items-center mt-2.5">
                     <div className="flex items-center overflow-hidden rounded bg-slate-200">
-                        <button className="p-2" onClick={() => setAmount(prev => prev - 1 < 1 ? 1 : prev - 1)}>
+                        <button onClick={() => handleDown(data.data.data.id)} className="p-2" >
                             <HiMinusSm />
                         </button>
-                        <input className="w-9 text-center bg-slate-200 outline-none" type="number" value={amount} min="0" onChange={(e) => setAmount(e.target.value)} />
-                        <button className="p-2" onClick={() => setAmount(prev => +prev + 1)}>
+                        <p className="w-4">{data.data.amount}</p>
+                        <button onClick={() => handleUp(data.data.data.id)} className="p-2" >
                             <IoMdAdd />
                         </button>
                     </div>
-                    <button className="opacity-80 text-sm underline p-2 ml-2">Remove</button>
+                    <button onClick={() => removeItem(data.data.data.id)} className="opacity-80 text-sm underline p-2 ml-2">Remove</button>
                 </div>
             </div>
         </div>
