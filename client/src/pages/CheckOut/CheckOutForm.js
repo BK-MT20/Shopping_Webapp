@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import axios from '../../api'
+import axiosR from 'axios'
 import Select from 'react-select';
 
 import CheckOutInput from "./CheckOutInput"
@@ -40,7 +41,7 @@ const CheckOutForm = () => {
 
 	const onClickProvince = () => {
 		if (provinceList.length) return
-		axios.get('https://provinces.open-api.vn/api/p/')
+		axiosR.get('https://provinces.open-api.vn/api/p/')
 			.then(res => {
 				const response = res.data
 				let curArr = []
@@ -54,7 +55,7 @@ const CheckOutForm = () => {
 	const onChangeProvinceValue = (provinceCode) => {
 		setDistrictList([])
 		setWardList([])
-		axios.get(`https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`)
+		axiosR.get(`https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`)
 			.then(res => {
 				const response = res.data.districts
 				let curArr = []
@@ -66,7 +67,7 @@ const CheckOutForm = () => {
 	}
 
 	const onChangeDistrictValue = (districtCode) => {
-		axios.get(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`)
+		axiosR.get(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`)
 			.then(res => {
 				const response = res.data.wards
 				let curArr = []
@@ -129,16 +130,14 @@ const CheckOutForm = () => {
 				quantity: item.data.amount
 			}
 		))
-		axios.post("http://localhost:8080/api/order/createOrder",
+		axios.post("/order/createOrder",
 			{
-				data: {
-					totalAmount: total,
-					products: products,
-					address: `${orderValue.address}, ${curOptionWard.label}, ${curOptionDistrict.label}, ${curOptionProvince.label}`,
-					note: orderValue.note
-				},
-				jwt: user.user.accessToken
-			}
+				totalAmount: total,
+				products: products,
+				address: `${orderValue.address}, ${curOptionWard.label}, ${curOptionDistrict.label}, ${curOptionProvince.label}`,
+				note: orderValue.note
+			},
+			{ withCredentials: true }
 		)
 			.then(res => console.log(res))
 			.catch(err => console.log(err))

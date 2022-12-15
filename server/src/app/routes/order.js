@@ -396,6 +396,11 @@ router.post(
     ],
     controller.declineOrder
 )
-router.post('/createOrder', controller.createOrder)
+router.post(
+    '/createOrder',
+    [
+        authJWT.verifyToken,
+    ],
+    controller.createOrder)
 
 module.exports = router

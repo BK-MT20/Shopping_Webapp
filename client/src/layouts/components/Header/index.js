@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import { signOut } from '../../../features/user/userSlice'
 import { resetCart } from '../../../features/cart/cartSlice'
@@ -18,6 +18,7 @@ import { RiShoppingBagLine } from 'react-icons/ri'
 
 const Header = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const user = useSelector(state => state.user)
 
     const [showSearch, setShowSearch] = useState(false)
@@ -37,6 +38,7 @@ const Header = () => {
     const handleSignout = () => {
         dispatch(signOut())
         dispatch(resetCart())
+        navigate("/")
     }
 
     useEffect(() => {

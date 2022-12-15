@@ -34,7 +34,6 @@ const HomeBestSellerItem = ({ data }) => {
         dispatch(add(data))
         notifySuccessAddItem()
     }
-    console.log(data);
     return (
         <div>
             <div className={"cursor-pointer md:px-4 pb-10 transition duration-200 " + (isHoverCard ? "shadow-lg" : "shadow-none	")} onMouseEnter={() => setIsHoverCard(true)} onMouseLeave={() => setIsHoverCard(false)}>

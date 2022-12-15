@@ -72,13 +72,17 @@ class OrderController {
         })
     }
     //  [POST] /api/order/createOrder
-    createOrder = (req, res, next) => {
-        const decoded = jwt.verify(req.body.jwt, process.env.ACCESS_SECRET_KEY);
-        const newOrder = new Order(req.body.data)
-        newOrder.customerId = decoded.id
-        newOrder.save()
-            .then(order => res.json(order.toClient()))
-            .catch(next)
+    createOrder = (req, res) => {
+        const newOrder = new Order(req.body)
+        newOrder.customerId = req.userId
+        newOrder.save((err, order) => {
+            if (err) {
+                res.status(500).send({ message: err })
+                return
+            }
+
+            res.status(200).send({ message: 'Create Order Successfully!' })
+        })
     }
 }
 

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { signIn } from '../../features/user/userSlice'
-import axios from 'axios'
+import axios from '../../api'
 
 const Index = () => {
 	const user = useSelector(state => state.user)
@@ -31,11 +31,12 @@ const Index = () => {
 			seterrorCode({ isShow: true, message: "Missing data!" })
 			return
 		}
-		axios.post('http://localhost:8080/api/auth/signin', { username: signInValue.username, password: signInValue.password })
+		axios.post('/auth/signin', { username: signInValue.username, password: signInValue.password })
 			.then(res => {
-				console.log(res.data);
-				dispatch(signIn(res.data))
-				navigate("/")
+				if (res.data.accessToken) {
+					dispatch(signIn(res.data))
+					navigate("/")
+				}
 			})
 			.catch(err => {
 				seterrorCode({ isShow: true, message: err.response.data.message || "Internal Server Error" })
