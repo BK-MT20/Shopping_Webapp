@@ -3,16 +3,16 @@ const Notification = db.notification
 const User = db.user
 
 const addNewNotification = (data) => {
-    User.findById(data.customer.id).exec((err, customer) => {
+    User.findById(data.customerId).exec((err, customer) => {
         if (err) {
             console.log('addNewNotification - Find Customer Error: ', err)
             return
         }
 
         const notification = new Notification({
-            orderId: data.orderId,
+            orderId: data.id,
             customer: {
-                id: data.customer.id,
+                id: data.customerId,
                 name: customer.username
             }
         })

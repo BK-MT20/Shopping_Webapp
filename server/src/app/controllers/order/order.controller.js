@@ -1,11 +1,12 @@
 const jwt = require('jsonwebtoken')
 const db = require('../../data')
+const { addNewNotification } = require('../../services/notification')
 const Order = db.order
 
 class OrderController {
     // [Get] /api/order/getAllOrders
     getAllOrders = (req, res) => {
-        Order.find({}).exec((err, orders) => {
+        Order.find({}, {}, { sort: { 'createdAt': -1 }}).exec((err, orders) => {
             if (err) {
                 res.status(500).send({ message: err })
                 return
@@ -37,6 +38,7 @@ class OrderController {
 
             order.status = 'confirmed'
             order.confirmByAdminId = req.userId
+            order.confirmAt = new Date()
 
             order.save((err, order) => {
                 if (err) {
@@ -59,6 +61,7 @@ class OrderController {
 
             order.status = 'declined'
             order.confirmByAdminId = req.userId
+            order.confirmAt = new Date()
             order.declineReason = req.body.reason
 
             order.save((err, order) => {
@@ -80,6 +83,7 @@ class OrderController {
                 res.status(500).send({ message: err })
                 return
             }
+            addNewNotification(order?.toClient() || newOrder?.toClient())
 
             res.status(200).send({ message: 'Create Order Successfully!' })
         })
