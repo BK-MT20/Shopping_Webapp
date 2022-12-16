@@ -1,6 +1,5 @@
 import { Card, Statistic, Table, Col, Row } from 'antd'
 import './month.scss'
-import { getDate } from './getDate.js'
 import React, { useEffect, useState } from 'react'
 import { SttHeader } from '../../../components/'
 import { ShoppingCartOutlined, PoundOutlined } from '@ant-design/icons'
@@ -26,7 +25,7 @@ import {
 
 import { Bar } from 'react-chartjs-2'
 function Statisticmonth() {
-  const [ revenueMonth, setRevenueMonth ] = useState(0)
+ 
   const [ revenue1, setRevenue1 ] = useState(0)
   const [ revenue2, setRevenue2 ] = useState(0)
   const [ revenue3, setRevenue3 ] = useState(0)
@@ -39,6 +38,7 @@ function Statisticmonth() {
   const [ revenue10, setRevenue10 ] = useState(0)
   const [ revenue11, setRevenue11 ] = useState(0)
   const [ revenue12, setRevenue12 ] = useState(0)
+  const [ revenueMonth, setRevenueMonth ] = useState(0)
   const [ orderMonth, setOrderMonth ] = useState(0)
   const [ revenueToday, setRevenueToday ] = useState(0)
   const [ orderToday, setOrderToday ] = useState(0)
@@ -50,34 +50,32 @@ function Statisticmonth() {
   const [ orderDress, setOrderDress ] = useState(0)
   const [ orderBag, setOrderBag ] = useState(0)
   const [ orderBelt, setOrderBelt ] = useState(0)
-  var date = document.getElementById('date')
-  var month = document.getElementById('month')
-  var year = document.getElementById('year')
-  var date_now = new Date().getDate()
 
-  var month_now = new Date().getMonth() + 1
+  var datenow = new Date().getDate()
 
-  var year_now = new Date().getFullYear()
+  var monthnow = new Date().getMonth() + 1
+
+  var yearnow = new Date().getFullYear()
 
   let today =
-    year_now.toString() +
+    yearnow.toString() +
     '-' +
-    month_now.toString() +
+    monthnow.toString() +
     '-' +
-    date_now.toString()
+    datenow.toString()
   useEffect(() => {
-    let revenue_month = 0
-    let order_month = 0
-    let revenue_today = 0
-    let order_today = 0
-    let order_shirt = 0
-    let order_jacket = 0
-    let order_pants = 0
-    let order_hats = 0
-    let order_sandals = 0
-    let order_dresses = 0
-    let order_belt = 0
-    let order_bags = 0
+    let revenuemonth = 0
+    let ordermonth = 0
+    let revenuetoday = 0
+    let ordertoday = 0
+    let ordershirt = 0
+    let orderjacket = 0
+    let orderpants = 0
+    let orderhats = 0
+    let ordersandals = 0
+    let orderdresses = 0
+    let orderbelt = 0
+    let orderbags = 0
     let Jan = 0
     let Fer = 0
     let March = 0
@@ -100,39 +98,39 @@ function Statisticmonth() {
            
             axios.get('/statistic/getProductId').then((products) => {
               products.data.map((product) => {
-              
+                
                 if (product.id === m.productId) {
                   if (product.type.toString() === 'shirts') {
-                    order_shirt = order_shirt + m.quantity
-                    setOrderTshirt(order_shirt)
+                    ordershirt = ordershirt + m.quantity
+                    setOrderTshirt(ordershirt)
                   }
                   if (product.type.toString() === 'jacket') {
-                    order_jacket = order_jacket + m.quantity
-                    setOrderJacket(order_jacket)
+                    orderjacket = orderjacket + m.quantity
+                    setOrderJacket(orderjacket)
                   }
                   if (product.type.toString() === 'pants') {
-                    order_pants = order_pants + m.quantity
-                    setOrderPants(order_pants)
+                    orderpants = orderpants + m.quantity
+                    setOrderPants(orderpants)
                   }
                   if (product.type.toString() === 'hats') {
-                    order_hats = order_hats + m.quantity
-                    setOrderHat(order_hats)
+                    orderhats = orderhats + m.quantity
+                    setOrderHat(orderhats)
                   }
                   if (product.type.toString() === 'dresses') {
-                    order_dresses = order_dresses + m.quantity
-                    setOrderDress(order_dresses)
+                    orderdresses = orderdresses + m.quantity
+                    setOrderDress(orderdresses)
                   }
                   if (product.type.toString() === 'bags') {
-                    order_bags = order_bags + m.quantity
-                    setOrderBag(order_bags)
+                    orderbags = orderbags + m.quantity
+                    setOrderBag(orderbags)
                   }
                   if (product.type.toString() === 'belts') {
-                    order_belt = order_belt + m.quantity
-                    setOrderBelt(order_belt)
+                    orderbelt = orderbelt + m.quantity
+                    setOrderBelt(orderbelt)
                   }
                   if (product.type.toString() === 'sandals') {
-                    order_sandals = order_sandals + m.quantity
-                    setOrderSandals(order_sandals)
+                    ordersandals = ordersandals + m.quantity
+                    setOrderSandals(ordersandals)
                   }
                 }
               })
@@ -140,18 +138,18 @@ function Statisticmonth() {
           })
 
           if (co.createdAt.search(today.toString()) !== -1) {
-            revenue_today = revenue_today + co.totalAmount
-            order_today = order_today + 1
+            revenuetoday = revenuetoday + co.totalAmount
+            ordertoday = ordertoday + 1
 
-            setRevenueToday(revenue_today)
-            setOrderToday(order_today)
+            setRevenueToday(revenuetoday)
+            setOrderToday(ordertoday)
           }
           let Month = co.createdAt.slice(5, 7)
-          if (Month.toString() === month_now.toString()) {
-            revenue_month = revenue_month + co.totalAmount
-            order_month = order_month + 1
-            setRevenueMonth(revenue_month)
-            setOrderMonth(order_month)
+          if (Month.toString() === monthnow.toString()) {
+            revenuemonth = revenuemonth + co.totalAmount
+            ordermonth = ordermonth + 1
+            setRevenueMonth(revenuemonth)
+            setOrderMonth(ordermonth)
           }
          
           if (Month.toString() === '1') {
@@ -275,36 +273,44 @@ function Statisticmonth() {
     {
       time: 'Shirt',
       revenue: orderTshirt,
+      key:'shirt'
     },
     {
       time: 'Jacket',
       revenue: orderJacket,
+      key:'jacket'
     },
     {
       time: 'Pants',
       revenue: orderPants,
+      key:'pants'
     },
     {
       time: 'Hats',
       revenue: orderHat,
+      key:'hats'
     }
   ]
   const dataitems2 = [
     {
       time: 'Sandals',
       revenue: orderSandals,
+      key:'sandals'
     },
     {
       time: 'Bags',
       revenue: orderBag,
+      key:'bags'
     },
     {
       time: 'Belts',
       revenue: orderBelt,
+      key:'belts'
     },
     {
       time: 'Dresses',
       revenue: orderDress,
+      key:'dress'
     }
   ]
   return (
