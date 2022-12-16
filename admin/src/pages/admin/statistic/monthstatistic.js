@@ -25,7 +25,6 @@ import {
 
 import { Bar } from 'react-chartjs-2'
 function Statisticmonth() {
- 
   const [ revenue1, setRevenue1 ] = useState(0)
   const [ revenue2, setRevenue2 ] = useState(0)
   const [ revenue3, setRevenue3 ] = useState(0)
@@ -58,11 +57,7 @@ function Statisticmonth() {
   var yearnow = new Date().getFullYear()
 
   let today =
-    yearnow.toString() +
-    '-' +
-    monthnow.toString() +
-    '-' +
-    datenow.toString()
+    yearnow.toString() + '-' + monthnow.toString() + '-' + datenow.toString()
   useEffect(() => {
     let revenuemonth = 0
     let ordermonth = 0
@@ -92,115 +87,117 @@ function Statisticmonth() {
       .get('/statistic/getOrderToday')
 
       .then((res) => {
+        console.log(res.data)
         res.data.map((co) => {
-         
-          co.products.map((m) => {
-           
-            axios.get('/statistic/getProductId').then((products) => {
-              products.data.map((product) => {
-                
-                if (product.id === m.productId) {
-                  if (product.type.toString() === 'shirts') {
-                    ordershirt = ordershirt + m.quantity
-                    setOrderTshirt(ordershirt)
+          if(co.status === 'confirmed') {
+            co.products.map((m) => {
+              
+              axios.get('/statistic/getProductId').then((products) => {
+                products.data.map((product) => {
+                  // console.log(product.id, m.id)
+                  if (product.id === m.productId) {
+                    if (product.type.toString() === 'shirts') {
+                      ordershirt = ordershirt + m.quantity
+                      setOrderTshirt(ordershirt)
+                    }
+                    if (product.type.toString() === 'jacket') {
+                      orderjacket = orderjacket + m.quantity
+                      setOrderJacket(orderjacket)
+                    }
+                    if (product.type.toString() === 'pants') {
+                      orderpants = orderpants + m.quantity
+                      setOrderPants(orderpants)
+                    }
+                    if (product.type.toString() === 'hats') {
+                      orderhats = orderhats + m.quantity
+                      setOrderHat(orderhats)
+                    }
+                    if (product.type.toString() === 'dresses') {
+                      orderdresses = orderdresses + m.quantity
+                      setOrderDress(orderdresses)
+                    }
+                    if (product.type.toString() === 'bags') {
+                      orderbags = orderbags + m.quantity
+                      setOrderBag(orderbags)
+                    }
+                    if (product.type.toString() === 'belts') {
+                      orderbelt = orderbelt + m.quantity
+                      setOrderBelt(orderbelt)
+                    }
+                    if (product.type.toString() === 'sandals') {
+                      ordersandals = ordersandals + m.quantity
+                      setOrderSandals(ordersandals)
+                    }
                   }
-                  if (product.type.toString() === 'jacket') {
-                    orderjacket = orderjacket + m.quantity
-                    setOrderJacket(orderjacket)
-                  }
-                  if (product.type.toString() === 'pants') {
-                    orderpants = orderpants + m.quantity
-                    setOrderPants(orderpants)
-                  }
-                  if (product.type.toString() === 'hats') {
-                    orderhats = orderhats + m.quantity
-                    setOrderHat(orderhats)
-                  }
-                  if (product.type.toString() === 'dresses') {
-                    orderdresses = orderdresses + m.quantity
-                    setOrderDress(orderdresses)
-                  }
-                  if (product.type.toString() === 'bags') {
-                    orderbags = orderbags + m.quantity
-                    setOrderBag(orderbags)
-                  }
-                  if (product.type.toString() === 'belts') {
-                    orderbelt = orderbelt + m.quantity
-                    setOrderBelt(orderbelt)
-                  }
-                  if (product.type.toString() === 'sandals') {
-                    ordersandals = ordersandals + m.quantity
-                    setOrderSandals(ordersandals)
-                  }
-                }
+                })
               })
+              
             })
-          })
 
-          if (co.createdAt.search(today.toString()) !== -1) {
-            revenuetoday = revenuetoday + co.totalAmount
-            ordertoday = ordertoday + 1
+            if (co.createdAt.search(today.toString()) !== -1) {
+              revenuetoday = revenuetoday + co.totalAmount
+              ordertoday = ordertoday + 1
 
-            setRevenueToday(revenuetoday)
-            setOrderToday(ordertoday)
+              setRevenueToday(revenuetoday)
+              setOrderToday(ordertoday)
+            }
+            let Month = co.createdAt.slice(5, 7)
+            if (Month.toString() === monthnow.toString()) {
+              revenuemonth = revenuemonth + co.totalAmount
+              ordermonth = ordermonth + 1
+              setRevenueMonth(revenuemonth)
+              setOrderMonth(ordermonth)
+            }
+
+            if (Month.toString() === '1') {
+              Jan = Jan + co.totalAmount
+              setRevenue1(Jan)
+            }
+            if (Month.toString() === '2') {
+              Fer = Fer + co.totalAmount
+              setRevenue2(Fer)
+            }
+            if (Month.toString() === '3') {
+              March = March + co.totalAmount
+              setRevenue3(March)
+            }
+            if (Month.toString() === '4') {
+              April = April + co.totalAmount
+              setRevenue4(April)
+            }
+            if (Month.toString() === '5') {
+              May = May + co.totalAmount
+              setRevenue5(May)
+            }
+            if (Month.toString() === '6') {
+              June = June + co.totalAmount
+              setRevenue6(June)
+            }
+            if (Month.toString() === '7') {
+              July = July + co.totalAmount
+              setRevenue7(July)
+            }
+            if (Month.toString() === '8') {
+              August = August + co.totalAmount
+              setRevenue8(August)
+            }
+            if (Month.toString() === '9') {
+              September = September + co.totalAmount
+              setRevenue9(September)
+            }
+            if (Month.toString() === '10') {
+              October = October + co.totalAmount
+              setRevenue10(October)
+            }
+            if (Month.toString() === '11') {
+              November = November + co.totalAmount
+              setRevenue11(November)
+            }
+            if (Month.toString() === '12') {
+              December = December + co.totalAmount
+              setRevenue12(December)
+            }
           }
-          let Month = co.createdAt.slice(5, 7)
-          if (Month.toString() === monthnow.toString()) {
-            revenuemonth = revenuemonth + co.totalAmount
-            ordermonth = ordermonth + 1
-            setRevenueMonth(revenuemonth)
-            setOrderMonth(ordermonth)
-          }
-         
-          if (Month.toString() === '1') {
-            Jan = Jan + co.totalAmount
-            setRevenue1(Jan)
-          }
-          if (Month.toString() === '2') {
-            Fer = Fer + co.totalAmount
-            setRevenue2(Fer)
-          }
-          if (Month.toString() === '3') {
-            March = March + co.totalAmount
-            setRevenue3(March)
-          }
-          if (Month.toString() === '4') {
-            April = April + co.totalAmount
-            setRevenue4(April)
-          }
-          if (Month.toString() === '5') {
-            May = May + co.totalAmount
-            setRevenue5(May)
-          }
-          if (Month.toString() === '6') {
-            June = June + co.totalAmount
-            setRevenue6(June)
-          }
-          if (Month.toString() === '7') {
-            July = July + co.totalAmount
-            setRevenue7(July)
-          }
-          if (Month.toString() === '8') {
-            August = August + co.totalAmount
-            setRevenue8(August)
-          }
-          if (Month.toString() === '9') {
-            September = September + co.totalAmount
-            setRevenue9(September)
-          }
-          if (Month.toString() === '10') {
-            October = October + co.totalAmount
-            setRevenue10(October)
-          }
-          if (Month.toString() === '11') {
-            November = November + co.totalAmount
-            setRevenue11(November)
-          }
-          if (Month.toString() === '12') {
-            December = December + co.totalAmount
-            setRevenue12(December)
-          }
-        
         })
       })
   }, [])
@@ -243,7 +240,7 @@ function Statisticmonth() {
   ]
 
   const dataChart = {
-    key:'chart',
+    key: 'chart',
     labels,
     datasets: [
       {
@@ -269,48 +266,47 @@ function Statisticmonth() {
     ],
   }
   const dataitems1 = [
-  
     {
       time: 'Shirt',
       revenue: orderTshirt,
-      key:'shirt'
+      key: 'shirt',
     },
     {
       time: 'Jacket',
       revenue: orderJacket,
-      key:'jacket'
+      key: 'jacket',
     },
     {
       time: 'Pants',
       revenue: orderPants,
-      key:'pants'
+      key: 'pants',
     },
     {
       time: 'Hats',
       revenue: orderHat,
-      key:'hats'
+      key: 'hats',
     }
   ]
   const dataitems2 = [
     {
       time: 'Sandals',
       revenue: orderSandals,
-      key:'sandals'
+      key: 'sandals',
     },
     {
       time: 'Bags',
       revenue: orderBag,
-      key:'bags'
+      key: 'bags',
     },
     {
       time: 'Belts',
       revenue: orderBelt,
-      key:'belts'
+      key: 'belts',
     },
     {
       time: 'Dresses',
       revenue: orderDress,
-      key:'dress'
+      key: 'dress',
     }
   ]
   return (
@@ -401,7 +397,7 @@ function Statisticmonth() {
           </div>
           <div className="itemright">
             <div className="itemsHeader">Statistic order by items</div>
-            <Table bordered dataSource={dataitems2}  key={dataitems2}>
+            <Table bordered dataSource={dataitems2} key={dataitems2}>
               <Column
                 title="Name of item"
                 dataIndex="time"
