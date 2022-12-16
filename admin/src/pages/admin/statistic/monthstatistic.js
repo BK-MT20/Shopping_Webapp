@@ -44,9 +44,12 @@ function Statisticmonth() {
   const [ orderToday, setOrderToday ] = useState(0)
   const [ orderTshirt, setOrderTshirt ] = useState(0)
   const [ orderJacket, setOrderJacket ] = useState(0)
-  const [ orderTrousers, setOrderTrousers ] = useState(0)
-  const [ orderGlasses, setOrderGlasses ] = useState(0)
-  const [ orderShoes, setOrderShoes ] = useState(0)
+  const [ orderPants, setOrderPants ] = useState(0)
+  const [ orderSandals, setOrderSandals ] = useState(0)
+  const [ orderHat, setOrderHat ] = useState(0)
+  const [ orderDress, setOrderDress ] = useState(0)
+  const [ orderBag, setOrderBag ] = useState(0)
+  const [ orderBelt, setOrderBelt ] = useState(0)
   var date = document.getElementById('date')
   var month = document.getElementById('month')
   var year = document.getElementById('year')
@@ -55,28 +58,6 @@ function Statisticmonth() {
   var month_now = new Date().getMonth() + 1
 
   var year_now = new Date().getFullYear()
-  var Dem_date = setInterval(getDate)
-  let revenue_month = 0
-  let order_month = 0
-  let revenue_today = 0
-  let order_today = 0
-  let order_Tshirt = 0
-  let order_Jacket = 0
-  let order_Trousers = 0
-  let order_Glasses = 0
-  let order_Shoes = 0
-  let Jan = 0
-  let Fer = 0
-  let March = 0
-  let April = 0
-  let May = 0
-  let June = 0
-  let July = 0
-  let August = 0
-  let September = 0
-  let October = 0
-  let November = 0
-  let December = 0
 
   let today =
     year_now.toString() +
@@ -85,100 +66,147 @@ function Statisticmonth() {
     '-' +
     date_now.toString()
   useEffect(() => {
-    // const getStatistic = async () => {
+    let revenue_month = 0
+    let order_month = 0
+    let revenue_today = 0
+    let order_today = 0
+    let order_shirt = 0
+    let order_jacket = 0
+    let order_pants = 0
+    let order_hats = 0
+    let order_sandals = 0
+    let order_dresses = 0
+    let order_belt = 0
+    let order_bags = 0
+    let Jan = 0
+    let Fer = 0
+    let March = 0
+    let April = 0
+    let May = 0
+    let June = 0
+    let July = 0
+    let August = 0
+    let September = 0
+    let October = 0
+    let November = 0
+    let December = 0
     axios
       .get('/statistic/getOrderToday')
 
       .then((res) => {
         res.data.map((co) => {
-          console.log(co.date, today)
-          if (co.date.search(today.toString()) !== -1) {
-            revenue_today = revenue_today + co.price * co.amount
-            order_today = order_today + co.amount
-          }
+         
+          co.products.map((m) => {
+           
+            axios.get('/statistic/getProductId').then((products) => {
+              products.data.map((product) => {
+              
+                if (product.id === m.productId) {
+                  if (product.type.toString() === 'shirts') {
+                    order_shirt = order_shirt + m.quantity
+                    setOrderTshirt(order_shirt)
+                  }
+                  if (product.type.toString() === 'jacket') {
+                    order_jacket = order_jacket + m.quantity
+                    setOrderJacket(order_jacket)
+                  }
+                  if (product.type.toString() === 'pants') {
+                    order_pants = order_pants + m.quantity
+                    setOrderPants(order_pants)
+                  }
+                  if (product.type.toString() === 'hats') {
+                    order_hats = order_hats + m.quantity
+                    setOrderHat(order_hats)
+                  }
+                  if (product.type.toString() === 'dresses') {
+                    order_dresses = order_dresses + m.quantity
+                    setOrderDress(order_dresses)
+                  }
+                  if (product.type.toString() === 'bags') {
+                    order_bags = order_bags + m.quantity
+                    setOrderBag(order_bags)
+                  }
+                  if (product.type.toString() === 'belts') {
+                    order_belt = order_belt + m.quantity
+                    setOrderBelt(order_belt)
+                  }
+                  if (product.type.toString() === 'sandals') {
+                    order_sandals = order_sandals + m.quantity
+                    setOrderSandals(order_sandals)
+                  }
+                }
+              })
+            })
+          })
 
-          let Month = co.date.slice(5, 7)
+          if (co.createdAt.search(today.toString()) !== -1) {
+            revenue_today = revenue_today + co.totalAmount
+            order_today = order_today + 1
+
+            setRevenueToday(revenue_today)
+            setOrderToday(order_today)
+          }
+          let Month = co.createdAt.slice(5, 7)
+          if (Month.toString() === month_now.toString()) {
+            revenue_month = revenue_month + co.totalAmount
+            order_month = order_month + 1
+            setRevenueMonth(revenue_month)
+            setOrderMonth(order_month)
+          }
+         
           if (Month.toString() === '1') {
-            Jan = Jan + co.price * co.amount
+            Jan = Jan + co.totalAmount
+            setRevenue1(Jan)
           }
           if (Month.toString() === '2') {
-            Fer = Fer + co.price * co.amount
+            Fer = Fer + co.totalAmount
+            setRevenue2(Fer)
           }
           if (Month.toString() === '3') {
-            March = March + co.price * co.amount
+            March = March + co.totalAmount
+            setRevenue3(March)
           }
           if (Month.toString() === '4') {
-            April = April + co.price * co.amount
+            April = April + co.totalAmount
+            setRevenue4(April)
           }
           if (Month.toString() === '5') {
-            May = May + co.price * co.amount
+            May = May + co.totalAmount
+            setRevenue5(May)
           }
           if (Month.toString() === '6') {
-            June = June + co.price * co.amount
+            June = June + co.totalAmount
+            setRevenue6(June)
           }
           if (Month.toString() === '7') {
-            July = July + co.price * co.amount
+            July = July + co.totalAmount
+            setRevenue7(July)
           }
           if (Month.toString() === '8') {
-            August = August + co.price * co.amount
+            August = August + co.totalAmount
+            setRevenue8(August)
           }
           if (Month.toString() === '9') {
-            September = September + co.price * co.amount
+            September = September + co.totalAmount
+            setRevenue9(September)
           }
           if (Month.toString() === '10') {
-            October = October + co.price * co.amount
+            October = October + co.totalAmount
+            setRevenue10(October)
           }
           if (Month.toString() === '11') {
-            November = November + co.price * co.amount
+            November = November + co.totalAmount
+            setRevenue11(November)
           }
           if (Month.toString() === '12') {
-            December = December + co.price * co.amount
+            December = December + co.totalAmount
+            setRevenue12(December)
           }
-          if (Month.toString() === month_now.toString()) {
-            revenue_month = revenue_month + co.price * co.amount
-            order_month = order_month + co.amount
-          }
-
-          if (co.type.toString() === 'Shirt') {
-            order_Tshirt = order_Tshirt + co.amount
-          }
-          if (co.type.toString() === 'Jacket') {
-            order_Jacket = order_Jacket + co.amount
-          }
-          if (co.type.toString() === 'Trousers') {
-            order_Trousers = order_Trousers + co.amount
-          }
-          if (co.type.toString() === 'Glasses') {
-            order_Glasses = order_Glasses + co.amount
-          }
-          if (co.type.toString() === 'Shoes') {
-            order_Shoes = order_Shoes + co.amount
-          }
-          // console.log(revenue_today, revenue_month)
-          setRevenueMonth(revenue_month)
-          setOrderMonth(order_month)
-          setRevenueToday(revenue_today)
-          setOrderToday(order_today)
-          setOrderTshirt(order_Tshirt)
-          setOrderJacket(order_Jacket)
-          setOrderTrousers(order_Trousers)
-          setOrderGlasses(order_Glasses)
-          setOrderShoes(order_Shoes)
-          setRevenue1(Jan)
-          setRevenue2(Fer)
-          setRevenue3(March)
-          setRevenue4(April)
-          setRevenue5(May)
-          setRevenue6(June)
-          setRevenue7(July)
-          setRevenue8(August)
-          setRevenue9(September)
-          setRevenue10(October)
-          setRevenue11(November)
-          setRevenue12(December)
+        
         })
       })
-  })
+  }, [])
+
   const options = {
     responsive: true,
     interaction: {
@@ -217,20 +245,35 @@ function Statisticmonth() {
   ]
 
   const dataChart = {
+    key:'chart',
     labels,
     datasets: [
       {
         label: 'Revenue',
-        data: [ revenue1, revenue2, revenue3, revenue4, revenue5, revenue6, revenue7, revenue8, revenue9, revenue10, revenue11, revenue12 ],
+        data: [
+          revenue1,
+          revenue2,
+          revenue3,
+          revenue4,
+          revenue5,
+          revenue6,
+          revenue7,
+          revenue8,
+          revenue9,
+          revenue10,
+          revenue11,
+          revenue12
+        ],
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: '#367e62',
         yAxisID: 'y',
       }
     ],
   }
-  const dataitems = [
+  const dataitems1 = [
+  
     {
-      time: 'T-shirt',
+      time: 'Shirt',
       revenue: orderTshirt,
     },
     {
@@ -238,16 +281,30 @@ function Statisticmonth() {
       revenue: orderJacket,
     },
     {
-      time: 'Trousers',
-      revenue: orderTrousers,
+      time: 'Pants',
+      revenue: orderPants,
     },
     {
-      time: 'Glassess',
-      revenue: orderGlasses,
+      time: 'Hats',
+      revenue: orderHat,
+    }
+  ]
+  const dataitems2 = [
+    {
+      time: 'Sandals',
+      revenue: orderSandals,
     },
     {
-      time: 'Shoes',
-      revenue: orderShoes,
+      time: 'Bags',
+      revenue: orderBag,
+    },
+    {
+      time: 'Belts',
+      revenue: orderBelt,
+    },
+    {
+      time: 'Dresses',
+      revenue: orderDress,
     }
   ]
   return (
@@ -264,6 +321,7 @@ function Statisticmonth() {
               <Card>
                 <Statistic
                   title="Order today"
+                  key="ordertoday"
                   value={orderToday}
                   valueStyle={{
                     color: '#367e62',
@@ -275,6 +333,7 @@ function Statisticmonth() {
             <Col className="today">
               <Card>
                 <Statistic
+                  key="revenuetoday"
                   title="Revenue today"
                   value={revenueToday}
                   precision={2}
@@ -289,6 +348,7 @@ function Statisticmonth() {
             <Col className="today">
               <Card>
                 <Statistic
+                  key="ordermonth"
                   title="Order this month"
                   value={orderMonth}
                   valueStyle={{
@@ -301,6 +361,7 @@ function Statisticmonth() {
             <Col className="today">
               <Card>
                 <Statistic
+                  key="revenuemonth"
                   title="Revenue this month"
                   value={revenueMonth}
                   precision={2}
@@ -322,7 +383,7 @@ function Statisticmonth() {
         <div className="items">
           <div className="itemleft">
             <div className="itemsHeader">Statistic order by items</div>
-            <Table bordered dataSource={dataitems}>
+            <Table bordered dataSource={dataitems1} key={dataitems1}>
               <Column
                 title="Name of item"
                 dataIndex="time"
@@ -333,9 +394,14 @@ function Statisticmonth() {
             </Table>
           </div>
           <div className="itemright">
-            <div className="itemsHeader">Best seller Items</div>
-            <Table bordered dataSource={dataitems}>
-              <Column title="Item" dataIndex="time" key="time" />
+            <div className="itemsHeader">Statistic order by items</div>
+            <Table bordered dataSource={dataitems2}  key={dataitems2}>
+              <Column
+                title="Name of item"
+                dataIndex="time"
+                key="time"
+                style={{ backgroundColor: '#ee5d0b' }}
+              />
               <Column title="Num of order" dataIndex="revenue" key="revenue" />
             </Table>
           </div>
