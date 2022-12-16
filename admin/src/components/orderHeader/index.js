@@ -7,6 +7,7 @@ import moment from 'moment'
 import './style.css'
 import BreadCrumb from '../breadCrumb'
 import axios from '../../api'
+import { useSocket } from '../../hooks'
 
 const { confirm } = Modal
 
@@ -16,6 +17,7 @@ function OrderHeader({ setRefresh, order, loading }) {
   const [ reason, setReason ] = useState('')
   const [ open, setOpen ] = useState(false)
   const [ form ] = Form.useForm()
+  const socket = useSocket()
 
   const handleConfirm = () => {
     confirm({
@@ -29,6 +31,7 @@ function OrderHeader({ setRefresh, order, loading }) {
           .then(response => {
             setRefresh(true)
             setFetching(false)
+            socket.emit('updateOrder')
           })
           .catch(err => {
             console.log('Confirm Order Error:', err)
@@ -87,6 +90,7 @@ function OrderHeader({ setRefresh, order, loading }) {
         setRefresh(true)
         setFetching(false)
         setOpen(false)
+        socket.emit('updateOrder')
       })
       .catch(err => {
         setFetching(false)

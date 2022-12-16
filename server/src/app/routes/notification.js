@@ -97,8 +97,8 @@ const router = express.Router()
 router.get(
     '/getAllNotifications',
     [
-        // authJWT.verifyToken,
-        // authJWT.isAdmin
+        authJWT.verifyToken,
+        authJWT.isAdmin
     ],
     controller.getAllNotifications
 )

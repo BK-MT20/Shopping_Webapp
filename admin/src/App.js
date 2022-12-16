@@ -22,7 +22,10 @@ function App() {
     const newSocket = io('http://localhost:8080')
     setSocket(newSocket)
     
-    return () => newSocket.close()
+    return () => {
+      setSocket(null)
+      newSocket.close()
+    }
   }, [])
 
   return (

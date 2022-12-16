@@ -4,6 +4,7 @@ import { OrdersHeader, OrdersTable } from '../../../components'
 import { Space } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import axios from '../../../api'
+import { useSocket } from '../../../hooks'
 
 const columns = [
   {
@@ -41,6 +42,7 @@ function OrdersList() {
   const [ loading, setLoading ] = useState(true)
   const [ data, setData ] = useState([])
   const [ search, setSearch ] = useState({ orderId: '', customerId: '' })
+  const socket = useSocket()
   
   const onRowClick = (record, rowIndex) => {
     navigate(`/orders/${record.id}`)
@@ -59,9 +61,8 @@ function OrdersList() {
     })
   }
 
-  useEffect(() => {
-    // setLoading(true)
-    axios.get('/order/getAllOrders', { withCredentials: true })
+  const getOrders = () => {
+    return axios.get('/order/getAllOrders', { withCredentials: true })
       // .then(res => res.json())
       .then(res => {
         setData(res.data.map((item, index) => ({
@@ -69,7 +70,7 @@ function OrdersList() {
           key: item.id,
           index,
           createdAt: !item.createdAt ? '' : moment(item.createdAt).format('hh:mm:ss DD-MM-YYYY'),
-          confirmAt: !item.updatedAt ? '' : moment(item.updatedAt).format('hh:mm:ss DD-MM-YYYY'),
+          confirmAt: !item.confirmAt ? '' : moment(item.updatedAt).format('hh:mm:ss DD-MM-YYYY'),
         })))
         setLoading(false)
       })
@@ -78,7 +79,24 @@ function OrdersList() {
         console.log(e)
         setLoading(false)
       })
+  }
+
+  useEffect(() => {
+    // setLoading(true)
+    getOrders()
   }, [])
+
+  useEffect(() => {
+    if (socket) {
+      socket.on('updateOrder', () => {
+        getOrders()
+      })
+  
+      return () => {
+        socket.off('updateOrder')
+      }
+    }
+  }, [ socket ])
 
   const props = {
     columns,

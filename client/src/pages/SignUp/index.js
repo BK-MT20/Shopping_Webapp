@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import axios from '../../api'
 
 const Index = () => {
     const navigate = useNavigate()
@@ -8,7 +8,8 @@ const Index = () => {
     const [signUpValue, setSignUpValue] = useState({
         userName: '',
         email: '',
-        password: ''
+        password: '',
+        repeatPassword: '',
     })
 
     const [errorCode, seterrorCode] = useState({
@@ -24,8 +25,15 @@ const Index = () => {
     }
 
     const handleSignUp = () => {
-        console.log(signUpValue);
-        axios.post('http://localhost:8080/api/auth/signup', { username: signUpValue.userName, email: signUpValue.email, password: signUpValue.password })
+        if (!signUpValue.userName || !signUpValue.email || !signUpValue.password || !signUpValue.repeatPassword) {
+            seterrorCode({ isShow: true, message: "Missing data!" })
+            return
+        }
+        if (signUpValue.password != signUpValue.repeatPassword) {
+            seterrorCode({ isShow: true, message: "Passwords do not match!" })
+            return
+        }
+        axios.post('auth/signup', { username: signUpValue.userName, email: signUpValue.email, password: signUpValue.password, repeat_password: signUpValue.repeatPassword })
             .then(res => {
                 navigate("/signin")
             })
@@ -55,6 +63,10 @@ const Index = () => {
                             <div>
                                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                                 <input type="password" name="password" onChange={onChangeSignUpValue} className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Repeat password</label>
+                                <input type="password" name="repeatPassword" onChange={onChangeSignUpValue} className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                             </div>
                             {errorCode.isShow &&
                                 <div className="px-2 py-1 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">

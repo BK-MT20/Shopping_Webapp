@@ -37,7 +37,7 @@ const menu = (
 
 function Header() {
   return (
-    <Layout.Header theme="light" style ={{ backgroundColor: '#367e62', display:'flex', justifyContent: 'space-between', alignItems:'center' }}className="header">
+    <Layout.Header theme="light" style ={{ backgroundColor: '#367e62', display:'flex', justifyContent: 'space-between', alignItems:'center', zIndex: '2' }}className="header">
       <Typography.Title > <img className='img-header' src="https://cdn.shopify.com/s/files/1/0591/1350/4958/files/3.png?v=1628328728&width=360"/></Typography.Title>
       <Space size={'large'}>
         <Notification />
