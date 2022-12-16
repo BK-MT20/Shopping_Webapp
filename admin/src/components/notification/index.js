@@ -32,14 +32,19 @@ const Notification = () => {
   const [ show, setShow ] = useState(false)
   const socket = useSocket()
 
-  useEffect(() => {
-    axios.get('/notification/getAllNotifications')
+  const getNotifications = () => {
+    return axios.get('/notification/getAllNotifications')
       .then(response => {
         setNotifications(response.data)
+        return response.data
       })
       .catch(err => {
         console.log('get notifications error:', err)
       })
+  }
+
+  useEffect(() => {
+    getNotifications()
   }, [])
 
   const onTabChange = () => {
@@ -65,15 +70,15 @@ const Notification = () => {
     <ListNotifications notifications={notifications} onClick={() => setShow(false)} />
   )
 
-  const openNotification = (order) => {
+  const openNotification = (data) => {
     notification.open({
-      message: `${order.customerName} has new order!`,
+      message: `${data.customer.name} has new order!`,
       description:
         'Please review more details to confirm this order, otherwise decline this with a reason!',
       icon: (
         <ShoppingCartOutlined />
       ),
-      duration: 1
+      duration: 2
     })
   }
 
@@ -83,8 +88,11 @@ const Notification = () => {
 
   useEffect(() => {
     if (socket) {
-      socket.on('newOrder', order => {
-        openNotification(order)
+      socket.on('newOrder', () => {
+        getNotifications()
+          .then(notifications => {
+            openNotification(notifications[0])
+          })
       })
   
       return () => {

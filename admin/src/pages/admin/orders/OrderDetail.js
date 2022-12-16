@@ -10,13 +10,21 @@ const columns = [
     dataIndex: 'id',
   },
   {
+    title: 'Name',
+    dataIndex: 'name',
+  },
+  {
+    title: 'Type',
+    dataIndex: 'type',
+  },
+  {
     title: 'Price',
     dataIndex: 'price',
   },
   {
     title: 'Quantity',
     dataIndex: 'quantity',
-  }
+  },
   // {
   //   title: 'Total Amout',
   //   dataIndex: 'total',

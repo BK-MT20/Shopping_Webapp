@@ -12,9 +12,12 @@ import { RiArrowLeftSLine } from 'react-icons/ri';
 
 import { toast } from 'react-toastify';
 
+import { useSocket } from '../../hooks'
+
 const CheckOutForm = () => {
 	const navigate = useNavigate()
 	const user = useSelector(state => state.user)
+	const socket = useSocket()
 
 	const optionsAddress = [{ label: "New Address", value: "0" }]
 
@@ -40,7 +43,7 @@ const CheckOutForm = () => {
 	const [wardList, setWardList] = useState([])
 
 	const onClickProvince = () => {
-		if (provinceList.length) return
+		if(provinceList.length) return
 		axiosR.get('https://provinces.open-api.vn/api/p/')
 			.then(res => {
 				const response = res.data
@@ -117,9 +120,8 @@ const CheckOutForm = () => {
 		theme: "light",
 	});
 
-
 	const confirmOrder = () => {
-		if (!curOptionProvince || !curOptionDistrict || !curOptionWard || !orderValue.address || !orderValue.lastName) {
+		if(!curOptionProvince || !curOptionDistrict || !curOptionWard || !orderValue.address || !orderValue.lastName) {
 			notifyErrorConfirm()
 			return
 		}
@@ -127,7 +129,10 @@ const CheckOutForm = () => {
 		itemCart.map(item => products.push(
 			{
 				id: item.data.data.id,
-				quantity: item.data.amount
+				quantity: item.data.amount,
+				name: item.data.data.name,
+				price: item.data.data.price,
+				type: item.data.data.type,
 			}
 		))
 		axios.post("/order/createOrder",
@@ -139,7 +144,10 @@ const CheckOutForm = () => {
 			},
 			{ withCredentials: true }
 		)
-			.then(res => console.log(res))
+			.then(res => {
+				console.log(res)
+				socket.emit('newOrder')
+			})
 			.catch(err => console.log(err))
 		notifySuccessConfirm()
 		navigate("/")

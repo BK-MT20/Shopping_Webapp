@@ -4,7 +4,7 @@ const Notification = db.notification
 class NotificationController {
     // [Get] /api/notification/getAllNotifications
     getAllNotifications = (req, res) => {
-        Notification.find({ for: 'admin' }).exec((err, notifications) => {
+        Notification.find({ for: 'admin' }, {}, { sort: { 'createdAt': -1 } }).exec((err, notifications) => {
             if (err) {
                 res.status(500).send({ message: err })
                 return
