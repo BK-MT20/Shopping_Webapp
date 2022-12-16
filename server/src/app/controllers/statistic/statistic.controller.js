@@ -1,10 +1,27 @@
 const db = require('../../data')
-const Statistic = db.statistic
+const Order=db.order
+const Product = db.product
 
 class StatisticController {
-// [Get]
+// [Get ]
+
 getOrderToday = (req, res) => {
-    Statistic.find({}).exec((err, orders) => {
+    Order.find({}).exec((err, orders) => {
+        if (err) {
+            res.status(500).send({ message: err })
+            return
+        }
+
+        res.json(orders.map(order => order.toClient()))
+    })
+}
+// getProductId = (req,res,next) => {
+//     Product.findById(req.params.id)
+//         .then(product => res.json(product.toClient()))
+//         .catch(next)
+// }
+getProductId = (req, res) => {
+    Product.find({}).exec((err, orders) => {
         if (err) {
             res.status(500).send({ message: err })
             return
@@ -14,7 +31,6 @@ getOrderToday = (req, res) => {
     })
 }
 
-// [POST] /api/order/getOrder
 
 }
 
