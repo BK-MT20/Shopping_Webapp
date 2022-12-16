@@ -8,7 +8,7 @@ async function startServer() {
 	const app = express()
 	const server = http.createServer(app)
 	const io = new Server(server, {
-		cors: 'http://localhost:3000'
+		cors: ['http://localhost:3000', 'http://localhost:3001']
 	})
 
 	await loader(app, io)
