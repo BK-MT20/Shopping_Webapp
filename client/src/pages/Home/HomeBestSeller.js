@@ -1,6 +1,6 @@
 import HomeBestSellerItem from './HomeBestSellerItem'
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import axios from '../../api'
 
 const HomeBestSeller = () => {
 
@@ -8,7 +8,7 @@ const HomeBestSeller = () => {
     const [limitItem, setLimitItem] = useState(15)
 
     useEffect(() => {
-        axios.get("http://localhost:8080/api/product/getAllProduct")
+        axios.get("product/getAllProduct")
             .then(res => setData(res.data))
             .catch(e => console.log(e))
     }, [])
