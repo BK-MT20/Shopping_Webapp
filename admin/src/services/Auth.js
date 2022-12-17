@@ -11,6 +11,8 @@ const login = (values) => {
     .then((res) => {
       console.log(res);
       if (res.data.accessToken) {
+        const username = values.username;
+        localStorage.setItem("user", JSON.stringify(username));
         localStorage.setItem("admin", JSON.stringify(res.data));
       }
     })
@@ -25,11 +27,15 @@ const login = (values) => {
       if (err.response.status === 404) {
         message.error("User not found");
       }
+      if (err.response.status === 403) {
+        message.error("You are not authorized to login");
+      }
     });
 };
 
 const logout = () => {
   localStorage.removeItem("admin");
+  localStorage.removeItem("user");
 };
 
 const register = (values) => {
