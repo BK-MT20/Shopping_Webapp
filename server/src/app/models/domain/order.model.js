@@ -11,7 +11,7 @@ const Order = mongoose.model(
         totalAmount: { type: Number, required: true },
         products: [
             {
-                id: { type: String, required: true },
+                productId: { type: String, required: true },
                 name: { type: String, required: true },
                 type: { type: String, required: true },
                 price: { type: Number, required: true },
