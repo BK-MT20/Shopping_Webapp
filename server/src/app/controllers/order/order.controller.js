@@ -78,12 +78,13 @@ class OrderController {
     createOrder = (req, res) => {
         const newOrder = new Order(req.body)
         newOrder.customerId = req.userId
+        console.log(req.userId);
         newOrder.save((err, order) => {
             if (err) {
                 res.status(500).send({ message: err })
                 return
             }
-            addNewNotification(order?.toClient() || newOrder?.toClient())
+            addNewNotification(newOrder)
 
             res.status(200).send({ message: 'Create Order Successfully!' })
         })

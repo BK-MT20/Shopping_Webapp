@@ -88,6 +88,10 @@ function OrdersList() {
 
   useEffect(() => {
     if (socket) {
+      socket.on('newOrder', () => {
+        getOrders()
+      })
+
       socket.on('updateOrder', () => {
         getOrders()
       })

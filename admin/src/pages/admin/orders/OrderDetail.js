@@ -7,7 +7,7 @@ import axios from '../../../api'
 const columns = [
   {
     title: 'Product ID',
-    dataIndex: 'id',
+    dataIndex: 'productId',
   },
   {
     title: 'Name',
