@@ -128,7 +128,7 @@ const CheckOutForm = () => {
 		const products = []
 		itemCart.map(item => products.push(
 			{
-				id: item.data.data.id,
+				productId: item.data.data.id,
 				quantity: item.data.amount,
 				name: item.data.data.name,
 				price: item.data.data.price,
